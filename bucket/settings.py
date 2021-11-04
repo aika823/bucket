@@ -20,8 +20,6 @@ SECRET_DIR = os.path.join(PROJECT_ROOT, 'secret')
 SECRETS = json.load(open(os.path.join(SECRET_DIR, 'secret.json'), 'rb'))
 DB_SECRETS = json.load(open(os.path.join(SECRET_DIR, 'database.json'), 'rb'))
 SECRET_KEY = SECRETS['SECRET_KEY']
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@wv*@c%ur&-_9shg%b3jfnki5gvd^)j+&g+qo2o0o5j*)v(k(6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

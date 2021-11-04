@@ -1,0 +1,89 @@
+{% extends "base.html" %} {% block contents %} {% if user %}
+
+<h1>{{user.social_login}} 으로 가입한 {{user.email}} 님</h1>
+<button class="btn btn-primary btn-block" onclick="location.href='/user/logout'">로그아웃</button> {% if seller %}
+<button class="btn btn-primary btn-block" onclick="location.href='/seller/product'">셀러 페이지</button> {% else %}
+<button class="btn btn-primary btn-block" onclick="location.href='/seller/register'">셀러 등록</button> {% endif %}
+
+<div class="row mt-5">
+    <div class="col-12">
+        <table class="table table-light">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">상품명</th>
+                    <th scope="col">상품 이미지</th>
+                    <th scope="col">가격</th>
+                    <th scope="col">등록날짜</th>
+                </tr>
+            </thead>
+            <tbody class="text-dark">
+                {% for product in products %}
+                <tr>
+                    <th scope="row">{{ product.id }}</th>
+                    <th>
+                        <a id="product-{{ product.id }}" href="/product/{{ product.id }}">
+              {{ product.name }}
+            </a>
+                    </th>
+                    <th><img src="{{ product.image }}" alt="" /></th>
+                    <th>{{ product.price }} 원</th>
+                    <th>{{ product.register_date|date:'Y-m-d H:i' }}</th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary" onclick="location.href='product/create'">
+      상품 등록하기
+    </button>
+    </div>
+</div>
+
+<div class="row mt-5">
+    {% if is_paginated %}
+    <ul class="pagination">
+
+        {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+
+        {% else %}
+        <li class="disabled"><span>&laquo;</span></li>
+
+        {% endif %} {% for i in paginator.page_range %} {% if page_obj.number == i%}
+        <li class="active">
+            <span>{{ i }} <span class="sr-only">(current)</span></span>
+        </li>
+        {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %} {% endfor %} {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+        {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>
+
+{% else %}
+<div class="row mt-5">
+    <div class="col-12 text-center">
+        <h1>로그인</h1>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-12">{{ error }}</div>
+</div>
+<div class="row mt-5">
+    <div>
+        <button onclick="location.href='/user/login/naver'">
+      네이버 로그인 버튼
+    </button>
+        <button onclick="location.href='/user/login/kakao'">
+      카카오 로그인 버튼
+    </button>
+        <button onclick="location.href='/user/login/google'">
+      구글 로그인 버튼
+    </button>
+    </div>
+</div>
+{% endif %} {% endblock %}

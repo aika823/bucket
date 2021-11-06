@@ -12,8 +12,8 @@ PROJECT_ROOT    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # URL
 # BILLIM_URL = 'http://localhost:8000'
-# BILLIM_URL = 'http://billim.co.kr'
-BILLIM_URL = 'http://bucket-env.eba-mfepamsq.ap-northeast-2.elasticbeanstalk.com'
+BILLIM_URL = 'http://billim.co.kr'
+# BILLIM_URL = 'http://bucket-env.eba-mfepamsq.ap-northeast-2.elasticbeanstalk.com'
 IMAGE_URL = 'http://static.billim.co.kr'
 # SERVICE_URL = json.load(open('url.json'))['SERVICE_URL']
 # IMAGE_URL = json.load(open('url.json'))['IMAGE_URL']

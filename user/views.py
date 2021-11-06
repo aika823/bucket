@@ -1,10 +1,11 @@
 import json
+import requests
+import base64
+
 from os import access
 from django.db.models.expressions import F, Case, When
 from django.db.models.fields import CharField
 from django.db.models.query_utils import Q, FilteredRelation
-import requests
-import base64
 
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
@@ -12,18 +13,18 @@ from django.views.generic.edit import FormView
 from django.conf import settings
 from requests.sessions import session
 from user.social_login import callback
-from rest_framework import viewsets
 
-from user.serializer import InterestSerializer, UserInterestSerializer, UserSerializer
+from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework.decorators import action
+
 
 from .forms import RegisterForm
 from .forms import LoginForm, RegisterForm
 from .models import Interest, User, UserInterest
 from .forms import RegisterForm
-from user.decorators import admin_required
-from rest_framework.response import Response
-from rest_framework.decorators import action
-
+from .serializer import InterestSerializer, UserInterestSerializer, UserSerializer
+from .decorators import admin_required
 
 
 billim_url = settings.BILLIM_URL
@@ -38,7 +39,6 @@ def profile(request):
         return render(request, 'profile.html', {'user': user, 'user_interest':user_interest})
     else:
         return redirect('/user/login')
-    
 
 def index(request):
     return render(request, 'index.html', { 'email': request.session.get('user') })
@@ -50,96 +50,14 @@ def logout(request):
 
 def callback_social(request, type):    
     
+    # Get user information from callback function
     user_info = callback(request,type)
-
-    # # 생성된 코드를 통해 유저 인증 진행
-    # code = request.GET.get('code')    
-    # url_auth = {
-    #     'google': 'https://oauth2.googleapis.com/token',
-    #     'naver' : 'https://nid.naver.com/oauth2.0/token',
-    #     'kakao' : 'https://kauth.kakao.com/oauth/token'  
-    # }
-    # client_id={
-    #     'google': '1094555666329-b76moi8dkckmoe3vc9kb2qhf60r8t563.apps.googleusercontent.com',
-    #     'naver' : "WO73y3DTPypJ9B7qq56N",
-    #     'kakao' : '8697dec0f53599c5d7f2502389d16f72'
-    # }
-    # client_secret={
-    #     'google': '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', #구글
-    #     'naver' : "SOUKrwtgel", #네이버
-    # }
-    # scope={
-    #     'google': "https://www.googleapis.com/auth/userinfo.profile"
-    # }
-    # state={
-    #     'naver' : "REWERWERTATE"
-    # }
-    # redirect_uri = {
-    #     'google': billim_url+'/user/callback/google',
-    #     'naver' : billim_url+'/user/callback/naver',
-    #     'kakao' : billim_url+'/user/callback/kakao',
-    # }
-    # if type == 'naver':
-    #     clientConnect = client_id[type] + ":" + client_secret[type]
-    #     clidst_base64 = base64.b64encode(bytes(clientConnect, "utf8")).decode()
-    #     headers = {"Authorization": "Basic "+clidst_base64}
-    # else:
-    #     headers = None
-        
-    # data = {
-    #     "grant_type":'authorization_code',
-    #     'client_id':client_id[type],
-    #     'redirect_uri':redirect_uri[type],
-    #     'code':code,
-    # }
-    # if type in client_secret:
-    #     data['client_secret'] = client_secret[type]
-    # if type in scope:
-    #      data['scope'] = scope[type] 
-    # if type in state:
-    #     data['state'] = state[type] 
-    # response = requests.request("POST", url_auth[type], data=data,headers=headers).json()
-    
-    # # 액세스 토큰 발급
-    # access_token = response['access_token'] 
-
-    # # 액세스 토큰을 통해 유저 정보 요청
-    # if type == 'google':
-    #     url_user_info = "https://www.googleapis.com/oauth2/v3/userinfo"
-    #     user_response = requests.request("POST", url_user_info, params={'access_token': access_token }).json()
-    #     name = user_response['email']
-    #     email = user_response['email']
-    #     social_id = user_response['sub']
-
-    # elif type == 'naver':
-    #     url_user_info = "https://openapi.naver.com/v1/nid/me"
-    #     header = {'Authorization':"Bearer " + access_token}
-    #     user_response = requests.request("POST", url_user_info, headers=header).json()
-    #     name = user_response['response']['name']
-    #     email = user_response['response']['email']
-    #     social_id = user_response['response']['id']
-    
-    # elif type == 'kakao':
-    #     url_user_info = "https://kapi.kakao.com/v2/user/me"
-    #     header = {'Authorization':"Bearer " + access_token}
-    #     user_response = requests.request("POST", url_user_info, headers=header, verify=False).json()
-    #     name = user_response['kakao_account']['profile']['nickname'] #카카오
-    #     email = user_response['kakao_account']['email']
-    #     social_id = user_response['id']
-
-    # # 유저 정보
-    # user_info = {
-    #     'name': name,
-    #     'email': email,
-    #     'social_id': social_id
-    # }
     
     # DB에서 중복여부 확인 후 유저 정보 저장 
     try:
         user_in_db = User.objects.get(social_id=user_info['social_id'])
     except User.DoesNotExist:
         user_in_db = None
-
     if user_in_db:
         user = user_in_db
     else:
@@ -192,10 +110,6 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-# class InterestViewSet(viewsets.ModelViewSet):
-#     queryset = Interest.objects.all()
-#     serializer_class = InterestSerializer
-
 class InterestViewSet(viewsets.ViewSet):
     def create(self, request):
         user_id =request.session.get('user') 
@@ -218,7 +132,7 @@ class InterestViewSet(viewsets.ViewSet):
         return Response(serializer.data)
     def list():
         return "test"
-'''  '''
+
 class UserInterestViewSet(viewsets.ModelViewSet):
     queryset = UserInterest.objects.all()
     serializer_class = UserInterestSerializer

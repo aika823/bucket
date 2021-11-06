@@ -12,7 +12,6 @@ urlpatterns = [
     path('', views.login),
     path('profile', views.profile),
     path('login/', views.login),    
-    path('login/<str:type>/', views.login_social),
     path('login/<str:type>/', social_login.login_social),
     path('callback/<str:type>/', views.callback_social),
     path('logout/', views.logout),

@@ -55,13 +55,13 @@ def callback(request, type):
         'kakao' : 'https://kauth.kakao.com/oauth/token'  
     }
     client_id={
-        'google': '1094555666329-b76moi8dkckmoe3vc9kb2qhf60r8t563.apps.googleusercontent.com',
-        'naver' : "WO73y3DTPypJ9B7qq56N",
-        'kakao' : '8697dec0f53599c5d7f2502389d16f72'
+        'naver' : settings.NAVER_CLIENT_ID,
+        'kakao' : settings.KAKAO_CLIENT_ID,
+        'google': settings.GOOGLE_CLIENT_ID
     }
     client_secret={
-        'google': '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', #구글
-        'naver' : "SOUKrwtgel", #네이버
+        'google': settings.GOOGLE_CLIENT_SECRET,
+        'naver' : settings.NAVER_CLIENT_SECRET,
     }
     scope={
         'google': "https://www.googleapis.com/auth/userinfo.profile"
@@ -130,25 +130,3 @@ def callback(request, type):
     }
 
     return user_info
-    
-    # DB에서 중복여부 확인 후 유저 정보 저장 
-    # try:
-    #     user_in_db = User.objects.get(social_id=social_id)
-    # except User.DoesNotExist:
-    #     user_in_db = None
-
-    # if user_in_db:
-    #     user = user_in_db
-    # else:
-    #     user = User(
-    #                 name=name,
-    #                 email=email,
-    #                 password=None,
-    #                 social_login=type,
-    #                 social_id = social_id
-    #             )
-    #     user.save()
-
-    # # 소셜 로그인 후 홈페이지로 이동
-    # request.session['user'] = user.id
-    # return redirect('/user/profile')

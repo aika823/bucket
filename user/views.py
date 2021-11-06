@@ -38,6 +38,7 @@ def profile(request):
         user_interest = UserInterest.objects.filter(user_id=user_id)
         return render(request, 'profile.html', {'user': user, 'user_interest':user_interest})
     else:
+        return render(request, 'profile.html')
         return redirect('/user/login')
 
 def index(request):

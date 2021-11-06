@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from django.views.generic import TemplateView
 
-from bucket.user import social_login
+from user import social_login
 from . import views
 
 urlpatterns = [

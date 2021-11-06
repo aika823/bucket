@@ -11,7 +11,7 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from django.conf import settings
 from requests.sessions import session
-from bucket.user.social_login import callback
+from user.social_login import callback
 from rest_framework import viewsets
 
 from user.serializer import InterestSerializer, UserInterestSerializer, UserSerializer

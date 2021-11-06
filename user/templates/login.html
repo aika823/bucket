@@ -1,5 +1,7 @@
 {% extends "base.html" %} {% block contents %} {% if user %}
 
+<h1>{{user}}</h1>
+
 <h1>{{user.social_login}} 으로 가입한 {{user.email}} 님</h1>
 <button class="btn btn-primary btn-block" onclick="location.href='/user/logout'">로그아웃</button> {% if seller %}
 <button class="btn btn-primary btn-block" onclick="location.href='/seller/product'">셀러 페이지</button> {% else %}

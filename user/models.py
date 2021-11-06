@@ -27,7 +27,7 @@ class User(models.Model):
         db_table = 'user'
 
 class Interest(models.Model):
-    interest = models.CharField(max_length=10)
+    interest = models.CharField(max_length=10, unique=True)
     class Meta:
         db_table = "interest"
 

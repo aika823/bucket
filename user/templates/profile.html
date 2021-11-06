@@ -2,9 +2,13 @@
 <h1>{{user.id}}</h1>
 <h1>{{user.name}}</h1>
 
-<form action="">
+<form action="/api/interest/" , method="post">
     <input type="text" name="interest" value="">
     <input type="submit">
 </form>
+
+{% for interest in user_interest %}
+<h2>{{interest.interest_id.interest}}</h2>
+{% endfor %}
 
 <a href="/"></a>

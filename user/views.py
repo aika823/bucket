@@ -20,6 +20,10 @@ from .forms import LoginForm, RegisterForm
 from .models import Interest, User, UserInterest
 from .forms import RegisterForm
 from user.decorators import admin_required
+from rest_framework.response import Response
+from rest_framework.decorators import action
+
+
 
 client_id_naver = settings.NAVER_CLIENT_ID
 client_id_kakao = settings.KAKAO_CLIENT_ID
@@ -28,8 +32,14 @@ image_url = settings.IMAGE_URL
 
 def profile(request):
     user_id =request.session.get('user') 
-    user = User.objects.filter(id=user_id).values()[0]
-    return render(request, 'profile.html', {'user': user})
+    user_list = User.objects.filter(id=user_id).values()
+    if user_list:
+        user = user_list[0]
+        user_interest = UserInterest.objects.filter(user_id=user_id)
+        return render(request, 'profile.html', {'user': user, 'user_interest':user_interest})
+    else:
+        return redirect('/user/login')
+    
 
 def index(request):
     return render(request, 'index.html', { 'email': request.session.get('user') })
@@ -187,7 +197,7 @@ def callback_social(request, type):
 
 
     # return render(request, 'home.html', {'test': user_info})
-    return redirect('/')
+    return redirect('/user/profile')
 
 def login(request):
     # 로그인 폼 제출 시
@@ -225,9 +235,32 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-class InterestViewSet(viewsets.ModelViewSet):
-    queryset = Interest.objects.all()
-    serializer_class = InterestSerializer
+# class InterestViewSet(viewsets.ModelViewSet):
+#     queryset = Interest.objects.all()
+#     serializer_class = InterestSerializer
+
+class InterestViewSet(viewsets.ViewSet):
+    def create(self, request):
+        user_id =request.session.get('user') 
+        user = User.objects.filter(id=user_id).all()[0] 
+        interest = request.POST['interest']
+        current_interests= Interest.objects.filter(interest=interest).all()
+        if current_interests:
+            interest = current_interests[0]
+        else:
+            interest = Interest(interest=interest)
+            interest.save()
+        current_user_interest = UserInterest.objects.filter(user_id=user_id ,interest_id=interest.id).all()
+        if current_user_interest:
+            pass
+        else:
+            user_interest = UserInterest(user_id=user, interest_id = interest)
+            user_interest.save()
+        queryset = Interest.objects.all()
+        serializer = InterestSerializer(queryset, many=True)
+        return Response(serializer.data)
+    def list():
+        return "test"
 
 class UserInterestViewSet(viewsets.ModelViewSet):
     queryset = UserInterest.objects.all()

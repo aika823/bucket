@@ -23,6 +23,7 @@ SECRET_KEY = SECRETS['SECRET_KEY']
 
 # HOSTS
 ALLOWED_HOSTS = [
+    'localhost',
     '127.0.0.1',
     'bucket-env.eba-mfepamsq.ap-northeast-2.elasticbeanstalk.com'
 ]

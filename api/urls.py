@@ -24,11 +24,4 @@ urlpatterns = [
     path('user/',user_view),
     path('interest/',interest_view),
     path('user_interest/',user_interest_view),
-    
-    # path('', views.login),
-    # path('login/', views.login),    
-    # path('login/<str:type>/', views.login_social),
-    # path('callback/<str:type>/', views.callback_social),
-    # path('logout/', views.logout),
-    # url(r'^api/',include(router.urls)),
 ]

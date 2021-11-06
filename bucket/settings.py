@@ -90,18 +90,10 @@ DATABASES = {
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
 # Internationalization
@@ -131,3 +123,4 @@ NAVER_CLOUD_CLIENT_ID       = SECRETS['NAVER_CLOUD_CLIENT_ID']
 NAVER_CLOUD_CLIENT_SECRET   = SECRETS['NAVER_CLOUD_CLIENT_SECRET']
 
 KAKAO_CLIENT_ID             = SECRETS['KAKAO_CLIENT_ID']
+GOOGLE_CLIENT_ID             = SECRETS['GOOGLE_CLIENT_ID']

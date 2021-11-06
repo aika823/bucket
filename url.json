@@ -1,0 +1,4 @@
+{
+    "SERVICE_URL": "http://localhost:8000",
+    "IMAGE_URL": "static.test.com"
+}

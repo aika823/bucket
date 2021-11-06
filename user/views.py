@@ -261,7 +261,7 @@ class InterestViewSet(viewsets.ViewSet):
         return Response(serializer.data)
     def list():
         return "test"
-
+'''  '''
 class UserInterestViewSet(viewsets.ModelViewSet):
     queryset = UserInterest.objects.all()
     serializer_class = UserInterestSerializer

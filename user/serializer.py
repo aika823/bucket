@@ -2,9 +2,10 @@ from rest_framework import serializers
 from .models import Interest, User, UserInterest
 
 class UserSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
     class Meta:
         model = User
-        fields = ('id', 'name', 'social_login')
+        fields = '__all__'
 
 class InterestSerializer(serializers.ModelSerializer):
     class Meta:

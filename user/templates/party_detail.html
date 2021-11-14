@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+
+    <title>Bucket Lister</title>
+</head>
+
+<body>
+    <div class="content height-auto">
+        <section class="detail">
+            <header>
+                <a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a>
+            </header>
+            <div class="detail-images">
+                <img class="party-bg" src="/static/images/dog.jpg" alt="">
+                <div class="overlay"></div>
+                <p class="left">잔여 <span>1</span></p>
+                <h2>의미있는 봉사활동 함께해요:)</h2>
+                <div class="participant">
+                    <img src="/static/images/user1.png" alt="">
+                    <img src="/static/images/user2.png" alt="">
+                </div>
+                <div class="owner">
+                    <img src="/static/images/user3.png" alt="">
+                    <h3>송 강</h3>
+                </div>
+            </div>
+            <div class="detail-box">
+                <div class="detail-card">
+                    <div class="detail-card-element">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>중랑구 용마선역 7호선 12</p>
+                    </div>
+                    <div class="detail-card-element">
+                        <i class="fas fa-clock"></i>
+                        <p>10.21 (목) 오후 2시</p>
+                    </div>
+                    <div class="detail-card-element">
+                        <i class="fas fa-won-sign"></i>
+                        <p>무료</p>
+                    </div>
+                </div>
+                <div class="detail-info">
+                    <h4>자세한 정보</h4>
+                    <p>봉사활동하기에 편한 복장하고 오세요. 목마를 수도 있으니 식수도 챙겨오시면 좋을 것 같네요</p>
+                </div>
+                <div class="detail-comment">
+                    <h4>댓글</h4>
+                    <div class="comment-write">
+                        <img src="/static/images/user2.png" alt="">
+                        <input type="text" placeholder="댓글 달기...">
+                    </div>
+                    <div class="comment-list">
+                        <!-- 댓글 리스트 반복문 시작 -->
+                        <div style="height: 300px; background: rgb(177, 220, 255);"></div>
+                        <!-- 댓글 리스트 반복문 끝 -->
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="bottom-nav">
+                <div class="join-box">
+                    <a class="btn-wish">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                    <a class="btn-join" href="">
+            소셜링 참여하기
+          </a>
+                </div>
+                <div class="bottom-nav-detail">
+                    <a href="./party.html"><i class="fas fa-users"></i></a>
+                    <a href="./add.html"><i class="fas fa-plus-circle"></i></a>
+                    <a href="./profile.html"><i class="fas fa-user"></i></a>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <script type="text/javascript">
+        $(function() {
+            $('.login-btn').click(function() {
+                location.href = "./profile.html"
+            });
+        });
+    </script>
+</body>
+
+</html>

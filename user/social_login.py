@@ -1,5 +1,7 @@
+import base64
 from django.shortcuts import render, redirect
 from django.conf import settings
+import requests
 
 billim_url = settings.BILLIM_URL
 
@@ -70,13 +72,9 @@ def callback(request, type):
         'naver' : "REWERWERTATE"
     }
     redirect_uri = {
-        # 'google': billim_url+'/user/callback/google',
-        # 'naver' : billim_url+'/user/callback/naver',
-        # 'kakao' : billim_url+'/user/callback/kakao',
-        
-        'google': '/user/profile',
-        'naver' : '/user/profile',
-        'kakao' : '/user/profile',
+        'google': billim_url+'/user/callback/google',
+        'naver' : billim_url+'/user/callback/naver',
+        'kakao' : billim_url+'/user/callback/kakao'
     }
     if type == 'naver':
         clientConnect = client_id[type] + ":" + client_secret[type]

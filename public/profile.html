@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+
+    <title>Bucket Lister</title>
+</head>
+
+<body>
+    <div class="content">
+        <section class="profile">
+            <div class="profile-box">
+                <div class="profile-header">
+                    <h1>내 프로필</h1>
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="profile-img">
+                    <img src="/static/images/user3.png" alt="profile image">
+                    <h3>송 강</h3>
+                </div>
+                <div class="profile-description">
+                    <p>영화를 좋아합니다:) 같이 좋은 시간 보내요!</p>
+                </div>
+                <div class="profile-tag">
+                    <span>#영화</span>
+                    <span>#운동</span>
+                    <span>#한강</span>
+                </div>
+            </div>
+
+            <img class="img-vertical" src="/static/images/logo_vertical.png" alt="">
+
+            <div class="bottom-nav">
+                <a href="./party.html"><i class="fas fa-users"></i></a>
+                <a href="./add.html"><i class="fas fa-plus-circle"></i></a>
+                <a href="./profile.html"><i class="fas fa-user"></i></a>
+            </div>
+
+        </section>
+    </div>
+
+    <script type="text/javascript">
+        $(function() {
+            $('.login-btn').click(function() {
+                location.href = "./profile.html"
+            });
+        });
+    </script>
+</body>
+
+</html>

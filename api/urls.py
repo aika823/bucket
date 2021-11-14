@@ -2,26 +2,31 @@ from django.conf.urls import url
 from django.urls import path, include
 
 from rest_framework import routers
-import user
+from user.views import InterestViewSet, UserInterestViewSet
+from party.views import PartyViewSet
+from . import views
 
-
-user_view = user.views.UserViewSet.as_view({
-    'post': 'create',
-    'get': 'list'
-})
-
-interest_view = user.views.InterestViewSet.as_view({
+interest_view = InterestViewSet.as_view({
     'post':'create',
     'get':'list'
 })
 
-user_interest_view = user.views.UserInterestViewSet.as_view({
+user_interest_view = UserInterestViewSet.as_view({
+    'post': 'create',
+    'get': 'list'
+})
+
+party_view = PartyViewSet.as_view({
     'post': 'create',
     'get': 'list'
 })
 
 urlpatterns = [
-    path('user/',user_view),
+    path('user/login',views.login),
+    
+
     path('interest/',interest_view),
     path('user_interest/',user_interest_view),
+    
+    path('party/', party_view)
 ]

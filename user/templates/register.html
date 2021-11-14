@@ -1,50 +1,11 @@
-{% extends "base.html" %}
-
-
-{% block contents %}
-
-{% if messages %}
-{% for message in messages %}
-    <div>에러메시지{{message}}</div>
-{% endfor %}
-{% endif %}
-
-<div class="row mt-5">
-  <div class="col-12 text-center">
-    <h1>회원가입123</h1>
-  </div>
-</div>
-<div class="row mt-5">
-  <div class="col-12">
-    {{ error }}
-  </div>
-</div>
-<div class="row mt-5">
-  <div class="col-12">
-    <button onclick="location.href='https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id={{client_id_naver}}&redirect_uri={{url}}/user/callback/naver/&state=7a74649e-d714-438f-a3fc-991c8b6f4bc7'">
-      네이버로 회원가입
-    </button>
-    <button onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id={{client_id_kakao}}&redirect_uri={{url}}/user/callback/kakao&response_type=code'">
-      카카오로 회원가입
-    </button>
-
-    <form method="POST" action="." enctype="multipart/form-data">
-      {% csrf_token %}
-
-      {% for field in form %}
-        <div class="form-group">
-          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-          <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
-            placeholder="{{ field.label }}" name="{{ field.name }}" />
-        </div>  
-        {% if field.errors %}
-        <span style="color: red;">{{ field.errors }}</span>
-        {% endif %} 
-      {% endfor %}
-
-      <button type="submit" class="btn btn-primary">등록</button>
-    </form>
-
-  </div>
-</div>
+{% extends "base.html" %} {% block contents %}
+<h1>회원가입 페이지</h1>
+<form method="POST" action="/user/register/" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input name="name" type="text" value="닉네임" />
+    <input name="email" type="email" value="aika823@naver.com" />
+    <input name="password" type="password" value="123" />
+    <input name="re_password" type="password" value="123" />
+    <input type="submit">
+</form>
 {% endblock %}

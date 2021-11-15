@@ -125,6 +125,7 @@ section.profile .profile-box .profile-img img {
     height: 120px;
     border-radius: 50%;
     vertical-align: middle;
+    cursor: pointer;
 }
 
 section.profile .profile-box .profile-img h3 {

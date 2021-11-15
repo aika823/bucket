@@ -49,9 +49,6 @@ from django.core.mail import EmailMessage
 from .tokens import account_activation_token
 from django.utils.encoding import force_bytes, force_text
 
-project_url = settings.PROJECT_URL
-image_url = settings.IMAGE_URL
-
 
 class InterestViewSet(viewsets.ViewSet):
     def create(self, request):
@@ -88,16 +85,17 @@ class UserInterestViewSet(viewsets.ModelViewSet):
 
 def update(request):
     user_id = request.session.get("user")
-    user = User.objects.get(id=user_id) 
+    user = User.objects.get(id=user_id)
     if request.method == "POST":
-        if request.FILES.get('image'):
-            user.image =  request.FILES.get('image')
+        if request.FILES.get("image"):
+            user.image = request.FILES.get("image")
             print("print(user.image)")
             print(user.image)
         user.save()
         print(user)
         return redirect("user:profile")
-    
+
+
 def profile(request):
     user_id = request.session.get("user")
     try:

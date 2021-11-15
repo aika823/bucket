@@ -1,75 +1,72 @@
 <!-- @format -->
 
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %} {% block contents %}
 
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-    <link rel="stylesheet" href="/static/css/main.css" />
-
-    <title>Bucket Lister</title>
-</head>
-
-<body>
-    <div class="content">
-        <section class="profile">
-            <div class="profile-box">
-                <div class="profile-header">
-                    <h1>내 프로필</h1>
-                    <i class="fas fa-bell"></i>
-                </div>
-                <div class="profile-img">
-                    <img src="/static/images/user3.png" alt="profile image" />
-                    <h3>{{user.name}}</h3>
-                </div>
-
-                <form action="/api/interest/" , method="post">
-                    <input type="text" name="interest" />
-                    <input type="submit" value="관심사 추가하기" />
+<div class="content">
+    <section class="profile">
+        <div class="profile-box">
+            <div class="profile-header">
+                <h1>내 프로필</h1>
+                <i class="fas fa-bell"></i>
+            </div>
+            <div class="profile-img">
+                <img id="profileImage" src="/media/{{user.image}}" alt="profile image" onclick="open_image_input()" />
+                <form action="/user/update/" id="imageForm" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="file" name="image" id="imageInput" style="display: none" />
                 </form>
-
-                <div class="profile-description">
-                    <p>{{user.email}}</p>
-                </div>
-                <div class="profile-tag">
-                    {% for interest in user_interest %}
-                    <span>#{{interest.interest_id.interest}}</span> {% endfor %}
-                </div>
-
-                <!-- 가입 중인 파티 -->
-                {% if user%} {% for party in user_party %}
-                <h3>{{party.party_id.id}}</h3>
-                <a href="/party/{{party.party_id.id}}">{{party.party_id.name}}</a>
-                <h3>{{party.party_id.name}}</h3>
-                <h3>{{party.party_id.date}}</h3>
-                <h3>{{party.party_id.address}}</h3>
-                {% endfor %} {% endif %}
+                <h3>{{user.name}}</h3>
             </div>
 
-            <img class="img-vertical" src="/static/images/logo_vertical.png" alt="" />
+            <form action="/api/interest/" , method="post">
+                <input type="text" name="interest" />
+                <input type="submit" value="관심사 추가하기" />
+            </form>
 
-            <div class="bottom-nav">
-                <a href="/party"><i class="fas fa-users"></i></a>
-                <a href="/party/create"><i class="fas fa-plus-circle"></i></a>
-                <a href="/user/profile"><i class="fas fa-user"></i></a>
+            <div class="profile-description">
+                <p>{{user.email}}</p>
             </div>
-        </section>
-    </div>
+            <div class="profile-tag">
+                {% for interest in user_interest %}
+                <span>#{{interest.interest_id.interest}}</span> {% endfor %}
+            </div>
 
-    <script type="text/javascript">
-        $(function() {
-            $(".login-btn").click(function() {
-                location.href = "./profile.html";
-            });
-        });
-    </script>
-</body>
+            <!-- 가입 중인 파티 -->
+            <!-- {% if user%} {% for party in user_party %}
+            <h3>{{party.party_id.id}}</h3>
+            <a href="/party/{{party.party_id.id}}">{{party.party_id.name}}</a>
+            <h3>{{party.party_id.name}}</h3>
+            <h3>{{party.party_id.date}}</h3>
+            <h3>{{party.party_id.address}}</h3>
+            {% endfor %} {% endif %} -->
+        </div>
 
-</html>
+        <img class="img-vertical" src="/static/images/logo_vertical.png" alt="" />
+
+        <div class="bottom-nav">
+            <a href="/party"><i class="fas fa-users"></i></a>
+            <a href="/party/create"><i class="fas fa-plus-circle"></i></a>
+            <a href="/user/profile"><i class="fas fa-user"></i></a>
+        </div>
+    </section>
+</div>
+
+{% endblock %} {% block extrascripts %}
+<script type="text/javascript">
+    function open_image_input() {
+        document.getElementById("imageInput").click();
+    }
+
+    imageInput.onchange = evt => {
+        const [file] = imageInput.files
+        if (file) {
+            profileImage.src = URL.createObjectURL(file)
+        }
+    }
+
+    $('#imageInput').on('change', function() {
+        console.log($(this).val)
+        $('#imageForm').submit();
+    })
+</script>
+{% endblock %}

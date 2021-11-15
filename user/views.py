@@ -49,7 +49,7 @@ from django.core.mail import EmailMessage
 from .tokens import account_activation_token
 from django.utils.encoding import force_bytes, force_text
 
-billim_url = settings.BILLIM_URL
+project_url = settings.PROJECT_URL
 image_url = settings.IMAGE_URL
 
 
@@ -86,6 +86,18 @@ class UserInterestViewSet(viewsets.ModelViewSet):
     serializer_class = UserInterestSerializer
 
 
+def update(request):
+    user_id = request.session.get("user")
+    user = User.objects.get(id=user_id) 
+    if request.method == "POST":
+        if request.FILES.get('image'):
+            user.image =  request.FILES.get('image')
+            print("print(user.image)")
+            print(user.image)
+        user.save()
+        print(user)
+        return redirect("user:profile")
+    
 def profile(request):
     user_id = request.session.get("user")
     try:

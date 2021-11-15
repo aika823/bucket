@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 import requests
 
-billim_url = settings.BILLIM_URL
+project_url = settings.PROJECT_URL
 
 def login_social(request, type):
     url_auth = {
@@ -22,9 +22,9 @@ def login_social(request, type):
         'google': settings.GOOGLE_CLIENT_ID
     }
     redirect_uri = {
-        'naver' : billim_url+'/user/callback/naver/',
-        'kakao' : billim_url+'/user/callback/kakao',
-        'google': billim_url+'/user/callback/google'
+        'naver' : project_url+'/user/callback/naver/',
+        'kakao' : project_url+'/user/callback/kakao',
+        'google': project_url+'/user/callback/google'
     }
     scope={
         'naver' : None,
@@ -72,9 +72,9 @@ def callback(request, type):
         'naver' : "REWERWERTATE"
     }
     redirect_uri = {
-        'google': billim_url+'/user/callback/google',
-        'naver' : billim_url+'/user/callback/naver',
-        'kakao' : billim_url+'/user/callback/kakao'
+        'google': project_url+'/user/callback/google',
+        'naver' : project_url+'/user/callback/naver',
+        'kakao' : project_url+'/user/callback/kakao'
     }
     if type == 'naver':
         clientConnect = client_id[type] + ":" + client_secret[type]

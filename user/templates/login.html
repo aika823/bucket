@@ -1,44 +1,42 @@
-<!-- @format -->
+{% extends 'base.html' %} {% block contents %}
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
-    <title>Bucket Lister</title>
-</head>
-
-<body>
-    <div class="content">
-        <section class="banner-main">
-            <img class="banner-img" src="/static/images/loginpage.png" alt="" />
-            <div class="login-wrap">
-                {% if user.id %}
-                <form action="/user/logout/" method="post">
-                    {% csrf_token %}
-                    <input type="text" value="{{user.email}}" readonly />
-                    <input type="submit" value="로그아웃" />
-                </form>
-                {% else %}
-                <form action="/user/login/" method="post">
-                    {% csrf_token %}
-                    <input type="text" name="email" placeholder="email" />
-                    <input type="password" name="password" placeholder="password" />
-                    <input type="submit" value="로그인" />
-                </form>
-                {% endif %}
-                <button class="login-btn"><img src="/static/images/btn_kakao.png" onclick="location.href='/user/login/kakao'" /></button>
-                <button class=""><img src="/static/images/btn_google.png" onclick="location.href='/user/login/google'" /></button>
-                <button class=""><img src="/static/images/btn_naver.png" onclick="location.href='/user/login/naver'" /></button>
-                <button onclick="location.href='/user/register'">회원가입 버튼</button>
-            </div>
-        </section>
-    </div>
-</body>
-
-</html>
+<div class="content">
+    <section class="banner-main">
+        <img class="banner-img" src="/static/images/loginpage.png" alt="" />
+        <div class="login-wrap">
+            {% if user.id %}
+            <form action="/user/logout/" method="post">
+                {% csrf_token %}
+                <input type="text" value="{{user.email}}" readonly />
+                <input type="submit" value="로그아웃" />
+            </form>
+            {% else %}
+            <form action="/user/login/" method="post">
+                {% csrf_token %}
+                <input type="text" name="email" placeholder="email" />
+                <input type="password" name="password" placeholder="password" />
+                <input type="submit" value="로그인" />
+            </form>
+            {% endif %}
+            <button class="login-btn">
+        <img
+          src="/static/images/btn_kakao.png"
+          onclick="location.href='/user/login/kakao'"
+        />
+      </button>
+            <button class="">
+        <img
+          src="/static/images/btn_google.png"
+          onclick="location.href='/user/login/google'"
+        />
+      </button>
+            <button class="">
+        <img
+          src="/static/images/btn_naver.png"
+          onclick="location.href='/user/login/naver'"
+        />
+      </button>
+            <button onclick="location.href='/user/register'">회원가입 버튼</button>
+        </div>
+    </section>
+</div>

@@ -14,6 +14,7 @@ urlpatterns = [
     path('', views.index),
     path('profile', views.profile, name='profile'),
     path('login/', views.login, name='login'),    
+    path('update/', views.update, name='update'),    
     path('login/<str:type>/', social_login.login_social),
     path('callback/<str:type>/', views.callback_social),
     path('logout/', views.logout, name='logout'),

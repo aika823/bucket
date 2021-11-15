@@ -10,14 +10,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 ROOT_DIR = os.path.dirname(BASE_DIR)
 # PROJECT_ROOT    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__name__))
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 
 # URL
-BILLIM_URL = "http://localhost:8000"
-# BILLIM_URL = 'http://billim.co.kr'
-# BILLIM_URL = 'http://bucket-env.eba-mfepamsq.ap-northeast-2.elasticbeanstalk.com'
+PROJECT_URL = "http://localhost:8000"
+# PROJECT_URL = 'http://billim.co.kr'
+# PROJECT_URL = 'http://bucket-env.eba-mfepamsq.ap-northeast-2.elasticbeanstalk.com'
 IMAGE_URL = "http://static.billim.co.kr"
 # SERVICE_URL = json.load(open('url.json'))['SERVICE_URL']
 # IMAGE_URL = json.load(open('url.json'))['IMAGE_URL']
+MEDIA_URL = "/media/"
 
 # SECRET
 SECRET_DIR = os.path.join(PROJECT_ROOT, "secret")
@@ -46,6 +49,7 @@ INSTALLED_APPS = [
     "user",
     "party",
     "rest_framework",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -114,7 +118,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Static files
+# STATIC SETTINGS
 STATIC_URL = "/static/"
 # STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_DIRS = [
@@ -127,35 +131,34 @@ STATICFILES_DIRS = [
     "static/images",
 ]
 
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# API SETTINGS
+# AWS API SETTINGS
 AWS_ACCESS_KEY_ID = SECRETS["AWS_ACCESS_KEY_ID"]
 AWS_SECRET_ACCESS_KEY = SECRETS["AWS_SECRET_ACCESS_KEY"]
 AWS_REGION = "ap-northeast-2"
-AWS_STORAGE_BUCKET_NAME = "static.billim.co.kr"
-AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
-AWS_S3_OBJECT_PARAMETERS = {
-    "CacheControl": "max-age=86400",
-}
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
+# AWS S3 SETTINGS
+# AWS_STORAGE_BUCKET_NAME = "static.billim.co.kr"
+# AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
+# AWS_S3_OBJECT_PARAMETERS = {
+#     "CacheControl": "max-age=86400",
+# }
+# DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+# SOCIAL API SETTINGS
 NAVER_CLIENT_ID = SECRETS["NAVER_CLIENT_ID"]
 NAVER_CLIENT_SECRET = SECRETS["NAVER_CLIENT_SECRET"]
 NAVER_CLOUD_CLIENT_ID = SECRETS["NAVER_CLOUD_CLIENT_ID"]
 NAVER_CLOUD_CLIENT_SECRET = SECRETS["NAVER_CLOUD_CLIENT_SECRET"]
-
 KAKAO_CLIENT_ID = SECRETS["KAKAO_CLIENT_ID"]
-
 GOOGLE_CLIENT_ID = SECRETS["GOOGLE_CLIENT_ID"]
 GOOGLE_CLIENT_SECRET = SECRETS["GOOGLE_CLIENT_SECRET"]
 
-
+# EMAIL API SETTINGS
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = "587"
 EMAIL_HOST_USER = "choiinkyu95@gmail.com"
 EMAIL_HOST_PASSWORD = "frjerzmtqcsniqeb"
-
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

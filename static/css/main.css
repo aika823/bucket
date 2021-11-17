@@ -621,6 +621,7 @@ section.detail .bottom-nav .join-box .btn-wish {
     padding: 10px;
     border: 1px solid #0033FF;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 section.detail .bottom-nav .join-box .btn-wish i {
@@ -898,4 +899,8 @@ section.search .bottom-nav .line {
     width: 60%;
     height: 3px;
     margin: 20px auto 0;
+}
+
+.heart {
+    cursor: pointer;
 }

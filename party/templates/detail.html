@@ -1,85 +1,110 @@
-{% extends 'base.html' %} {% block contents %}
+{% extends 'party_base.html' %}
+
+{% block contents %}
 <div class="content height-auto">
-    <section class="detail">
-        <header>
-            <a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a>
-        </header>
-        <div class="detail-images">
-            <img class="party-bg" src="/static/images/dog.jpg" alt="" />
-            <div class="overlay"></div>
-            <p class="left">잔여 <span>{{party.headcount}}</span></p>
-            <h2>{{party.name}}</h2>
-            <div class="participant">
-                {% for member in party.members %}
-                <img src="/media/{{member.user_id.image}}" alt="" /> {% endfor %}
-            </div>
-            <div class="owner">
-                <img src="/media/{{party.host.image}}" alt="" />
-                <h3>{{party.host.name}}</h3>
-            </div>
-        </div>
-        <div class="detail-box">
-            <div class="detail-card">
-                <div class="detail-card-element">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <p>{{party.address}}</p>
-                </div>
-                <div class="detail-card-element">
-                    <i class="fas fa-clock"></i>
-                    <p>{{party.date}} {{party.time}}</p>
-                </div>
-                <div class="detail-card-element">
-                    <i class="fas fa-won-sign"></i>
-                    <p>{{party.price}}</p>
-                </div>
-            </div>
-            <div class="detail-info">
-                <h4>자세한 정보</h4>
-                <p>{{party.detail}}</p>
-            </div>
-            <div class="detail-comment">
-                <h4>댓글</h4>
-                <div class="comment-write">
-                    <img src="/static/images/user2.png" alt="" />
-                    <input type="text" placeholder="댓글 달기..." />
-                </div>
-                <div class="comment-list">
-                    <!-- 댓글 리스트 반복문 시작 -->
-                    <div style="height: 300px; background: rgb(177, 220, 255)"></div>
-                    <!-- 댓글 리스트 반복문 끝 -->
-                </div>
-            </div>
-        </div>
+  <section class="detail">
+    <header>
+      <a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a>
+    </header>
+    <div class="detail-images">
+      <img class="party-bg" src="/static/images/dog.jpg" alt="" />
+      <div class="overlay"></div>
 
-        <div class="bottom-nav">
-            <div class="join-box">
-                <a class="btn-wish">
-                    <i class="fas fa-heart"></i>
-                </a>
+      {% if party.leftover < 1 %}
+      <p class="left">마감된 소셜링</span></p>
+      {% else %}
+      <p class="left">잔여 <span>{{party.leftover}}</span></p>
+      {% endif %}
 
-                {% if user.member.is_host == True %}
-                <a class="btn-join" href=""> 소셜링 수정하기 </a> {% elif user.member.is_join == True %}
-                <a class="btn-join" onclick="send_join_form()"> 소셜링 탈퇴하기 </a> {% else %}
-                <a class="btn-join" onclick="send_join_form()"> 소셜링 참여하기 </a> {% endif %}
-            </div>
-            <div class="bottom-nav-detail">
-                <a href="/party "><i class="fas fa-users"></i></a>
-                <a href="/party/create "><i class="fas fa-plus-circle"></i></a>
-                <a href="/user/profile "><i class="fas fa-user"></i></a>
-            </div>
+      <h2>{{party.name}}</h2>
+      <div class="participant">
+        {% for member in party.members %}
+        <img src="/media/{{member.user_id.image}}" alt="" /> {% endfor %}
+      </div>
+      <div class="owner">
+        <img src="/media/{{party.host.image}}" alt="" />
+        <h3>{{party.host.name}}</h3>
+      </div>
+    </div>
+    <div class="detail-box">
+      <div class="detail-card">
+        <div class="detail-card-element">
+          <i class="fas fa-map-marker-alt"></i>
+          <p>{{party.address}}</p>
         </div>
-    </section>
+        <div class="detail-card-element">
+          <i class="fas fa-clock"></i>
+          <p>{{party.date}} {{party.time}}</p>
+        </div>
+        <div class="detail-card-element">
+          <i class="fas fa-won-sign"></i>
+          <p>{{party.price}}</p>
+        </div>
+      </div>
+      <div class="detail-info">
+        <h4>자세한 정보</h4>
+        <p>{{party.detail}}</p>
+      </div>
+      <div class="detail-comment">
+        <h4>댓글</h4>
+        <div class="comment-write">
+          <img src="/static/images/user2.png" alt="" />
+          <input type="text" placeholder="댓글 달기..." />
+        </div>
+        <div class="comment-list">
+          <!-- 댓글 리스트 반복문 시작 -->
+          <div style="height: 300px; background: rgb(177, 220, 255)"></div>
+          <!-- 댓글 리스트 반복문 끝 -->
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <div class="join-box">
+        {# like button #}
+        <a class="btn-wish">
+          {% if user.member.is_like%}
+          <i class="fas fa-heart"></i>
+          {% else %}
+          <i class="far fa-heart"></i>
+          {% endif %}
+        </a>
+
+        {% if user.member.is_host == True %}
+        <a class="btn-join" href=""> 소셜링 수정하기 </a>
+        {% elif user.member.is_join == True %}
+        <a class="btn-join" onclick="send_join_form()"> 소셜링 탈퇴하기 </a>
+        {% elif party.leftover < 1 %}
+        <a class="btn-join"> 정원 초과 </a>
+        {% else %}
+        <a class="btn-join" onclick="send_join_form()"> 소셜링 참여하기 </a>
+        {% endif %}
+      </div>
+      <div class="bottom-nav-detail">
+        <a href="/party "><i class="fas fa-users"></i></a>
+        <a href="/party/create "><i class="fas fa-plus-circle"></i></a>
+        <a href="/user/profile "><i class="fas fa-user"></i></a>
+      </div>
+    </div>
+  </section>
 </div>
 
 <form action="/party/join" id="joinForm" method="post">
-    {%csrf_token%}
-    <input type="hidden" name="party_id" value="{{party.id}}" />
+  {%csrf_token%}
+  <input type="hidden" name="party_id" value="{{party.id}}" />
 </form>
-{% endblock %} {% block extrascripts %}
+
+<div id="partyID" data-party_id="{{party.id}}"></div>
+
+{% endblock %}
+
+{% block extrascripts %}
 <script>
-    function send_join_form() {
-        console.log("test");
-        document.getElementById("joinForm").submit();
-    }
+  
+  function send_join_form() {
+    document.getElementById("joinForm").submit();
+  }
+  
+  
 </script>
 {% endblock%}

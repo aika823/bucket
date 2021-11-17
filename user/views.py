@@ -82,7 +82,6 @@ class UserInterestViewSet(viewsets.ModelViewSet):
     queryset = UserInterest.objects.all()
     serializer_class = UserInterestSerializer
 
-
 def update(request):
     user_id = request.session.get("user")
     user = User.objects.get(id=user_id)

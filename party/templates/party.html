@@ -1,6 +1,6 @@
-<!-- @format -->
+{% extends 'party_base.html' %}
 
-{% extends 'base.html' %} {% block contents %}
+{% block contents %}
 
 <div class="content">
     <section class="party">
@@ -24,7 +24,15 @@
 
             <div class="party-card">
                 <div class="dday">
-                    <h4>D - <span class="dday-num">1</span></h4>
+
+                    {% if party.d_day > 0 %}
+                    <h4>D - {{party.d_day}}</span></h4>
+                    {% elif party.d_day < 0 %}
+                    <h4>마감된 소셜링</h4>
+                    {% else %}
+                    <h4>오늘 마감</span></h4>
+                    {% endif %}
+
                 </div>
                 <h3 onclick="location.href='/party/detail/{{party.id}}'">{{party.name}}</h3>
                 <div class="party-participant">
@@ -51,8 +59,12 @@
                         <p>{{party.date}} {{party.time}}</p>
                     </div>
                     <div class="party-info-element">
-                        <i class="fas fa-heart"></i>
-                        <p>3</p>
+                        {% if party.user_like %}
+                        <i class="fas fa-heart" onclick="like(this, {{party.id}})"></i>
+                        {%else%}
+                        <i class="far fa-heart" onclick="like(this, {{party.id}})"></i>
+                        {%endif%}
+                        <p>{{party.like_count}}</p>
                     </div>
                     <div class="party-info-element">
                         <i class="fas fa-comment"></i>

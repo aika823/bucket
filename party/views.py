@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 
-from .models import Party, UserParty
+from .models import Comment, Party, PartyComment, UserParty
 from user.models import User
 from .serializer import PartySerializer
 
@@ -20,9 +20,22 @@ def comment(request):
         user = User.objects.get(id=request.session.get("user"))
         party = Party.objects.get(id=request.POST.get('party_id'))
         content = request.POST.get('content')
+        
         print(user)
+        print(party)
         print(content)
-    return HttpResponseRedirect(request.path_info)
+
+        comment = Comment()
+        comment.content = content
+        comment.user = user
+        comment.save()
+
+        party_comment = PartyComment()
+        party_comment.party_id = party
+        party_comment.comment_id = comment
+        party_comment.save()
+
+    return redirect("/party/detail/" + str(party.id))
 
 
 def like(request):
@@ -82,10 +95,16 @@ def detail(request, party_id):
         party.leftover = party.headcount - len(party.members)
     except:
         party.members = None
+    
+    try:
+        party.comments = PartyComment.objects.filter(party_id=party_id).all()
+    except:
+        party.comments = None
     try:
         user.member = UserParty.objects.get(user_id=user, party_id=party_id)
     except:
         user.member = None
+    
     return render(request, "detail.html", {"party": party, "user": user})
 
 

@@ -42,6 +42,7 @@ class UserParty(models.Model):
 
 class Comment(models.Model):
     content = models.CharField(max_length=100, db_column='content', null=False)
+    user = models.ForeignKey(to='user.User', db_column='user', null=True, on_delete=CASCADE)
     class Meta:
         db_table = 'comment'
     

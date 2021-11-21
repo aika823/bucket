@@ -125,6 +125,7 @@ section.profile .profile-box .profile-img img {
     height: 120px;
     border-radius: 50%;
     vertical-align: middle;
+    cursor: pointer;
 }
 
 section.profile .profile-box .profile-img h3 {
@@ -598,128 +599,7 @@ section.detail .detail-box .detail-comment img {
     border: 2px solid #fff;
 }
 
-section.detail .detail-box .detail-comment .comment-list {
-    padding-left: 30px;
-}
-
-section.detail .detail-box .detail-comment .comment-list .comment-item-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-section.detail .detail-box .detail-comment .comment-list .comment-item-profile {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-
-section.detail .detail-box .detail-comment .comment-list .comment-item-row img {
-    width: 30px;
-    height: 30px;
-}
-
-section.detail .detail-box .detail-comment .comment-list .comment-item {
-    margin-bottom: 15px;
-}
-
-section.detail .detail-box .detail-comment .comment-list .comment-item-row .comment-id {
-    margin: 20px 0;
-}
-
-section.detail .detail-box .detail-comment .comment-list .comment-content p {
-    font-size: 15px;
-    margin: 0 0 10px;
-}
-
-section.detail .detail-box .detail-comment .comment-list .comment-content .comment-like {
-    font-size: 13px;
-    color: #535353;
-    margin-right: 10px;
-}
-
-section.detail .detail-box .detail-comment .comment-list .comment-content .js-open-comment {
-    color: #5ca8ff;
-    cursor: pointer;
-    font-size: 13px;
-}
-
-#CommentDetail .comment-write {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-
-#CommentDetail img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid #fff;
-}
-
-#CommentDetail .comment-list {
-    padding-left: 30px;
-    padding-right: 30px;
-}
-
-#CommentDetail .comment-list .comment-item-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-#CommentDetail .comment-item-profile {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
-}
-
-#CommentDetail .comment-item-checked {
-    padding-left: 10px;
-    padding-right: 30px;
-    margin-bottom: 20px;
-}
-
-#CommentDetail .comment-item-checked .comment-item-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-#CommentDetail .comment-list .comment-item-row img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-}
-
-#CommentDetail .comment-list .comment-item {
-    margin-top: 20px;
-    margin-bottom: 15px;
-}
-
-#CommentDetail .comment-list .comment-item-row .comment-id {
-    margin: 20px 0;
-}
-
-#CommentDetail .comment-content p {
-    font-size: 15px;
-    margin: 10px 0;
-    text-align: left;
-}
-
-#CommentDetail .comment-list .comment-content .js-open-comment {
-    color: #5ca8ff;
-    cursor: pointer;
-    font-size: 13px;
-}
-
-#CommentDetail .comment-like {
-    font-size: 13px;
-    text-align: left;
-    width: 100%;
-}
+section.detail .detail-box .detail-comment .comment-list {}
 
 section.detail .bottom-nav {
     position: fixed;
@@ -741,6 +621,7 @@ section.detail .bottom-nav .join-box .btn-wish {
     padding: 10px;
     border: 1px solid #0033FF;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 section.detail .bottom-nav .join-box .btn-wish i {
@@ -766,39 +647,6 @@ section.detail .bottom-nav .bottom-nav-detail {
     box-shadow: 0px -1px 6px #c2c2c2;
     z-index: 99;
     background: #f0f0f0;
-}
-
-.sidenav {
-    height: 0;
-    width: 400px;
-    position: fixed;
-    z-index: 15;
-    top: 0;
-    background-color: #f0f0f0;
-    overflow-y: hidden;
-    transition: 0.5s;
-    text-align: center;
-}
-
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-.sidenav a:hover {
-    color: #f1f1f1;
-}
-
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
 }
 
 
@@ -1051,4 +899,8 @@ section.search .bottom-nav .line {
     width: 60%;
     height: 3px;
     margin: 20px auto 0;
+}
+
+.heart {
+    cursor: pointer;
 }

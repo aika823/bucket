@@ -12,6 +12,7 @@ urlpatterns = [
     path('', views.list),
     path('create', views.create),
     path('join', views.join),
+    path('comment', views.comment),
     path('like', views.like),
     path('detail/<int:party_id>', views.detail, name='detail'),
 ]

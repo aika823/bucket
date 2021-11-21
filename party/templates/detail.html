@@ -6,27 +6,32 @@
     <header>
       <a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a>
     </header>
+
+    {# 소셜링 배너 #}
     <div class="detail-images">
       <img class="party-bg" src="/static/images/dog.jpg" alt="" />
       <div class="overlay"></div>
-
       {% if party.leftover < 1 %}
       <p class="left">마감된 소셜링</span></p>
       {% else %}
       <p class="left">잔여 <span>{{party.leftover}}</span></p>
       {% endif %}
-
       <h2>{{party.name}}</h2>
       <div class="participant">
         {% for member in party.members %}
-        <img src="/media/{{member.user_id.image}}" alt="" /> {% endfor %}
+        <img src="/media/{{member.user_id.image}}" alt="" />
+        {% endfor %}
       </div>
       <div class="owner">
         <img src="/media/{{party.host.image}}" alt="" />
         <h3>{{party.host.name}}</h3>
       </div>
     </div>
+
+    
     <div class="detail-box">
+
+      {# 소셜링 정보 #}
       <div class="detail-card">
         <div class="detail-card-element">
           <i class="fas fa-map-marker-alt"></i>
@@ -41,22 +46,80 @@
           <p>{{party.price}}</p>
         </div>
       </div>
+
+      {# 소셜링 상세정보 #}
       <div class="detail-info">
         <h4>자세한 정보</h4>
         <p>{{party.detail}}</p>
       </div>
+
+      {# 소셜링 댓글 #}
       <div class="detail-comment">
         <h4>댓글</h4>
         <div class="comment-write">
           <img src="/static/images/user2.png" alt="" />
-          <input type="text" placeholder="댓글 달기..." />
+          <form action="/party/comment" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="party_id" value="{{party.party_id}}">
+            <input type="text" name="content" placeholder="댓글 달기..." />
+            <input type="submit" value="입력">
+          </form>
         </div>
+
+        {# 댓글 목록 #}
         <div class="comment-list">
           <!-- 댓글 리스트 반복문 시작 -->
-          <div style="height: 300px; background: rgb(177, 220, 255)"></div>
+          <div class="comment-item">
+            <div class="comment-item-row">
+              <div class="comment-item-profile">
+                <img src="./assets/images/user1.png" alt="">
+                <h5 class="comment-id">버킷리스터</h5>
+              </div>
+              <div class="comment-btn-like">
+                <i class="far fa-heart"></i>
+              </div>
+            </div>
+            <div class="comment-content">
+              <p>
+                댓글 내용입니다.
+              </p>
+              <div class="comment-item-detail">
+                <span class="comment-like">좋아요 <span>0</span>개</span>
+                <span class="js-open-comment" onclick="openComment()">
+                  <i class="fas fa-caret-down"></i>
+                  답글보기
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="comment-item">
+            <div class="comment-item-row">
+              <div class="comment-item-profile">
+                <img src="./assets/images/user3.png" alt="">
+                <h5 class="comment-id">버킷리스터</h5>
+              </div>
+              <div class="comment-btn-like">
+                <i class="far fa-heart"></i>
+              </div>
+            </div>
+            <div class="comment-content">
+              <p>
+                댓글 내용입니다.
+              </p>
+              <div class="comment-item-detail">
+                <span class="comment-like">좋아요 <span>0</span>개</span>
+                <span class="js-open-comment" onclick="openComment()">
+                  <i class="fas fa-caret-down"></i>
+                  답글보기
+                </span>
+              </div>
+            </div>
+          </div>
           <!-- 댓글 리스트 반복문 끝 -->
         </div>
+
       </div>
+
     </div>
 
     <div class="bottom-nav">
@@ -100,11 +163,8 @@
 
 {% block extrascripts %}
 <script>
-  
   function send_join_form() {
     document.getElementById("joinForm").submit();
   }
-  
-  
 </script>
 {% endblock%}

@@ -40,5 +40,15 @@ class UserParty(models.Model):
     class Meta:
         db_table = 'user_party'
 
+class Comment(models.Model):
+    content = models.CharField(max_length=100, db_column='content', null=False)
+    class Meta:
+        db_table = 'comment'
+    
+class PartyComment(models.Model):
+    party_id = models.ForeignKey(to=Party, db_column='party_id', null=True, on_delete=CASCADE)
+    comment_id = models.ForeignKey(to=Comment, db_column='comment_id', null=True, on_delete=CASCADE)
+    class Meta:
+        db_table = 'party_comment'
 
 

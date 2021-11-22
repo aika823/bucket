@@ -26,6 +26,7 @@ class User(models.Model):
     social_login = models.CharField(max_length=10, null=True)
     social_id = models.CharField(max_length=200, null=True)
     is_active = models.BooleanField(null=False, default=False)
+    is_admin = models.BooleanField(null=False, default=False)
     class Meta:
         db_table = 'user'
 

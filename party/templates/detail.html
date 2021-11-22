@@ -23,7 +23,7 @@
         {% endfor %}
       </div>
       <div class="owner">
-        <img src="/media/{{party.host.image}}" alt="" />
+        <img src="/media/{{party.host.image}}" onclick="location.href='/user/profile?id={{party.host.id}}'"/>
         <h3>{{party.host.name}}</h3>
       </div>
     </div>

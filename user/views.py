@@ -88,15 +88,21 @@ def update(request):
     if request.method == "POST":
         if request.FILES.get("image"):
             user.image = request.FILES.get("image")
-            print("print(user.image)")
-            print(user.image)
+        if request.POST.get("name"):
+            user.name = request.POST.get("name")
+        if request.POST.get("detail"):
+            user.detail = request.POST.get("detail")
         user.save()
-        print(user)
         return redirect("user:profile")
 
 
 def profile(request):
     user_id = request.session.get("user")
+    my = True
+    if request.method == "GET" :
+        if request.GET.get('id'):
+            user_id = request.GET.get('id')
+            my = False
     try:
         user = User.objects.get(id=user_id)
     except:
@@ -110,7 +116,7 @@ def profile(request):
     return render(
         request,
         "profile.html",
-        {"user": user, "user_interest": user_interest, "user_party": user_party},
+        {"user": user, "user_interest": user_interest, "user_party": user_party, "my":my},
     )
 
 

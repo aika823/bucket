@@ -38,11 +38,12 @@
                 <div class="party-participant">
 
                     {% for member in party.members %}
-                    <img class="join-image" src="/media/{{member.user_id.image}}" alt="profile image" /> {% endfor %}
+                    <img class="join-image" src="/media/{{member.user_id.image}}" alt="profile image" /> 
+                    {% endfor %}
+
                     <a href="/party/detail/{{party.id}}">
                         <i class="fas fa-plus-circle"></i>
                     </a>
-
 
                     {% for memeber in party.members %}
                     <p class="participant">{{member.name}}</p>

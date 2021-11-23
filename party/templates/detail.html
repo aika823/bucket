@@ -78,8 +78,8 @@
           <div class="comment-item">
             <div class="comment-item-row">
               <div class="comment-item-profile">
-                <img src="/media/{{comment.comment_id.user.image}}" alt="">
-                <h5 class="comment-id">{{comment.comment_id.user.name}}</h5>
+                <img src="/media/{{comment.user.image}}" alt="">
+                <h5 class="comment-id">{{comment.user.name}}</h5>
               </div>
               <div class="comment-btn-like">
                 <i class="far fa-heart"></i>
@@ -87,7 +87,7 @@
             </div>
             <div class="comment-content">
               <p>
-                {{comment.comment_id.content}}
+                {{comment.content}}
               </p>
               <div class="comment-item-detail">
                 <span class="comment-like">좋아요 <span>0</span>개</span>

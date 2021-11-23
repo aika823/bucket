@@ -1,5 +1,6 @@
-{% extends 'party_base.html' %} {% block contents %}
+{% extends 'party_base.html' %} 
 
+{% block contents %}
 <div class="content height-auto">
     <section class="add">
         <header>
@@ -116,19 +117,22 @@
         </div>
     </section>
 </div>
-{%endblock%} {%block extrascripts %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+{%endblock%} 
+
+{%block extrascript %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
-    $(".login-btn").click(function() {
+    $(".login-btn").click(function () {
         location.href = "./profile.html";
     });
-    $(".address-box input").focus(function() {
+    $(".address-box input").focus(function () {
         $(".address-box i").css("display", "none");
     });
-    $(".address-box input").blur(function() {
+    $(".address-box input").blur(function () {
         $(".address-box i").css("display", "block");
     });
-    $(".open-option").click(function() {
+    $(".open-option").click(function () {
         if ($(this).next().hasClass("active") == 0) {
             $(this).children(".fas:eq(0)").attr("class", "fas fa-caret-up");
         } else {

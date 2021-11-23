@@ -1,0 +1,28 @@
+{% extends 'party_base.html' %}
+
+{% block contents %}
+
+<div class="content">
+    <section class="party">
+        <header>
+            <h1>BUCKET LISTER</h1>
+            <div class="btn-action">
+                <a href="/search"><i class="fas fa-search"></i></a>
+                <a href="#"><i class="fas fa-bell"></i></a>
+            </div>
+        </header>
+        <div class="party-box">
+            <div class="party-filter">
+                <button onclick = "location.href = '/manager/user' ">유저 관리 <br> 총: {{count.user}} 명의 유저</button>
+                <button onclick = "location.href = '/manager/party' ">소셜링 관리 <br> 총: {{count.party}} 개의 소셜링</button>
+                <button onclick = "location.href = '/manager/comment' ">소셜링 관리 <br> 총: {{count.comment}} 개의 댓글</button>
+            </div>
+        </div>
+        <div class="bottom-nav">
+            <a href="/party"><i class="fas fa-users"></i></a>
+            <a href="/party/create"><i class="fas fa-plus-circle"></i></a>
+            <a href="/user/profile"><i class="fas fa-user"></i></a>
+        </div>
+    </section>
+</div>
+{%endblock%}

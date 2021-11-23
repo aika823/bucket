@@ -1,44 +1,40 @@
-{% extends 'base.html' %} {% block contents %}
+{% extends 'base.html' %} 
 
+{% block contents %}
 <div class="content">
-    <section class="banner-main">
-        <img class="banner-img" src="/static/images/loginpage.png" alt="" />
-        <div class="login-wrap">
-            {% if user.id %}
-            <form action="/user/logout/" method="post">
-                {% csrf_token %}
-                <input type="text" value="{{user.email}}" readonly />
-                <input type="submit" value="로그아웃" />
-            </form>
-            {% else %}
-            <form action="/user/login/" method="post">
-                {% csrf_token %}
-                <input type="text" name="email" placeholder="email" />
-                <input type="password" name="password" placeholder="password" />
-                <input type="submit" value="로그인" />
-            </form>
-            {% endif %}
-            <button class="login-btn">
-        <img
-          src="/static/images/btn_kakao.png"
-          onclick="location.href='/user/login/kakao'"
-        />
+  <section class="banner-main">
+    <img class="banner-img" src="/static/images/loginpage.png" alt="" />
+    <div class="login-wrap">
+      
+      {% if user.id %}
+      <form action="/user/logout/" method="post">
+        {% csrf_token %}
+        <input type="text" value="{{user.email}}" readonly />
+        <input type="submit" value="로그아웃" />
+      </form>
+      {% else %}
+      <form action="/user/login/" method="post">
+        {% csrf_token %}
+        <input type="text" name="email" placeholder="email" />
+        <input type="password" name="password" placeholder="password" />
+        <button type="submit">로그인</button>
+        <button type="button" onclick="location.href='/user/find_password'">비밀번호 찾기</button>
+      </form>
+      {% endif %}
+      
+      <!-- 소셜 로그인 버튼
+      <button class="login-btn">
+        <img src="/static/images/btn_kakao.png" onclick="location.href='/user/login/kakao'" />
       </button>
-            <button class="">
-        <img
-          src="/static/images/btn_google.png"
-          onclick="location.href='/user/login/google'"
-        />
+      <button class="">
+        <img src="/static/images/btn_google.png" onclick="location.href='/user/login/google'" />
       </button>
-            <button class="">
-        <img
-          src="/static/images/btn_naver.png"
-          onclick="location.href='/user/login/naver'"
-        />
+      <button class="">
+        <img src="/static/images/btn_naver.png" onclick="location.href='/user/login/naver'" />
       </button>
-            <button onclick="location.href='/user/register'">회원가입 버튼</button>
-        </div>
-    </section>
+      -->
+      <button onclick="location.href='/user/register'">회원가입 버튼</button>
+    </div>
+  </section>
 </div>
-
 {%endblock%}

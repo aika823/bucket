@@ -8,13 +8,10 @@ urlpatterns = [
     path("", views.profile),
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
+    path("manager/", include("manager.urls")),
     path("user/", include("user.urls")),
     path("party/", include("party.urls")),
-    # path('api/', include('rest_framework.urls')),
-    # path('api/', include('rest_framework.urls')),
-    # path('api/product/', ProductListAPI.as_view()),
-    # path('api/product/<int:pk>/', ProductDetailAPI.as_view()),
-    
+    path("manager/", include("manager.urls")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,70 @@
+{% extends 'manager_base.html' %}
+
+{% block contents %}
+
+<div class="content">
+    <section class="party">
+        <header>
+            <h1>BUCKET LISTER</h1>
+            <div class="btn-action">
+                <a href="/search"><i class="fas fa-search"></i></a>
+                <a href="#"><i class="fas fa-bell"></i></a>
+            </div>
+        </header>
+        <div class="party-box">
+            
+            <div class="party-filter">
+                <h3>소셜링 관리</h3>
+            </div>
+
+            {% for party in party_list %}
+            <div class="party-card">
+                <h3 onclick="location.href='/party/detail/{{party.id}}'">{{party.name}}</h3>
+                <div class="party-info">
+                    <div class="party-info-element">
+                        <p onclick="location.href='/manager/user/detail/{{party.host.id}}'">주최자: {{party.host.name}}</p>
+                    </div>
+                    <div class="party-info-element">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>위치 : {{party.address}}</p>
+                    </div>
+                    <div class="party-info-element">
+                        <p>{{party.date}} {{party.time}}</p>
+                    </div>
+                    <div class="party-info-element">
+                        <button onclick="delete_party('party', {{party.id}})">삭제</button>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+
+        <div class="bottom-nav">
+            <a href="/party"><i class="fas fa-users"></i></a>
+            <a href="/party/create"><i class="fas fa-plus-circle"></i></a>
+            <a href="/user/profile"><i class="fas fa-user"></i></a>
+        </div>
+    </section>
+</div>
+
+<form id="partyDeleteForm" action="/manager/delete/" method="post">
+    {%csrf_token%}
+    <input type="hidden" name="table" value="" />
+    <input type="hidden" name="id" value="" />
+</form>
+{%endblock%}
+
+{%block extrascript%}
+<script>
+    function delete_party(table, id) {
+        if (confirm("삭제하시겠습니까?")) {
+            $('#partyDeleteForm > input[name=table]').val(table);
+            $('#partyDeleteForm > input[name=id]').val(id);
+            console.log(table);
+            console.log(id);
+            $('#partyDeleteForm').submit();
+        }
+    }
+</script>
+{%endblock%}

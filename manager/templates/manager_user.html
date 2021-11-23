@@ -1,0 +1,65 @@
+{% extends 'manager_base.html' %}
+
+{% block contents %}
+
+<div class="content">
+    <section class="party">
+        <header>
+            <h1>BUCKET LISTER</h1>
+            <div class="btn-action">
+                <a href="/search"><i class="fas fa-search"></i></a>
+                <a href="#"><i class="fas fa-bell"></i></a>
+            </div>
+        </header>
+        <div class="party-box">
+            
+            <div class="party-filter">
+                <h3>유저 관리</h3>
+            </div>
+
+            {% for user in user_list %}
+            <div class="party-card">
+                <div class="party-participant">
+                <img class="join-image" src="/media/{{user.image}}" alt="profile image" />
+                </div>
+
+                <h3 onclick="location.href='/user/detail/{{user.id}}'">{{user.name}}</h3>
+                <div class="party-info">
+                    <div class="party-info-element">
+                        <p>이메일: {{user.email}}</p>
+                    </div>
+                    <div class="party-info-element">
+                        <button onclick="delete_user('user', {{user.id}})">삭제</button>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+
+        <div class="bottom-nav">
+            <a href="/party"><i class="fas fa-users"></i></a>
+            <a href="/party/create"><i class="fas fa-plus-circle"></i></a>
+            <a href="/user/profile"><i class="fas fa-user"></i></a>
+        </div>
+    </section>
+</div>
+
+<form id="userDeleteForm" action="/manager/delete/" method="post">
+    {%csrf_token%}
+    <input type="hidden" name="table" value="" />
+    <input type="hidden" name="id" value="" />
+</form>
+{%endblock%}
+
+{%block extrascript%}
+<script>
+    function delete_user(table, id) {
+        if (confirm("삭제하시겠습니까?")) {
+            $('#userDeleteForm > input[name=table]').val(table);
+            $('#userDeleteForm > input[name=id]').val(id);
+            $('#userDeleteForm').submit();
+        }
+    }
+</script>
+{%endblock%}

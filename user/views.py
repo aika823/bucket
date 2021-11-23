@@ -82,8 +82,12 @@ class UserInterestViewSet(viewsets.ModelViewSet):
     queryset = UserInterest.objects.all()
     serializer_class = UserInterestSerializer
 
+
 def update(request):
-    user_id = request.session.get("user")
+    if request.POST.get("user_id"):
+        user_id = request.POST.get("user_id")
+    else:
+        user_id = request.session.get("user")
     user = User.objects.get(id=user_id)
     if request.method == "POST":
         if request.FILES.get("image"):
@@ -92,6 +96,9 @@ def update(request):
             user.name = request.POST.get("name")
         if request.POST.get("detail"):
             user.detail = request.POST.get("detail")
+        if request.POST.get("password"):
+            if request.POST.get("password") == request.POST.get("re_password"):
+                user.password = request.POST.get("password")
         user.save()
         return redirect("user:profile")
 
@@ -99,9 +106,9 @@ def update(request):
 def profile(request):
     user_id = request.session.get("user")
     my = True
-    if request.method == "GET" :
-        if request.GET.get('id'):
-            user_id = request.GET.get('id')
+    if request.method == "GET":
+        if request.GET.get("id"):
+            user_id = request.GET.get("id")
             my = False
     try:
         user = User.objects.get(id=user_id)
@@ -116,7 +123,12 @@ def profile(request):
     return render(
         request,
         "profile.html",
-        {"user": user, "user_interest": user_interest, "user_party": user_party, "my":my},
+        {
+            "user": user,
+            "user_interest": user_interest,
+            "user_party": user_party,
+            "my": my,
+        },
     )
 
 
@@ -168,11 +180,9 @@ def login(request):
         try:
             user = User.objects.get(email=email)
             if check_password(password, user.password):
-                print("yes")
                 request.session["user"] = user.id
                 return redirect("user:profile")
             else:
-                print("no")
                 return render(request, "login.html")
         except Exception as e:
             print(e)
@@ -183,6 +193,32 @@ def login(request):
         except:
             user = None
         return render(request, "login.html", {"user": user})
+
+
+def find_password(request):
+    if request.method == "POST":
+        user_email = request.POST.get("email")
+
+        try:
+            user = User.objects.get(email=user_email)
+        except:
+            return render(request, "find_password.html", {'error':"존재하지 않는 이메일입니다."})
+        print(user)
+        message = render_to_string(
+            "find_password_email.html",
+            {
+                "user": user,
+                "domain": get_current_site(request).domain,
+                "uid": urlsafe_base64_encode(force_bytes(user.pk)).encode().decode(),
+                "token": account_activation_token.make_token(user),
+            },
+        )
+        mail_subject = "[버킷리스터] 비밀번호 초기화 메일입니다."
+        email = EmailMessage(mail_subject, message, to=[user_email])
+        email.send()
+        return redirect("user:find_password")
+    else:
+        return render(request, "find_password.html")
 
 
 def register(request):
@@ -227,3 +263,15 @@ def activate(request, uidb64, token):
         user.save()
         request.session["user"] = uid
         return redirect("user:profile")
+
+
+def reset_password(request, uidb64, token):
+    uid = force_text(urlsafe_base64_decode(uidb64))
+    try:
+        user = User.objects.get(id=uid)
+    except User.DoesNotExist:
+        return HttpResponse("비정상적인 접근입니다.")
+
+    if account_activation_token.check_token(user, token):
+        request.session["user"] = uid
+        return render(request, "reset_password.html", {"user": user})

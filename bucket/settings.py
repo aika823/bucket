@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "party",
     "rest_framework",
     "storages",
+    "manager",
 ]
 
 MIDDLEWARE = [

@@ -3,70 +3,8 @@
 {% block contents %}
 <div class="content height-auto">
 
-  <div id="CommentDetail" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeComment()">&times;</a>
-    <div class="comment-item-checked">
-      <div class="comment-item-row">
-        <div class="comment-item-profile">
-          <img src="./assets/images/user1.png" alt="">
-          <h5 class="comment-id">버킷리스터</h5>
-        </div>
-        <div class="comment-btn-like">
-          <i class="far fa-heart"></i>
-        </div>
-      </div>
-      <div class="comment-content">
-        <p>
-          선택한 댓글 내용입니다.
-        </p>
-        <div class="comment-like">좋아요 <span>0</span>개</div>
-      </div>
-    </div>
-    <div class="comment-write">
-      <form action="" class="comment-form">
-        <input type="text" placeholder="댓글 달기...">
-        <input type="submit" value="입력">
-      </form>
-    </div>
-    <div class="comment-list">
-      <!-- 댓글 리스트 반복문 시작 -->
-      <div class="comment-item">
-        <div class="comment-item-row">
-          <div class="comment-item-profile">
-            <img src="./assets/images/user1.png" alt="">
-            <h5 class="comment-id">버킷리스터</h5>
-          </div>
-          <div class="comment-btn-like">
-            <i class="far fa-heart"></i>
-          </div>
-        </div>
-        <div class="comment-content">
-          <p>
-            댓글 내용입니다.
-            <div class="comment-like">좋아요 <span>0</span>개</div>
-          </p>
-        </div>
-      </div>
-      <div class="comment-item">
-        <div class="comment-item-row">
-          <div class="comment-item-profile">
-            <img src="./assets/images/user3.png" alt="">
-            <h5 class="comment-id">버킷리스터</h5>
-          </div>
-          <div class="comment-btn-like">
-            <i class="far fa-heart"></i>
-          </div>
-        </div>
-        <div class="comment-content">
-          <p>
-            댓글 내용입니다.
-          </p>
-          <div class="comment-like">좋아요 <span>0</span>개</div>
-        </div>
-      </div>
-      <!-- 댓글 리스트 반복문 끝 -->
-    </div>
-  </div>
+  {# 대댓글 모달 #}
+  <div id="CommentDetail" class="sidenav"></div>
 
   <section class="detail">
     <header>
@@ -89,7 +27,7 @@
         {% endfor %}
       </div>
       <div class="owner">
-        <img src="/media/{{party.host.image}}" onclick="location.href='/user/profile?id={{party.host.id}}'"/>
+        <img src="/media/{{party.host.image}}" onclick="location.href='/user/profile?id={{party.host.id}}'" />
         <h3>{{party.host.name}}</h3>
       </div>
     </div>
@@ -136,10 +74,6 @@
         <div class="comment-list">
 
           <!-- 댓글 리스트 반복문 시작 -->
-
-
-          
-
           {% for comment in party.comments %}
           <div class="comment-item">
             <div class="comment-item-row">
@@ -148,7 +82,11 @@
                 <h5 class="comment-id">{{comment.user.name}}</h5>
               </div>
               <div class="comment-btn-like">
-                <i class="far fa-heart"></i>
+                {% if comment.id in user.user_comment %}
+                <i class="fas fa-heart" onclick="like(this, {{comment.id}}, 'comment')"></i>
+                {% else %}
+                <i class="far fa-heart" onclick="like(this, {{comment.id}}, 'comment')"></i>
+                {% endif %}
               </div>
             </div>
             <div class="comment-content">
@@ -156,64 +94,16 @@
                 {{comment.content}}
               </p>
               <div class="comment-item-detail">
-                <span class="comment-like">좋아요 <span>0</span>개</span>
-                <span class="js-open-comment" onclick="openComment()">
+                <span class="comment-like">좋아요 <span>{{comment.count_like}}</span>개</span>
+                <span class="js-open-comment" onclick="openComment({{comment.id}})">
                   <i class="fas fa-caret-down"></i>
-                  답글보기
+                  답글보기 ({{comment.count_children}})
                 </span>
               </div>
             </div>
           </div>
           {% endfor %}
 
-
-          <div class="comment-item">
-            <div class="comment-item-row">
-              <div class="comment-item-profile">
-                <img src="./assets/images/user1.png" alt="">
-                <h5 class="comment-id">버킷리스터</h5>
-              </div>
-              <div class="comment-btn-like">
-                <i class="far fa-heart"></i>
-              </div>
-            </div>
-            <div class="comment-content">
-              <p>
-                댓글 내용입니다.
-              </p>
-              <div class="comment-item-detail">
-                <span class="comment-like">좋아요 <span>0</span>개</span>
-                <span class="js-open-comment" onclick="openComment()">
-                  <i class="fas fa-caret-down"></i>
-                  답글보기
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="comment-item">
-            <div class="comment-item-row">
-              <div class="comment-item-profile">
-                <img src="./assets/images/user3.png" alt="">
-                <h5 class="comment-id">버킷리스터</h5>
-              </div>
-              <div class="comment-btn-like">
-                <i class="far fa-heart"></i>
-              </div>
-            </div>
-            <div class="comment-content">
-              <p>
-                댓글 내용입니다.
-              </p>
-              <div class="comment-item-detail">
-                <span class="comment-like">좋아요 <span>0</span>개</span>
-                <span class="js-open-comment" onclick="openComment()">
-                  <i class="fas fa-caret-down"></i>
-                  답글보기
-                </span>
-              </div>
-            </div>
-          </div>
-          <!-- 댓글 리스트 반복문 끝 -->
         </div>
 
       </div>
@@ -225,20 +115,26 @@
         {# like button #}
         <a class="btn-wish">
           {% if user.member.is_like%}
-          <i class="fas fa-heart"></i>
+          <i class="fas fa-heart" onclick="like(this, {{party.id}})"></i>
           {% else %}
-          <i class="far fa-heart"></i>
+          <i class="far fa-heart" onclick="like(this, {{party.id}})"></i>
           {% endif %}
         </a>
 
+
+
         {% if user.member.is_host == True %}
-        <a class="btn-join" href=""> 소셜링 수정하기 </a>
+        <a class="btn-join" href=""> 내가 만든 소셜링 </a>
         {% elif user.member.is_join == True %}
-        <a class="btn-join" onclick="send_join_form()"> 소셜링 탈퇴하기 </a>
+        <a class="btn-join" onclick="send_exit_form()"> 소셜링 탈퇴하기 </a>
         {% elif party.leftover < 1 %}
         <a class="btn-join"> 정원 초과 </a>
         {% else %}
-        <a class="btn-join" onclick="send_join_form()"> 소셜링 참여하기 </a>
+        <a id="btnJoin" class="btn-join" onclick="send_join_form()"> 소셜링 참여하기 </a>
+
+        <a id="modalSuccess" class="btn-join" href="{{party.link}}" style="display:none">참여가 완료되었습니다 / 링크!</a>
+
+
         {% endif %}
       </div>
       <div class="bottom-nav-detail">
@@ -261,9 +157,26 @@
 
 {% block extrascript %}
 <script>
-  function send_join_form() {
+
+  function send_exit_form(){
     document.getElementById("joinForm").submit();
   }
+
+  function send_join_form() {
+    
+    var queryString = $("#joinForm").serialize();
+    
+    $.ajax({
+      type: 'post',
+      url: '/party/join',
+      data: queryString,
+      dataType: 'json',
+      success: function (result) {
+        $('#modalSuccess').show();
+      }
+    });
+  }
+
 </script>
 <script src="/static/js/sidenav.js"></script>
 {% endblock%}

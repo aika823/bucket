@@ -1,0 +1,60 @@
+{% extends 'party_base.html' %}
+
+{% block contents %}
+<a href="javascript:void(0)" class="closebtn" onclick="closeComment()">&times;</a>
+<div class="comment-item-checked">
+    <div class="comment-item-row">
+        <div class="comment-item-profile">
+            <img src="/media/{{parent_comment.user.image}}" alt="">
+            <h5 class="comment-id">{{parent_comment.user.name}}</h5>
+        </div>
+        <div class="comment-btn-like">
+            {% if parent_comment.id in user.user_comment %}
+            <i class="fas fa-heart" onclick="like(this, {{parent_comment.id}}, 'comment' )"></i>
+            {%else%}
+            <i class="far fa-heart" onclick="like(this, {{parent_comment.id}}, 'comment' )"></i>
+            {%endif%}
+        </div>
+    </div>
+    <div class="comment-content">
+        <p>
+            {{parent_comment.content}}
+        </p>
+        <div class="comment-like">좋아요 <span>{{parent_comment.count_like}}</span>개</div>
+    </div>
+</div>
+
+<div class="comment-write">
+    <form action="/party/comment" class="comment-form" method="post">
+        {%csrf_token%}
+        <input name="parent_id" type="hidden" value="{{parent_comment.id}}">
+        <input name="content" type="text" placeholder="댓글 달기...">
+        <input type="submit" value="입력">
+    </form>
+</div>
+
+
+<div class="comment-list">
+
+    {% for comment in comment_list %}
+    <div class="comment-item">
+        <div class="comment-item-row">
+            <div class="comment-item-profile">
+                <img src="/media/{{comment.user.image}}" alt="">
+                <h5 class="comment-id">{{comment.user.name}}</h5>
+            </div>
+            <div class="comment-btn-like">
+                <i class="far fa-heart"></i>
+            </div>
+        </div>
+        <div class="comment-content">
+            <p>
+                {{comment.content}}
+                <div class="comment-like">좋아요 <span>0</span>개</div>
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

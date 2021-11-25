@@ -2,163 +2,170 @@
 
 
 {% block contents %}
- <section class="search">
-     <header>
-         <a href="/party/search">
-             <p>재설정</p><i class="fas fa-redo"></i>
-         </a>
-     </header>
 
-     <div class="search-box">
-         <h3 class="option-title">기간</h3>
-         <div class="search-term">
-             <div class="ck-button">
-                 <label>
-                     <input type="radio" name="ss2" id="ss2" value="이번주" checked=""><span>이번주</span>
-                 </label>
-             </div>
+<div class="content">
+    <section class="search">
+        <header>
+            <a href="#">
+                <p>재설정</p><i class="fas fa-redo"></i>
+            </a>
+        </header>
 
-             <div class="line-vertical"></div>
 
-             <div class="ck-button">
-                 <label>
-                     <input type="radio" name="ss2" id="ss2" value="다음주"><span>다음주</span>
-                 </label>
-             </div>
 
-             <div class="line-vertical"></div>
+        <form action="/party">
+            <div class="search-box">
+                <h3 class="option-title">기간</h3>
 
-             <div class="ck-button">
-                 <label>
-                     <input type="radio" name="ss2" id="ss2" value="직접 지정"><span>직접 지정</span>
-                 </label>
-             </div>
-         </div>
+                <div class="search-term">
+                    <div class="ck-button">
+                        <label>
+                            <input class="date-radio" type="radio" name="date" id="ss2" value="이번주"
+                                checked=""><span>이번주</span>
+                        </label>
+                    </div>
+                    <div class="line-vertical"></div>
+                    <div class="ck-button">
+                        <label>
+                            <input class="date-radio" type="radio" name="date" id="ss2" value="다음주"><span>다음주</span>
+                        </label>
+                    </div>
+                    <div class="line-vertical"></div>
+                    <div class="ck-button">
+                        <label>
+                            <input type="radio" name="date" id="dateCustom" value="직접 지정"><span>직접 지정</span>
+                        </label>
+                    </div>
+                </div>
 
-         <div class="line"></div>
+                <input class="date-input" type="date" id="dateInput" name="start_date" style="display:none">
+                <input class="date-input" type="date" id="dateInput" name="end_date" style="display:none">
 
-         <div class="search-days">
-             <div class="option-title">
-                 <h3>요일</h3>
-                 <div class="option-btn">
-                     <a class="day-filter active">• 전체</a>
-                     <a class="day-filter">• 평일</a>
-                     <a class="day-filter">• 주말</a>
-                 </div>
-             </div>
-             <div class="day-of-week">
-                 <div class="ck-button">
-                     <label>
-                         <input class="days" type="checkbox" name="day-of-week" id="dayOfWeek" value="1"
-                             checked=""><span>월</span>
-                     </label>
-                 </div>
-                 <div class="ck-button">
-                     <label>
-                         <input class="days" type="checkbox" name="day-of-week" id="dayOfWeek" value="1"
-                             checked=""><span>화</span>
-                     </label>
-                 </div>
-                 <div class="ck-button">
-                     <label>
-                         <input class="days" type="checkbox" name="day-of-week" id="dayOfWeek" value="1"
-                             checked=""><span>수</span>
-                     </label>
-                 </div>
-                 <div class="ck-button">
-                     <label>
-                         <input class="days" type="checkbox" name="day-of-week" id="dayOfWeek" value="1"
-                             checked=""><span>목</span>
-                     </label>
-                 </div>
-                 <div class="ck-button">
-                     <label>
-                         <input class="days" type="checkbox" name="day-of-week" id="dayOfWeek" value="1"
-                             checked=""><span>금</span>
-                     </label>
-                 </div>
-                 <div class="ck-button">
-                     <label>
-                         <input class="weekend" type="checkbox" name="day-of-week" id="dayOfWeek" value="1"
-                             checked=""><span>토</span>
-                     </label>
-                 </div>
-                 <div class="ck-button">
-                     <label>
-                         <input class="weekend" type="checkbox" name="day-of-week" id="dayOfWeek" value="1"
-                             checked=""><span>일</span>
-                     </label>
-                 </div>
-             </div>
-         </div>
+                <div class="line"></div>
 
-         <div class="line"></div>   
+                <div class="search-days">
+                    <div class="option-title">
+                        <h3>요일</h3>
+                        <div class="option-btn">
+                            <a class="day-filter active">• 전체</a>
+                            <a class="day-filter">• 평일</a>
+                            <a class="day-filter">• 주말</a>
+                        </div>
+                    </div>
+                    <div class="day-of-week">
+                        <div class="ck-button">
+                            <label>
+                                <input class="weekend" type="checkbox" name="day-of-week" id="dayOfWeek" value="1"
+                                    checked=""><span>일</span>
+                            </label>
+                        </div>
+                        <div class="ck-button">
+                            <label>
+                                <input class="days" type="checkbox" name="day-of-week" id="dayOfWeek" value="2"
+                                    checked=""><span>월</span>
+                            </label>
+                        </div>
+                        <div class="ck-button">
+                            <label>
+                                <input class="days" type="checkbox" name="day-of-week" id="dayOfWeek" value="3"
+                                    checked=""><span>화</span>
+                            </label>
+                        </div>
+                        <div class="ck-button">
+                            <label>
+                                <input class="days" type="checkbox" name="day-of-week" id="dayOfWeek" value="4"
+                                    checked=""><span>수</span>
+                            </label>
+                        </div>
+                        <div class="ck-button">
+                            <label>
+                                <input class="days" type="checkbox" name="day-of-week" id="dayOfWeek" value="5"
+                                    checked=""><span>목</span>
+                            </label>
+                        </div>
+                        <div class="ck-button">
+                            <label>
+                                <input class="days" type="checkbox" name="day-of-week" id="dayOfWeek" value="6"
+                                    checked=""><span>금</span>
+                            </label>
+                        </div>
+                        <div class="ck-button">
+                            <label>
+                                <input class="weekend" type="checkbox" name="day-of-week" id="dayOfWeek" value="7"
+                                    checked=""><span>토</span>
+                            </label>
+                        </div>
 
-         <div class="search-category">
-             <h3>카테고리</h3>
-             <div class="category">
-                 <label class="container">함께 나들이
-                     <input type="checkbox" checked="checked">
-                     <span class="checkmark"></span>
-                 </label>
-                 <label class="container">가볍게 한잔
-                     <input type="checkbox">
-                     <span class="checkmark"></span>
-                 </label>
-                 <label class="container">이야기
-                     <input type="checkbox">
-                     <span class="checkmark"></span>
-                 </label>
-                 <label class="container">영화
-                     <input type="checkbox">
-                     <span class="checkmark"></span>
-                 </label>
-                 <label class="container">맛집
-                     <input type="checkbox" checked="checked">
-                     <span class="checkmark"></span>
-                 </label>
-                 <label class="container">카페 • 공간
-                     <input type="checkbox">
-                     <span class="checkmark"></span>
-                 </label>
-                 <label class="container">산책 • 등산 • 러닝
-                     <input type="checkbox">
-                     <span class="checkmark"></span>
-                 </label>
-                 <label class="container">글쓰기
-                     <input type="checkbox">
-                     <span class="checkmark"></span>
-                 </label>
-                 <label class="container">전시 • 공연
-                     <input type="checkbox" checked="checked">
-                     <span class="checkmark"></span>
-                 </label>
-                 <label class="container">영감 투어
-                     <input type="checkbox">
-                     <span class="checkmark"></span>
-                 </label>
-                 <label class="container">액티비티
-                     <input type="checkbox">
-                     <span class="checkmark"></span>
-                 </label>
-             </div>
-         </div>
-     </div>
+                    </div>
+                </div>
 
-     <!-- <div class="bottom-nav">
-            <a class="btn-show-all" href="">
-            전체 소셜링 보기
-            <div class="line"></div>
-          </a>
-        </div> -->
+                <div class="line"></div>
 
-     <div class="bottom-nav">
-         <a href="/party"><i class="fas fa-users"></i></a>
-         <a href="/party/create"><i class="fas fa-plus-circle"></i></a>
-         <a href="/user/profile"><i class="fas fa-user"></i></a>
-     </div>
- </section>
- </div>
+                <div class="search-category">
+                    <h3>카테고리</h3>
+                    <div class="category">
+                        <label class="container">함께 나들이
+                            <input type="checkbox" name="category" value="함께 나들이">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">가볍게 한잔
+                            <input type="checkbox" name="category" value="가볍게 한잔">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">이야기
+                            <input type="checkbox" name="category" value="이야기">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">영화
+                            <input type="checkbox" name="category" value="영화">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">맛집
+                            <input type="checkbox" name="category" value="맛집">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">카페 • 공간
+                            <input type="checkbox" name="category" value="카페 • 공간">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">산책 • 등산 • 러닝
+                            <input type="checkbox" name="category" value="산책 • 등산 • 러닝">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">글쓰기
+                            <input type="checkbox" name="category" value="글쓰기">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">전시 • 공연
+                            <input type="checkbox" name="category" value="전시 • 공연">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">영감 투어
+                            <input type="checkbox" name="category" value="영감 투어">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">액티비티
+                            <input type="checkbox" name="category" value="액티비티">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <button type="submit"> 검색 </button>
+
+        </form>
+
+
+        <div class="bottom-nav">
+            <a href="/party"><i class="fas fa-users"></i></a>
+            <a href="/party/create"><i class="fas fa-plus-circle"></i></a>
+            <a href="/user/profile"><i class="fas fa-user"></i></a>
+        </div>
+    </section>
+
+</div>
 {% endblock %}
 
 {% block extrascript %}
@@ -184,5 +191,17 @@
         $(this).addClass('active');
         $(this).siblings().removeClass('active');
     });
+
+
+    $('#dateCustom').on('click', function () {
+        $('.date-input').show();
+        $('.date-input').prop('required',true);
+
+    })
+
+    $('.date-radio').on('click', function () {
+        $('.date-input').hide();
+        $('.date-input').prop('required',false);
+    })
 </script>
 {% endblock extrascript %}

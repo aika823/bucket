@@ -13,7 +13,7 @@
                 <h3>언제 어디서 만나나요?</h3>
             </div>
 
-            <form action="/api/party/" method="post" onsubmit="return false">
+            <form action="/api/party/" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="host" value="{{user_id}}" />
                 <div class="add-select">
@@ -24,10 +24,81 @@
                             <h3>모임 이름, 설명</h3>
                         </div>
                         <div class="input-option active">
-                            <input type="text" name="name" placeholder="모임 이름" />
-                            <input type="text" name="detail" placeholder="모임 설명" />
+                            <input type="text" name="name" placeholder="모임 이름" required />
+                            <input type="text" name="detail" placeholder="모임 설명" required />
                         </div>
                     </div>
+
+
+                    <!-- 카테고리 -->
+                    <div class="add-option add-option--date">
+                        <div class="option-title">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h3>카테고리 선택</h3>
+                        </div>
+                        <a class="open-option"><i class="fas fa-caret-down"></i></a>
+
+
+
+
+                        <div class="search-category">
+                            <h3>카테고리</h3>
+                            <div class="category">
+                                <label class="container">함께 나들이
+                                    <input type="radio" name="category" value="함께 나들이">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">가볍게 한잔
+                                    <input type="radio" name="category" value="가볍게 한잔">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">이야기
+                                    <input type="radio" name="category" value="이야기">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">영화
+                                    <input type="radio" name="category" value="영화">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">맛집
+                                    <input type="radio" name="category" value="맛집">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">카페 • 공간
+                                    <input type="radio" name="category" value="카페 • 공간">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">산책 • 등산 • 러닝
+                                    <input type="radio" name="category" value="산책 • 등산 • 러닝">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">글쓰기
+                                    <input type="radio" name="category" value="글쓰기">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">전시 • 공연
+                                    <input type="radio" name="category" value="전시 • 공연">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">영감 투어
+                                    <input type="radio" name="category" value="영감 투어">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">액티비티
+                                    <input type="radio" name="category" value="액티비티">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+
                     <!-- 날짜 -->
                     <div class="add-option add-option--date">
                         <div class="option-title">
@@ -36,7 +107,7 @@
                         </div>
                         <a class="open-option"><i class="fas fa-caret-down"></i></a>
                         <div class="input-option">
-                            <input type="date" name="date" />
+                            <input type="date" name="date" required />
                         </div>
                     </div>
                     <!-- 시간 -->
@@ -47,7 +118,7 @@
                         </div>
                         <a class="open-option"><i class="fas fa-caret-down"></i></a>
                         <div class="input-option">
-                            <input type="time" name="time" />
+                            <input type="time" name="time" required />
                         </div>
                     </div>
                     <!-- 장소 -->
@@ -64,9 +135,9 @@
                             </div>
                             <div class="offline">
                                 <div class="address-box">
-                                    <input type="text" name="address" class="input-address" value=""
-                                        onkeypress="if(event.keyCode==13) {search_address()}" />
-                                    <a class="openMap"><i class="fas fa-search"></i></a>
+                                    <input type="text" name="address" class="input-address" value="" 
+                                        onkeypress="if(event.keyCode==13) {search_address()}" required/>
+                                    <a class="openMap"><i class="fas fa-search" onclick="search_address()"></i></a>
                                 </div>
                                 <div id="map" style="width:100%;height:350px;"></div>
                             </div>
@@ -80,7 +151,7 @@
                         </div>
                         <a class="open-option"><i class="fas fa-caret-down"></i></a>
                         <div class="input-option">
-                            <input type="number" name="headcount" value="1" min="1" />
+                            <input type="number" name="headcount" value="1" min="1" required />
                         </div>
                     </div>
                     <!-- 인원 수 -->
@@ -91,7 +162,7 @@
                         </div>
                         <a class="open-option"><i class="fas fa-caret-down"></i></a>
                         <div class="input-option">
-                            <input type="number" name="price" value="0" min="0" />
+                            <input type="number" name="price" value="0" min="0" required />
                         </div>
                     </div>
                     <!-- 오픈채팅방 링크 -->
@@ -102,7 +173,7 @@
                         </div>
                         <a class="open-option"><i class="fas fa-caret-down"></i></a>
                         <div class="input-option">
-                            <input type="text" name="link" value="http://billim.co.kr" />
+                            <input type="text" name="link" value="" required />
                         </div>
                     </div>
                 </div>

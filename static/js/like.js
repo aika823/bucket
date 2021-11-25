@@ -1,4 +1,4 @@
-function like(element, party_id) {
+function like(element, id, table = 'party') {
     //like
     if ($(element).hasClass('far')) {
         $(element).removeClass('far')
@@ -18,10 +18,11 @@ function like(element, party_id) {
     $.ajax({
             url: "/party/like",
             data: {
-                'party_id': party_id,
+                'table': table,
+                'id': id,
                 'like': like
             },
-            method: "POST",
+            method: "GET",
             success: function(data) {
                 console.log(data)
             }
@@ -34,38 +35,3 @@ function like(element, party_id) {
             console.log(status)
         })
 }
-
-// $('.fa-heart').on('click', function() {
-//     // like
-//     if ($(this).hasClass('far')) {
-//         $(this).removeClass('far')
-//         $(this).addClass('fas')
-//         var like = true
-//     }
-//     // dislike
-//     else {
-//         $(this).removeClass('fas')
-//         $(this).addClass('far')
-//         var like = false
-//     }
-//     var party_id = $('#partyID').data('party_id')
-//     console.log(party_id)
-//     $.ajax({
-//             url: "/party/like",
-//             data: {
-//                 'party_id': party_id,
-//                 'like': like
-//             },
-//             method: "POST",
-//             success: function(data) {
-//                 console.log(data)
-//             }
-//         })
-//         .done(function(json) {
-//             console.log("done")
-//         })
-//         .fail(function(xhr, status) {
-//             console.log('fail')
-//             console.log(status)
-//         })
-// });

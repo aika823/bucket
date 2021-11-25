@@ -997,6 +997,7 @@ section.search .search-box .search-term {
 .ck-button label input {
     position: absolute;
     top: -20px;
+    display: none;
 }
 
 .ck-button input:checked+span {
@@ -1034,9 +1035,10 @@ section.search .search-box .search-days .option-title .option-btn a:hover {
     color: #0033FF;
 }
 
-section.search .search-box .search-days .option-title .option-btn a.active {
+
+/* section.search .search-box .search-days .option-title .option-btn a.active {
     color: #0033FF;
-}
+} */
 
 section.search .search-box .search-days .day-of-week {
     display: flex;
@@ -1135,11 +1137,12 @@ section.search .search-box .category {
     transform: rotate(45deg);
 }
 
-section.search .bottom-nav {
+
+/* section.search .bottom-nav {
     background: #0033FF;
     flex-direction: column;
     padding: 0;
-}
+} */
 
 section.search .bottom-nav .btn-show-all {
     color: #fff;

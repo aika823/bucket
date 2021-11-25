@@ -27,13 +27,18 @@
                 <img id="profileImage" src="/media/{{user.image}}" alt="profile image" />
                 {%endif%}
 
-                <h3>{{user.name}}</h3>
+                <h3>
+                  {{user.name}}
+                  {%if my%}
+                  <a class="open-input"><i class="fas fa-edit"></i></a>
+                  {% endif %}
+                </h3>
             </div>
 
             {# 개인 정보 #}
 
             {%if my%}
-            <form action="/user/update/" method="post">
+            <form class="username-form" action="/user/update/" method="post">
                 {%csrf_token%}
                 <input type="text" name="name" value="{{user.name}}">
                 <input type="text" name="detail" value="{{user.detail}}">
@@ -48,18 +53,24 @@
 
             {# 관심사 #}
             <div class="profile-tag">
-                <form action="/api/interest/" , method="post">
+                <form class="profile-tag-form" action="/api/interest/" , method="post">
                     <input type="text" name="interest" />
                     <input type="submit" value="관심사 추가하기" />
                 </form>
                 {% for interest in user_interest %}
-                <span>#{{interest.interest_id.interest}}</span>
+                <span>
+                  #{{interest.interest_id.interest}}
+                  
+                  {%if my%}
+                  <a onclick="deleteTag()"><i class="fas fa-times"></i></a>
+                  {%endif%}
+                </span>
                 {% endfor %}
             </div>
 
             <div>
                 {%if user.is_admin%}
-                <button onclick="location.href='/manager'">관리자 페이지로 이동</button>
+                <button class="btn-manager" onclick="location.href='/manager'">관리자 페이지로 이동</button>
                 {%endif%}
             </div>
 
@@ -95,6 +106,15 @@
     $('#imageInput').on('change', function () {
         console.log($(this).val)
         $('#imageForm').submit();
-    })
+    });
+
+    $('.open-input').click(function(){
+      $('.username-form').toggleClass('active');
+      $('.profile-tag-form').toggleClass('active');
+    });
+
+    function deleteTag() {
+      console.log('태그 삭제');
+    }
 </script>
 {% endblock %}

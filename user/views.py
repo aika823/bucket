@@ -98,7 +98,7 @@ def update(request):
             user.detail = request.POST.get("detail")
         if request.POST.get("password"):
             if request.POST.get("password") == request.POST.get("re_password"):
-                user.password = request.POST.get("password")
+                user.password = make_password(request.POST.get("password"))
         user.save()
         return redirect("user:profile")
 
@@ -180,9 +180,11 @@ def login(request):
         try:
             user = User.objects.get(email=email)
             if check_password(password, user.password):
+                print("good")
                 request.session["user"] = user.id
                 return redirect("user:profile")
             else:
+                print("not good")
                 return render(request, "login.html")
         except Exception as e:
             print(e)

@@ -5,17 +5,18 @@
 <div class="content">
     <section class="party">
         <header>
+          <a class="prev-page" href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a>
             <h1>BUCKET LISTER</h1>
             <div class="btn-action">
                 <a href="/search"><i class="fas fa-search"></i></a>
                 <a href="#"><i class="fas fa-bell"></i></a>
             </div>
         </header>
-        <div class="party-box">
-            <div class="party-filter">
+        <div class="manage-box">
+            <div class="manage-options">
                 <button onclick = "location.href = '/manager/user' ">유저 관리 <br> 총: {{count.user}} 명의 유저</button>
                 <button onclick = "location.href = '/manager/party' ">소셜링 관리 <br> 총: {{count.party}} 개의 소셜링</button>
-                <button onclick = "location.href = '/manager/comment' ">소셜링 관리 <br> 총: {{count.comment}} 개의 댓글</button>
+                <button onclick = "location.href = '/manager/comment' ">댓글 관리 <br> 총: {{count.comment}} 개의 댓글</button>
             </div>
         </div>
         <div class="bottom-nav">

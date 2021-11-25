@@ -5,6 +5,7 @@
 <div class="content">
     <section class="party">
         <header>
+          <a class="prev-page" href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a>
             <h1>BUCKET LISTER</h1>
             <div class="btn-action">
                 <a href="/search"><i class="fas fa-search"></i></a>
@@ -13,22 +14,22 @@
         </header>
         <div class="party-box">
             
-            <div class="party-filter">
+            <div class="manage-filter">
                 <h3>유저 관리</h3>
             </div>
 
             {% for user in user_list %}
-            <div class="party-card">
-                <div class="party-participant">
-                <img class="join-image" src="/media/{{user.image}}" alt="profile image" />
+            <div class="manage-card">
+                <div class="image-wrap">
+                <img class="user-image" src="/media/{{user.image}}" alt="profile image" />
+                <h5 onclick="location.href='/user/detail/{{user.id}}'">{{user.name}}</h5>
                 </div>
 
-                <h3 onclick="location.href='/user/detail/{{user.id}}'">{{user.name}}</h3>
-                <div class="party-info">
-                    <div class="party-info-element">
+                <div class="manage-info">
+                    <div class="manage-info-element">
                         <p>이메일: {{user.email}}</p>
                     </div>
-                    <div class="party-info-element">
+                    <div class="manage-info-element">
                         <button onclick="delete_user('user', {{user.id}})">삭제</button>
                     </div>
                 </div>

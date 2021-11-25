@@ -14,5 +14,6 @@ urlpatterns = [
     path('join', views.join),
     path('comment', views.comment),
     path('like', views.like),
+    path('search', views.search),
     path('detail/<int:party_id>', views.detail, name='detail'),
 ]

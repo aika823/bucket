@@ -5,6 +5,7 @@
 <div class="content">
     <section class="party">
         <header>
+          <a class="prev-page" href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a>
             <h1>BUCKET LISTER</h1>
             <div class="btn-action">
                 <a href="/search"><i class="fas fa-search"></i></a>
@@ -13,25 +14,29 @@
         </header>
         <div class="party-box">
 
-            <div class="party-filter">
+            <div class="manage-filter">
                 <h3>댓글 관리</h3>
             </div>
 
             {% for comment in comment_list %}
-            <div class="party-card">
-                <div class="party-participant">
-                    <img class="join-image" src="/media/{{comment.user.image}}" alt="profile image" />
+            <div class="manage-card">
+                <!-- <div class="image-wrap">
+                    <img class="user-image" src="/media/{{comment.user.image}}" alt="profile image" />
+                </div> -->
+              <div class="manage-info">
+                <div>
+                  <p style="font-weight: 600;">{{comment.content}}</p>
+                  <p>
+                      <a href="/user/detail/{{comment.user.id}}">"{{comment.user.name}}" </a> 님이 <br>
+                      <a href="/party/detail/{{comment.party.id}}">"{{comment.party.name}}" </a> 소셜링에 남긴 댓글
+                  </p>
                 </div>
-                <h3>{{comment.content}}</h3>
-                <h3>
-                    <a href="/user/detail/{{comment.user.id}}">"{{comment.user.name}}" </a> 님이 <br>
-                    <a href="/party/detail/{{comment.party.id}}">"{{comment.party.name}}" </a> 소셜링에 남긴 댓글
-                </h3>
-                <div class="party-info">
-                    <div class="party-info-element">
-                        <button onclick="delete_comment('comment', {{comment.id}})">삭제</button>
+                <div class="manage-info">
+                    <div class="manage-info-element">
+                        <button class="delete-social" onclick="delete_comment('comment', {{comment.id}})"><i class="fas fa-trash-alt"></i></button>
                     </div>
                 </div>
+              </div>
             </div>
             {% endfor %}
         </div>

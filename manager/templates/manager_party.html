@@ -5,6 +5,7 @@
 <div class="content">
     <section class="party">
         <header>
+          <a class="prev-page" href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a>
             <h1>BUCKET LISTER</h1>
             <div class="btn-action">
                 <a href="/search"><i class="fas fa-search"></i></a>
@@ -13,27 +14,39 @@
         </header>
         <div class="party-box">
             
-            <div class="party-filter">
+            <div class="manage-filter">
                 <h3>소셜링 관리</h3>
             </div>
 
             {% for party in party_list %}
-            <div class="party-card">
-                <h3 onclick="location.href='/party/detail/{{party.id}}'">{{party.name}}</h3>
-                <div class="party-info">
-                    <div class="party-info-element">
-                        <p onclick="location.href='/manager/user/detail/{{party.host.id}}'">주최자: {{party.host.name}}</p>
+            <div class="manage-card">
+                <h4 class="social-title" onclick="location.href='/party/detail/{{party.id}}'">{{party.name}}</h4>
+                <div class="manage-info socialing">
+                  <div>
+                    <div class="manage-info">
+                      <div class="manage-info-element">
+                          <p class="owner" onclick="location.href='/manager/user/detail/{{party.host.id}}'">주최자: {{party.host.name}}</p>
+                      </div>
                     </div>
-                    <div class="party-info-element">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>위치 : {{party.address}}</p>
+                    <div class="manage-info">
+                      <div class="manage-info-element">
+                          <i class="fas fa-map-marker-alt"></i>
+                          <p>위치 : {{party.address}}</p>
+                      </div>
                     </div>
-                    <div class="party-info-element">
-                        <p>{{party.date}} {{party.time}}</p>
+                    <div class="manage-info">
+                      <div class="manage-info-element">
+                          <p>{{party.date}} {{party.time}}</p>
+                      </div>
                     </div>
-                    <div class="party-info-element">
-                        <button onclick="delete_party('party', {{party.id}})">삭제</button>
+                  </div>
+                  <div>
+                    <div class="manage-info">
+                      <div class="manage-info-element">
+                          <button class="delete-social" onclick="delete_party('party', {{party.id}})"><i class="fas fa-trash-alt"></i></button>
+                      </div>
                     </div>
+                  </div>
                 </div>
             </div>
 

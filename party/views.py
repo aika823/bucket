@@ -14,6 +14,10 @@ import datetime
 
 from django.db.models import Count
 
+def search(request):
+    return render(request, "search.html")
+
+
 
 def comment(request):
     if request.method == "POST":

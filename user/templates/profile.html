@@ -18,7 +18,12 @@
             <div class="profile-img">
 
                 {%if my%}
+                {%if user.image%}
                 <img id="profileImage" src="/media/{{user.image}}" alt="profile image" onclick="open_image_input()" />
+                {%else%}
+                <img id="profileImage" src="/static/images/default_profile.jpg" alt="profile image" onclick="open_image_input()" />
+                {%endif%}
+
                 <form action="/user/update/" id="imageForm" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="file" name="image" id="imageInput" style="display: none" />

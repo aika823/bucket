@@ -249,6 +249,7 @@ def join(request):
         if user_party.is_join:
             user_party.is_join = False
             user_party.save()
+            return HttpResponse (json.dumps({ 'data': 'bad' }))
             return redirect("/party/detail/" + str(party.id))
         else:
             user_party.is_join = True

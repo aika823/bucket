@@ -126,13 +126,15 @@
         {% if user.member.is_host == True %}
         <a class="btn-join" href=""> 내가 만든 소셜링 </a>
         {% elif user.member.is_join == True %}
-        <a class="btn-join" onclick="send_exit_form()"> 소셜링 탈퇴하기 </a>
+
+        <a class="btn-join exit" onclick="send_join_form()"> 소셜링 탈퇴하기 </a>
+
         {% elif party.leftover < 1 %}
         <a class="btn-join"> 정원 초과 </a>
         {% else %}
-        <a id="btnJoin" class="btn-join" onclick="send_join_form()"> 소셜링 참여하기 </a>
-
-        <a id="modalSuccess" class="btn-join" href="{{party.link}}" style="display:none">참여가 완료되었습니다 / 링크!</a>
+        <!-- <div class="btn-join-wrap"> -->
+        <a id="btnJoin" class="btn-join join open_modal" onclick="send_join_form()"> 소셜링 참여하기 </a>
+        <!-- </div> -->
 
 
         {% endif %}
@@ -143,6 +145,18 @@
         <a href="/user/profile "><i class="fas fa-user"></i></a>
       </div>
     </div>
+  </section>
+
+  <section class="modal_wrap">
+    <article class="modal_cnt">
+      <div class="modal_body">
+        <i class="fas fa-check-circle"></i>
+        <h3>소셜링 참여신청 완료!</h3>
+        <!-- <a href="javascript:void(0)" class="close_btn">X</a> -->
+        <a id="modalSuccess" class="btn-join" href="{{party.link}}" style="display:none">오픈채팅방 입장!</a>
+      </div>
+    </article>
+    <div class="modal_dim"></div>
   </section>
 </div>
 
@@ -157,26 +171,44 @@
 
 {% block extrascript %}
 <script>
-
-  function send_exit_form(){
+  function send_exit_form() {
     document.getElementById("joinForm").submit();
   }
 
+  function getScrollWidth() {
+    var body = document.querySelector('body');
+    var scrollDiv = document.createElement('div');
+    scrollDiv.className = 'fake_sjwidth';
+    body.appendChild(scrollDiv);
+    var scrollbarWidth = $(document).height() > $(window).height() ? scrollDiv.offsetWidth - scrollDiv.clientWidth : 0;
+
+    body.removeChild(scrollDiv);
+    return scrollbarWidth;
+  }
+
   function send_join_form() {
-    
     var queryString = $("#joinForm").serialize();
-    
     $.ajax({
       type: 'post',
       url: '/party/join',
       data: queryString,
       dataType: 'json',
       success: function (result) {
-        $('#modalSuccess').show();
+        if (result.data == "good") {
+          console.log(result.data);
+          $('#modalSuccess').show();
+          $('#btnJoin').text("소셜링 탈퇴하기");
+          $body.addClass('modal_in');
+          $modalWrap.fadeIn(300);
+          $body.css('padding-right', getScrollWidth());
+        } else {
+          console.log(result.data);
+          $('#btnJoin').text("소셜링 가입하기");
+        }
       }
     });
   }
-
 </script>
 <script src="/static/js/sidenav.js"></script>
+<script src="/static/js/open_modal.js" type="text/javascript"></script>
 {% endblock%}

@@ -852,6 +852,12 @@ section.detail .bottom-nav .join-box .btn-wish i {
     color: #0033FF;
 }
 
+/* section.detail .bottom-nav .join-box .btn-join-wrap {
+  display: flex;
+  width: 100%;
+  justify-content: right;
+} */
+
 section.detail .bottom-nav .join-box .btn-join {
     border-radius: 20px;
     padding: 11px 30px;
@@ -860,6 +866,7 @@ section.detail .bottom-nav .join-box .btn-join {
     width: 60%;
     text-align: center;
     font-weight: 600;
+    cursor: pointer;
 }
 
 section.detail .bottom-nav .bottom-nav-detail {
@@ -1054,6 +1061,33 @@ section.search .search-box .category {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+section.add .add-option .search-category {
+  grid-column: 1/3;
+}
+section.add .add-option .search-category h3 {
+  padding-left: 20px;
+}
+.search-category .category {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0 0 0 30px;
+}
+.search-category .category label {
+  margin-right: 10px;
+}
+
+.modal_wrap {display:none;position: fixed; left:0; top:0; z-index:100; width:100%; height:100%; }
+.modal_wrap.active {display: block;}
+.modal_wrap .modal_dim {position: absolute; left: 0; top: 0; z-index: 10; display: block; width:100%; height:100%; content:''; background:rgba(0,0,0,.5);}
+.modal_wrap .modal_cnt {position:relative; text-align: center; height: 150px; top:50%; transform: translateY(-50%); z-index:20; width: 250px; min-height:200px; margin:0 auto;; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,.5); -webkit-box-shadow: 0 4px 10px rgba(0,0,0,.5); border-radius: 20px;}
+.modal_wrap .modal_cnt .close_btn {position: absolute; top:0; right:0; z-index:50; display: inline-block; width:50px; height:50px; background: url('./images/btn_colse.png') no-repeat 0 0; background-size: 100% 100%; text-indent:-99999px;}
+.modal_wrap .modal_cnt .modal_header {padding-bottom:5px; border-bottom:1px solid #ddd; }
+.modal_wrap .modal_cnt .modal_body { width: 100%; height: fit-content; padding-top: 30px;}
+.fake_sjwidth {overflow: scroll; position: absolute; top: -99999px; width: 60px; height: 60px;}
+
+.modal_wrap .modal_cnt .modal_body i { font-size: 40px; color: #2898FA;}
+#modalSuccess { position: absolute; bottom: 0; left: 0; transition: all .5s; background: #5ca8ff; color: #fff; font-weight: 600; border-radius: 0 0 20px 20px; padding: 15px 0;width: 100%;}
+#modalSuccess:hover { background: #0033FF;}
 
 .container {
     display: block;

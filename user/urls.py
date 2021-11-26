@@ -17,6 +17,7 @@ urlpatterns = [
     path('reset_password/', views.reset_password, name='reset_password'),
     path('login/', views.login, name='login'),    
     path('update/', views.update, name='update'),    
+    path('delete/', views.delete, name='delete'),    
     path('login/<str:type>/', social_login.login_social),
     path('callback/<str:type>/', views.callback_social),
     path('logout/', views.logout, name='logout'),

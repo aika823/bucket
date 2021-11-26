@@ -28,10 +28,10 @@
                 {%endif%}
 
                 <h3>
-                  {{user.name}}
-                  {%if my%}
-                  <a class="open-input"><i class="fas fa-edit"></i></a>
-                  {% endif %}
+                    {{user.name}}
+                    {%if my%}
+                    <a class="open-input"><i class="fas fa-edit"></i></a>
+                    {% endif %}
                 </h3>
             </div>
 
@@ -59,26 +59,22 @@
                 </form>
                 {% for interest in user_interest %}
                 <span>
-                  #{{interest.interest_id.interest}}
-                  
-                  {%if my%}
-                  <a onclick="deleteTag()"><i class="fas fa-times"></i></a>
-                  {%endif%}
+                    #{{interest.interest_id.interest}}
+
+                    {%if my%}
+                    <a onclick="deleteTag(this, {{interest.id}} )"><i class="fas fa-times"></i></a>
+                    {%endif%}
                 </span>
                 {% endfor %}
             </div>
 
             <div>
-                {%if user.is_admin%}
+                {%if my and user.is_admin%}
                 <button class="btn-manager" onclick="location.href='/manager'">관리자 페이지로 이동</button>
                 {%endif%}
             </div>
 
         </div>{#profile-box#}
-
-
-
-
 
         <img class="img-vertical" src="/static/images/logo_vertical.png" alt="" />
         <div class="bottom-nav">
@@ -108,13 +104,25 @@
         $('#imageForm').submit();
     });
 
-    $('.open-input').click(function(){
-      $('.username-form').toggleClass('active');
-      $('.profile-tag-form').toggleClass('active');
+    $('.open-input').click(function () {
+        $('.username-form').toggleClass('active');
+        $('.profile-tag-form').toggleClass('active');
     });
 
-    function deleteTag() {
-      console.log('태그 삭제');
+    function deleteTag(element,user_interest_id ) {
+        console.log(user_interest_id)
+        
+        $.ajax({
+            type: 'get',
+            url: '/user/delete',
+            data: {'user_interest_id':user_interest_id},
+            dataType: 'json',
+            success: function (result) {
+                console.log("성공")
+            }
+        });
+        element.parentNode.style.display = "none";
+        console.log('태그 삭제');
     }
 </script>
 {% endblock %}

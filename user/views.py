@@ -2,6 +2,7 @@ import json
 import os
 import re
 from django.db.models import query
+from django.http.response import JsonResponse
 import requests
 import base64
 
@@ -82,6 +83,17 @@ class UserInterestViewSet(viewsets.ModelViewSet):
     queryset = UserInterest.objects.all()
     serializer_class = UserInterestSerializer
 
+
+def delete(request):
+    user_interest_id = request.GET.get('user_interest_id')
+    user_interest = UserInterest.objects.get(id=user_interest_id)
+    interest = user_interest.interest_id
+
+    user_interest.delete()
+    interest.delete()
+
+    result = {"msg":"good"}
+    return JsonResponse(result)
 
 def update(request):
     if request.POST.get("user_id"):

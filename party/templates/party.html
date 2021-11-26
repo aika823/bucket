@@ -35,8 +35,8 @@
 
                 </div>
                 <h3 onclick="location.href='/party/detail/{{party.id}}'">{{party.name}}</h3>
+                
                 <div class="party-participant">
-
                     {% for member in party.members %}
                     <img class="join-image" src="/media/{{member.user_id.image}}" alt="profile image" /> 
                     {% endfor %}

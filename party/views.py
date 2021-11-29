@@ -148,9 +148,6 @@ def list(request):
         party_list = Party.objects.all()
         current_week = datetime.date.today().isocalendar()[1] 
 
-        print("date")
-        print(date)
-
         if(date == '이번주'):
             party_list = party_list.filter(date__week=current_week)
         if(date == '다음주'):
@@ -166,8 +163,6 @@ def list(request):
     
     for party in party_list:
         party.d_day = (party.date - datetime.date.today()).days
-
-
 
         # party.day_of_week = datetime.datetime.strptime(party.date, '%B %d, %Y').strftime('%A')
         party.day_of_week = ['월','화','수', '목','금', '토', '일'][party.date.weekday()]
@@ -271,7 +266,7 @@ class PartyViewSet(viewsets.ViewSet):
         address = request.POST.get("address")
         headcount = request.POST.get("headcount")
         price = request.POST.get("price")
-        link = request.POST.get("link")
+        link = "https://open.kakao.com/" + request.POST.get("link")
         party = Party(
             host=host,
             name=name,

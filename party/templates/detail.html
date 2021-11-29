@@ -23,7 +23,7 @@
       <h2>{{party.name}}</h2>
       <div class="participant">
         {% for member in party.members %}
-        <img src="/media/{{member.user_id.image}}" alt="" />
+        <img src="/media/{{member.user_id.image}}" onclick="location.href='/user/profile?id={{member.user_id.id}}'" />
         {% endfor %}
       </div>
       <div class="owner">
@@ -49,12 +49,23 @@
           <i class="fas fa-won-sign"></i>
           <p>{{party.price}}</p>
         </div>
+        <div class="detail-card-element">
+          <i class="fas fa-link"></i>
+          {% if user.member.is_join == True %}
+          <p onclick="location.href='{{party.link}}' ">{{party.link}}</p>
+          {%else%}
+          <p>소셜링 가입 후 링크를 확인해주세요</p>
+          {%endif%}
+        </div>
       </div>
 
       {# 소셜링 상세정보 #}
       <div class="detail-info">
         <h4>자세한 정보</h4>
+        {%if party.detail%}
         <p>{{party.detail}}</p>
+        {%endif%}
+        <p>입력된 정보가 없습니다.</p>
       </div>
 
       {# 소셜링 댓글 #}
@@ -65,7 +76,7 @@
           <form class="comment-form" action="/party/comment" method="post">
             {% csrf_token %}
             <input type="hidden" name="party_id" value="{{party.id}}">
-            <input type="text" name="content" placeholder="댓글 달기..." />
+            <input type="text" name="content" placeholder="댓글 달기..." required/>
             <input type="submit" value="입력">
           </form>
         </div>
@@ -126,14 +137,12 @@
         {% if user.member.is_host == True %}
         <a class="btn-join" href=""> 내가 만든 소셜링 </a>
         {% elif user.member.is_join == True %}
-
-        <a class="btn-join exit" onclick="send_join_form()"> 소셜링 탈퇴하기 </a>
-
+        <a class="btn-join exit" onclick="send_exit_form()"> 소셜링 탈퇴하기 </a>
         {% elif party.leftover < 1 %}
         <a class="btn-join"> 정원 초과 </a>
         {% else %}
         <!-- <div class="btn-join-wrap"> -->
-        <a id="btnJoin" class="btn-join join open_modal" onclick="send_join_form()"> 소셜링 참여하기 </a>
+          <a id="btnJoin" class="btn-join join open_modal" onclick="send_join_form()"> 소셜링 참여하기 </a>
         <!-- </div> -->
 
 
@@ -171,43 +180,26 @@
 
 {% block extrascript %}
 <script>
-  function send_exit_form() {
+
+  function send_exit_form(){
     document.getElementById("joinForm").submit();
   }
 
-  function getScrollWidth() {
-    var body = document.querySelector('body');
-    var scrollDiv = document.createElement('div');
-    scrollDiv.className = 'fake_sjwidth';
-    body.appendChild(scrollDiv);
-    var scrollbarWidth = $(document).height() > $(window).height() ? scrollDiv.offsetWidth - scrollDiv.clientWidth : 0;
-
-    body.removeChild(scrollDiv);
-    return scrollbarWidth;
-  }
-
   function send_join_form() {
+    
     var queryString = $("#joinForm").serialize();
+    
     $.ajax({
       type: 'post',
       url: '/party/join',
       data: queryString,
       dataType: 'json',
       success: function (result) {
-        if (result.data == "good") {
-          console.log(result.data);
-          $('#modalSuccess').show();
-          $('#btnJoin').text("소셜링 탈퇴하기");
-          $body.addClass('modal_in');
-          $modalWrap.fadeIn(300);
-          $body.css('padding-right', getScrollWidth());
-        } else {
-          console.log(result.data);
-          $('#btnJoin').text("소셜링 가입하기");
-        }
+        $('#modalSuccess').show();
       }
     });
   }
+
 </script>
 <script src="/static/js/sidenav.js"></script>
 <script src="/static/js/open_modal.js" type="text/javascript"></script>

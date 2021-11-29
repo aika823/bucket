@@ -5,10 +5,10 @@
 <div class="content">
     <section class="party">
         <header>
-            <h1>BUCKET LISTER</h1>
+            <h1>BUCKETLISTER</h1>
             <div class="btn-action">
                 <a href="/party/search"><i class="fas fa-search"></i></a>
-                <a href="#"><i class="fas fa-bell"></i></a>
+                <!-- <a href="#"><i class="fas fa-bell"></i></a> -->
             </div>
         </header>
         <div class="party-box">
@@ -22,7 +22,7 @@
 
             {% for party in party_list %}
 
-            <div class="party-card">
+            <div class="party-card" onclick="location.href='/party/detail/{{party.id}}'">
                 <div class="dday">
 
                     {% if party.d_day > 0 %}
@@ -37,12 +37,19 @@
                 <h3 onclick="location.href='/party/detail/{{party.id}}'">{{party.name}}</h3>
                 
                 <div class="party-participant">
+                    
                     {% for member in party.members %}
+                    
+                    {% if member.user_id.image %}
                     <img class="join-image" src="/media/{{member.user_id.image}}" alt="profile image" /> 
+                    {% else %}
+                    <img class="join-image" src="/media/default_profile.jpg" alt="profile image" />
+                    {% endif %}
+
                     {% endfor %}
 
                     <a href="/party/detail/{{party.id}}">
-                        <i class="fas fa-plus-circle"></i>
+                      <i class="fas fa-plus"></i>
                     </a>
 
                     {% for memeber in party.members %}
@@ -57,7 +64,9 @@
                         <p>위치 : {{party.address}}</p>
                     </div>
                     <div class="party-info-element">
-                        <p>{{party.date}} {{party.time}}</p>
+                    
+
+                        <p>{{ party.date|date:'Y-m-d'}} ({{party.day_of_week}})</p>
                     </div>
                     <div class="party-info-element">
                         {% if party.user_like %}

@@ -15,21 +15,25 @@
             </div>
 
             {# 프로필 사진 #}
-            <div class="profile-img">
+            <div class="profile-wrap">
 
                 {%if my%}
-                {%if user.image%}
-                <img id="profileImage" src="/media/{{user.image}}" alt="profile image" onclick="open_image_input()" />
-                {%else%}
-                <img id="profileImage" src="/static/images/default_profile.jpg" alt="profile image" onclick="open_image_input()" />
-                {%endif%}
-
+                <div class="profile-img">
+                  <img id="profileImage" src="/media/{{user.image}}" alt="profile image" onclick="open_image_input()" />
+                </div>
                 <form action="/user/update/" id="imageForm" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="file" name="image" id="imageInput" style="display: none" />
                 </form>
                 {%else%}
+
+                {% if user.image %}
                 <img id="profileImage" src="/media/{{user.image}}" alt="profile image" />
+                {% else %}
+                <img id="profileImage" src="/media/default_profile.jpg" alt="profile image" />
+                {% endif %}
+
+
                 {%endif%}
 
                 <h3>
@@ -46,15 +50,23 @@
             <form class="username-form" action="/user/update/" method="post">
                 {%csrf_token%}
                 <input type="text" name="name" value="{{user.name}}">
-                <input type="text" name="detail" value="{{user.detail}}">
+                {% if user.detail %}
+                <input type="text" name="detail" value="{{'user.detail'}}">
+                {% else %}
+                <input type="text" name="detail" value="">
+                {% endif %}
                 <input type="submit" value="수정">
             </form>
-            {%else%}
-            <div class="profile-description">
-                <h3>{{user.name}}</h3>
-                <p>{{user.detail}}</p>
-            </div>
             {%endif%}
+            
+            <div class="profile-description">
+                {%if user.detail%}
+                <p>{{user.detail}}</p>
+                {%else%}
+                <p>자기소개가 없습니다.</p>
+                {%endif%}
+            </div>
+            
 
             {# 관심사 #}
             <div class="profile-tag">
@@ -93,6 +105,9 @@
 
 {% block extrascripts %}
 <script type="text/javascript">
+
+    {% if my %}
+    
     function open_image_input() {
         document.getElementById("imageInput").click();
     }
@@ -108,6 +123,7 @@
         console.log($(this).val)
         $('#imageForm').submit();
     });
+    {%endif%}
 
     $('.open-input').click(function () {
         $('.username-form').toggleClass('active');

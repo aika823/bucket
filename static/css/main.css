@@ -130,18 +130,30 @@ section.profile .profile-box .profile-header h1,
 section.profile .profile-box .profile-header i {
     color: #363636;
 }
-
-section.profile .profile-box .profile-img {
-    display: flex;
-    align-items: flex-end;
-    gap: 20px;
+section.profile .profile-box .profile-wrap {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
 }
-
-section.profile .profile-box .profile-img img {
+section.profile .profile-box .profile-img {
+    /* display: flex;
+    align-items: flex-end;
+    gap: 20px; */
     width: 120px;
     height: 120px;
     border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+section.profile .profile-box .profile-img img {
+    width: 100%;
+    border-radius: 50%;
     vertical-align: middle;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 section.profile .profile-box .profile-img h3 {
@@ -289,6 +301,7 @@ section.party header h1 {
     margin: 0;
     color: #0033FF;
     font-size: 2rem;
+    letter-spacing: -3px;
 }
 
 section.party header .btn-action {
@@ -354,10 +367,15 @@ section.party .party-box .party-card .party-participant .join-image {
     border-radius: 50%;
     vertical-align: middle;
 }
-
+section.party .party-box .party-card .party-participant a {
+  border-radius: 50%;
+  border: 5px solid #0033FF;
+  height: fit-content;
+  padding: 9px;
+}
 section.party .party-box .party-card .party-participant i {
-    font-size: 70px;
-    color: #65b4ff;
+    font-size: 40px;
+    color: #0033FF;
 }
 
 section.party .party-box .party-card .party-participant .participant {
@@ -375,6 +393,17 @@ section.party .party-box .party-card .party-info .party-info-element {
     display: flex;
     align-items: center;
     gap: 3px;
+}
+section.party .party-box .party-card .party-info .party-info-element:nth-child(3) i {
+  cursor: pointer;
+}
+section.party .party-box .party-card .party-info .party-info-element:nth-child(3) i,
+section.party .party-box .party-card .party-info .party-info-element:nth-child(4) i {
+  font-size: 18px;
+}
+section.party .party-box .party-card .party-info .party-info-element:nth-child(3) p,
+section.party .party-box .party-card .party-info .party-info-element:nth-child(4) p {
+  font-size: 15px;
 }
 
 section.party .party-box .party-card .party-info .party-info-element i {
@@ -620,8 +649,8 @@ section.detail .detail-images .participant {
 }
 
 section.detail .detail-images .participant img {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     border: 2px solid #fff;
 }
@@ -652,7 +681,7 @@ section.detail .detail-box .detail-card {
     align-items: center;
     background: #fff;
     border-radius: 15px;
-    padding: 15px;
+    padding: 50px 15px;
 }
 
 section.detail .detail-box .detail-card-element {
@@ -679,6 +708,7 @@ section.detail .detail-box .detail-comment {
     width: 100%;
     grid-template-columns: 80% 20%;
     align-items: center;
+    margin: 0 10px;
 }
 
 .comment-form input {
@@ -780,7 +810,7 @@ section.detail .detail-box .detail-comment .comment-list .comment-content .js-op
 }
 
 #CommentDetail .comment-item-checked {
-    padding-left: 10px;
+    padding-left: 15px;
     padding-right: 30px;
     margin-bottom: 20px;
 }
@@ -801,6 +831,7 @@ section.detail .detail-box .detail-comment .comment-list .comment-content .js-op
 #CommentDetail .comment-list .comment-item {
     margin-top: 20px;
     margin-bottom: 15px;
+    border-bottom: 1px solid #c2c2c2;
 }
 
 #CommentDetail .comment-list .comment-item-row .comment-id {
@@ -956,6 +987,21 @@ section.search .search-box {
     padding: 20px 30px;
 }
 
+section.search .search-box button {
+  width: 100%;
+  padding: 10px 0;
+  border: #0033FF;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .5s;
+}
+section.search .search-box button:hover {
+  color: #fff;
+  background: #5ca8ff;
+}
+
 section.search .search-box .line {
     width: 100%;
     height: 1px;
@@ -1100,6 +1146,52 @@ section.add .add-option .search-category h3 {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+
+/* 회원가입 페이지 */
+/* section.register */
+section.register {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 400px;
+  height: 100%;
+  background: #f0f0f0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+section.register .banner-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+section.register h1 {
+  z-index: 1;
+}
+section.register form {
+  width: 90%;
+  margin: 5px auto;
+  z-index: 1;
+}
+section.register form input {
+  width: 100%;
+  margin: 5px 0;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid #c2c2c2;
+}
+section.register form input[type='submit'] {
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all .5s;
+}
+section.register form input[type='submit']:hover {
+  background: #0033FF;
+  color: #fff;
 }
 
 

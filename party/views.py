@@ -161,15 +161,16 @@ def list(request):
             party_list = party_list.filter(date__week_day__in=day_of_week)
         if(category_list):
             party_list = party_list.filter(category__in=category_list)
-
-        print(party_list.query)
-    
     else:    
         party_list = Party.objects.all()
     
-    # party_list = Party.objects.all()
     for party in party_list:
         party.d_day = (party.date - datetime.date.today()).days
+
+
+
+        # party.day_of_week = datetime.datetime.strptime(party.date, '%B %d, %Y').strftime('%A')
+        party.day_of_week = ['월','화','수', '목','금', '토', '일'][party.date.weekday()]
         
         try:
             party.like_count = UserParty.objects.filter(party_id=party, is_like=True).annotate(like_count=Count('is_like')).count()
@@ -249,7 +250,6 @@ def join(request):
         if user_party.is_join:
             user_party.is_join = False
             user_party.save()
-            return HttpResponse (json.dumps({ 'data': 'bad' }))
             return redirect("/party/detail/" + str(party.id))
         else:
             user_party.is_join = True
@@ -264,6 +264,7 @@ class PartyViewSet(viewsets.ViewSet):
         host = request.POST.get("host")
         host = User.objects.filter(id=host).all()[0]
         name = request.POST.get("name")
+        detail = request.POST.get("detail")
         category = request.POST.get("category")
         date = request.POST.get("date")
         time = request.POST.get("time")
@@ -274,6 +275,7 @@ class PartyViewSet(viewsets.ViewSet):
         party = Party(
             host=host,
             name=name,
+            detail=detail,
             category = category,
             date=date,
             time=time,

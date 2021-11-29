@@ -6,7 +6,8 @@
 <div class="content">
     <section class="search">
         <header>
-            <a href="#">
+            <a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a>
+            <a href="/party/search">
                 <p>재설정</p><i class="fas fa-redo"></i>
             </a>
         </header>
@@ -150,10 +151,10 @@
                         </label>
                     </div>
                 </div>
+                <button type="submit"> 검색 </button>
             </div>
 
 
-            <button type="submit"> 검색 </button>
 
         </form>
 
@@ -195,13 +196,13 @@
 
     $('#dateCustom').on('click', function () {
         $('.date-input').show();
-        $('.date-input').prop('required',true);
+        $('.date-input').prop('required', true);
 
     })
 
     $('.date-radio').on('click', function () {
         $('.date-input').hide();
-        $('.date-input').prop('required',false);
+        $('.date-input').prop('required', false);
     })
 </script>
 {% endblock extrascript %}

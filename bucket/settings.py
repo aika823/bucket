@@ -32,6 +32,7 @@ SECRET_KEY = SECRETS["SECRET_KEY"]
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
+    "bucketlister.co.kr",
     "bucket-env.eba-mfepamsq.ap-northeast-2.elasticbeanstalk.com",
 ]
 

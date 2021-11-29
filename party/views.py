@@ -15,35 +15,43 @@ import datetime
 from django.db.models import Count, Q
 from django.template import loader
 
+def delete(request):
+    if request.method == "GET":
+        if request.GET.get('party_id'):
+            party = Party.objects.get(id=request.GET.get('party_id'))
+            print(party)
+            party.delete()
+    return redirect("/party")
+
 
 def search(request):
     return render(request, "search.html")
     
-    start = request.GET.get('start_date')
-    end = request.GET.get('end_date')
-    if(request.GET.get('date')):
-        date = request.GET.get('date')[0] 
-    else:
-        date = None
-    day_of_week = request.GET.getlist('day-of-week')
-    category_list = request.GET.getlist('category')
+    # start = request.GET.get('start_date')
+    # end = request.GET.get('end_date')
+    # if(request.GET.get('date')):
+    #     date = request.GET.get('date')[0] 
+    # else:
+    #     date = None
+    # day_of_week = request.GET.getlist('day-of-week')
+    # category_list = request.GET.getlist('category')
     
-    party_list = Party.objects.all()
-    current_week = datetime.date.today().isocalendar()[1] 
+    # party_list = Party.objects.all()
+    # current_week = datetime.date.today().isocalendar()[1] 
 
-    if(date == '이번주'):
-        party_list = party_list.filter(date__week=current_week)
-    if(date == '다음주'):
-        party_list = party_list.filter(date__month=current_week+1)
-    if(start and end):
-        party_list = party_list.filter(date__range=[start, end])
-    if(day_of_week):
-        party_list = party_list.filter(date__week_day__in=day_of_week)
-    if(category_list):
-        party_list = party_list.filter(category__in=category_list)
+    # if(date == '이번주'):
+    #     party_list = party_list.filter(date__week=current_week)
+    # if(date == '다음주'):
+    #     party_list = party_list.filter(date__month=current_week+1)
+    # if(start and end):
+    #     party_list = party_list.filter(date__range=[start, end])
+    # if(day_of_week):
+    #     party_list = party_list.filter(date__week_day__in=day_of_week)
+    # if(category_list):
+    #     party_list = party_list.filter(category__in=category_list)
 
     
-    return render(request, "search.html", {'party_list':party_list})
+    # return render(request, "search.html", {'party_list':party_list})
 
 def get_comment(request):
     comment_id = request.GET.get('comment_id')

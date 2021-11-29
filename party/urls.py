@@ -13,6 +13,7 @@ app_name = "party"
 urlpatterns = [
     path('', views.list, name='list'),
     path('create', views.create),
+    path('delete', views.delete),
     path('join', views.join),
     path('comment', views.comment),
     path('like', views.like),

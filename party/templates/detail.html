@@ -14,12 +14,18 @@
     {# 소셜링 배너 #}
     <div class="detail-images">
       <img class="party-bg" src="/static/images/dog.jpg" alt="" />
+
       <div class="overlay"></div>
+
       {% if party.leftover < 1 %}
-      <p class="left">마감된 소셜링</span></p>
+      <p class="left">마감</span></p>
       {% else %}
       <p class="left">잔여 <span>{{party.leftover}}</span></p>
       {% endif %}
+
+
+      <p class="right" onclick="location.href='/party/delete?party_id={{party.id}}'">삭제<span></span></p>
+
       <h2>{{party.name}}</h2>
       <div class="participant">
         {% for member in party.members %}
@@ -30,6 +36,7 @@
         <img src="/media/{{party.host.image}}" onclick="location.href='/user/profile?id={{party.host.id}}'" />
         <h3>{{party.host.name}}</h3>
       </div>
+
     </div>
 
 
@@ -77,7 +84,7 @@
           <form class="comment-form" action="/party/comment" method="post">
             {% csrf_token %}
             <input type="hidden" name="party_id" value="{{party.id}}">
-            <input type="text" name="content" placeholder="댓글 달기..." required/>
+            <input type="text" name="content" placeholder="댓글 달기..." required autocomplete="off" />
             <input type="submit" value="입력">
           </form>
         </div>
@@ -143,7 +150,7 @@
         <a class="btn-join"> 정원 초과 </a>
         {% else %}
         <!-- <div class="btn-join-wrap"> -->
-          <a id="btnJoin" class="btn-join join open_modal" onclick="send_join_form()"> 소셜링 참여하기 </a>
+        <a id="btnJoin" class="btn-join join open_modal" onclick="send_join_form()"> 소셜링 참여하기 </a>
         <!-- </div> -->
 
 
@@ -181,15 +188,14 @@
 
 {% block extrascript %}
 <script>
-
-  function send_exit_form(){
+  function send_exit_form() {
     document.getElementById("joinForm").submit();
   }
 
   function send_join_form() {
-    
+
     var queryString = $("#joinForm").serialize();
-    
+
     $.ajax({
       type: 'post',
       url: '/party/join',
@@ -200,7 +206,6 @@
       }
     });
   }
-
 </script>
 <script src="/static/js/sidenav.js"></script>
 <script src="/static/js/open_modal.js" type="text/javascript"></script>

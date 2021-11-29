@@ -5,11 +5,10 @@
     <h1>회원가입</h1>
     <form method="POST" action="/user/register/" enctype="multipart/form-data">
         {% csrf_token %}
-        <input name="name" placeholder="닉네임" type="text" value="" />
+        <input name="name" placeholder="성명(실명기입)" type="text" value="" />
         <input name="email" placeholder="이메일" type="email" value="" />
         <input name="password" placeholder="비밀번호" type="password" value="" />
         <input name="re_password" placeholder="비밀번호 확인" type="password" value="" />
-        <input type="file" name="image"/>
         <input type="submit" />
     </form>
   </section>

@@ -107,7 +107,7 @@
                         </div>
                         <a class="open-option"><i class="fas fa-caret-down"></i></a>
                         <div class="input-option">
-                            <input type="date" name="date" required />
+                            <input id="dateInput" type="date" name="date" required />
                         </div>
                     </div>
                     <!-- 시간 -->
@@ -162,7 +162,7 @@
                         </div>
                         <a class="open-option"><i class="fas fa-caret-down"></i></a>
                         <div class="input-option">
-                            <input type="number" name="price" value="0" min="0" required />
+                            <input type="number" name="price" value="0" min="0" max="1000000" required />
                         </div>
                     </div>
                     <!-- 오픈채팅방 링크 -->
@@ -174,7 +174,7 @@
                         <a class="open-option"><i class="fas fa-caret-down"></i></a>
                         <div class="input-option">
                             <h5>https://open.kakao.com/</h5>
-                            <input type="text" name="link" placeholder="나머지 부분만 입력 해주세요"  value="" required />
+                            <input type="text" name="link" placeholder="나머지 부분만 입력 해주세요" value="" required />
                         </div>
                     </div>
                 </div>
@@ -224,6 +224,20 @@
 
 
 <script>
+    function getFormatDate(d) {
+        return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+    }
+
+    
+    var minDate = getFormatDate(new Date()),
+        mdTemp = new Date(),
+        maxDate = getFormatDate(new Date(mdTemp.setDate(mdTemp.getDate() + 30)));
+
+    document.getElementById("dateInput").setAttribute("max", maxDate);
+    document.getElementById("dateInput").setAttribute("min", minDate);
+
+
+
 
     function show_map() {
         $('.address-box').show()
@@ -289,8 +303,8 @@
             kakao.maps.Marker({
                 map: map,
                 position: new kakao.maps.LatLng(place.y, place.x),
-                clickable: true// 마커에 클릭이벤트를 등록합니다
-            }); 
+                clickable: true // 마커에 클릭이벤트를 등록합니다
+            });
             kakao.maps.event.addListener(marker, 'click', function () { // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
                 infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place
                     .place_name +

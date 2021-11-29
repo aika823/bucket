@@ -8,10 +8,10 @@
             <div class="profile-header">
                 {% if my %}
                 <h1>내 프로필</h1>
+                <button onclick="location.href='/user/logout' "> 로그아웃</button>
                 {%else%}
                 <h1>{{user.name}}님의 프로필</h1>
                 {%endif%}
-                <i class="fas fa-bell"></i>
             </div>
 
             {# 프로필 사진 #}
@@ -26,14 +26,15 @@
                     <input type="file" name="image" id="imageInput" style="display: none" />
                 </form>
                 {%else%}
-
-                {% if user.image %}
-                <img id="profileImage" src="/media/{{user.image}}" alt="profile image" />
-                {% else %}
-                <img id="profileImage" src="/media/default_profile.jpg" alt="profile image" />
-                {% endif %}
-
-
+                    {% if user.image %}
+                    <div class="profile-img">
+                        <img id="profileImage" src="/media/{{user.image}}" alt="profile image" />
+                    </div>
+                    {% else %}
+                    <div class="profile-img">
+                        <img id="profileImage" src="/media/default_profile.jpg" alt="profile image" />
+                    </div>
+                    {% endif %}
                 {%endif%}
 
                 <h3>
@@ -51,7 +52,7 @@
                 {%csrf_token%}
                 <input type="text" name="name" value="{{user.name}}">
                 {% if user.detail %}
-                <input type="text" name="detail" value="{{'user.detail'}}">
+                <input type="text" name="detail" value="{{user.detail}}">
                 {% else %}
                 <input type="text" name="detail" value="">
                 {% endif %}
@@ -61,9 +62,9 @@
             
             <div class="profile-description">
                 {%if user.detail%}
-                <p>{{user.detail}}</p>
+                    <p>{{user.detail}}</p>
                 {%else%}
-                <p>자기소개가 없습니다.</p>
+                    <p>자기소개가 없습니다.</p>
                 {%endif%}
             </div>
             
@@ -72,7 +73,7 @@
             <div class="profile-tag">
                 <form class="profile-tag-form" action="/api/interest/" , method="post">
                     <input type="text" name="interest" />
-                    <input type="submit" value="관심사 추가하기" />
+                    <input type="submit" value="관심사 추가하기 - 하나씩 추가해 주세요" />
                 </form>
                 {% for interest in user_interest %}
                 <span>

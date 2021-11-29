@@ -192,15 +192,15 @@ def login(request):
         try:
             user = User.objects.get(email=email)
             if check_password(password, user.password):
-                print("good")
                 request.session["user"] = user.id
                 return redirect("user:profile")
             else:
-                print("not good")
-                return render(request, "login.html")
+                error = "비밀번호를 확인해주세요."
+                return render(request, "login.html", {'error':error})
         except Exception as e:
             print(e)
-            return render(request, "login.html")
+            error = "존재하지 않는 회원입니다."
+            return render(request, "login.html", {"error":error})
     else:
         try:
             user = User.objects.get(id=request.session.get("user"))

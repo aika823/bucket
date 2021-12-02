@@ -139,6 +139,7 @@ section.profile {
     justify-content: center;
     position: relative;
     width: 400px;
+    /* padding: 200px 0; */
     height: 100%;
     background: #f0f0f0;
 }
@@ -150,6 +151,17 @@ section.profile .profile-box {
     width: 100%;
     padding: 20px 30px;
     position: relative;
+}
+
+@media all and (max-height: 760px) {
+    section.profile .profile-box {
+        background: #fff;
+        border-radius: 0 0 50px 50px;
+        height: fit-content;
+        width: 100%;
+        padding: 20px 30px 150px;
+        position: relative;
+    }
 }
 
 section.profile .profile-box .profile-header {
@@ -670,8 +682,22 @@ section.detail header i {
 section.detail .detail-images {
     /* margin: 0 25px; */
     position: relative;
-    height: 300px;
+    height: 250px;
+    width: 400px;
     background: #fff;
+    /* overflow: hidden; */
+}
+
+section.detail .detail-images img {
+    object-fit: cover;
+}
+
+section.detail .detail-images .detail-images-bg {
+    position: relative;
+    height: 250px;
+    width: 400px;
+    background: #fff;
+    overflow: hidden;
 }
 
 section.detail .detail-images .image-wrapper {
@@ -689,7 +715,11 @@ section.detail .detail-images .participant .image-wrapper {
 
 section.detail .detail-images img {
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 section.detail .detail-images .overlay {
@@ -769,7 +799,8 @@ section.detail .detail-box {
 section.detail .detail-box .detail-card {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
+    overflow-x: hidden;
     background: #fff;
     border-radius: 15px;
     padding: 50px 15px;

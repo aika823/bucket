@@ -13,7 +13,9 @@
 
     {# 소셜링 배너 #}
     <div class="detail-images">
-      <img class="party-bg" src="/media/{{party.image}}" alt="" />
+      <div class="detail-images-bg">
+        <img class="party-bg" src="/media/{{party.image}}" alt="" />
+      </div>
       <!-- <img src="/static/images/logo_long.png" style="width: 220px;
       height: 110px;
       position: absolute;
@@ -159,7 +161,7 @@
           {% endif %}
         </a>
 
-        {% if party.d_day > 0 %}
+        {% if party.d_day <= 0 %}
 
           {% if user.member.is_host == True %}
             <a class="btn-join" href="/party/update/{{party.id}}"> 내가 만든 소셜링 (수정) </a>

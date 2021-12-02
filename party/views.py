@@ -235,8 +235,6 @@ def list(request):
         "order_new"
     )
 
-    print(party_list.query)
-
     for party in party_list:
         party.d_day = (party.date - datetime.date.today()).days
         party.day_of_week = ["월", "화", "수", "목", "금", "토", "일"][party.date.weekday()]
@@ -363,7 +361,7 @@ class PartyViewSet(viewsets.ViewSet):
         address = request.POST.get("address")
         headcount = request.POST.get("headcount")
         price = request.POST.get("price")
-        link = "https://open.kakao.com/" + request.POST.get("link")
+        link = request.POST.get("link")
 
         if request.FILES.get("image"):
             image = request.FILES.get("image")

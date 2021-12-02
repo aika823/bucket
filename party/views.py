@@ -15,50 +15,76 @@ import datetime
 from django.db.models import Count, Q
 from django.template import loader
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render
+
+
 def delete(request):
-    if request.method == "GET":
-        if request.GET.get('party_id'):
-            party = Party.objects.get(id=request.GET.get('party_id'))
-            print(party)
+    if request.method == "POST":
+        if request.POST.get("party_id"):
+            party = Party.objects.get(id=request.POST.get("party_id"))
             party.delete()
     return redirect("/party")
 
 
+def update(request, party_id):
+
+    user = User.objects.get(id=request.session.get("user"))
+    party = Party.objects.get(id=party_id)
+
+    if party.host == user:
+
+        party_category = dict()
+        party_category[party.category] = "checked"
+
+        if request.method == "POST":
+
+            if request.POST.get("party_id"):
+                party = Party.objects.get(id=request.POST.get("party_id"))
+                party.name = request.POST.get("name")
+                party.detail = request.POST.get("detail")
+                party.category = request.POST.get("category")
+                party.date = request.POST.get("date")
+                party.time = request.POST.get("time")
+                party.address = request.POST.get("address")
+                party.headcount = request.POST.get("headcount")
+                party.price = request.POST.get("price")
+                party.link = request.POST.get("link")
+
+                if request.FILES.get("image"):
+                    image = request.FILES.get("image")
+                    party.image = image
+
+                party.save()
+                return redirect("/party/detail/" + str(party_id))
+            else:
+                return redirect("/party/detail/" + str(party_id))
+        else:
+            party.date = party.date.strftime("%Y-%m-%d")
+            party.time = party.time.strftime("%H:%M:%S")
+            return render(
+                request,
+                "update.html",
+                {"party": party, "party_category": [party_category]},
+            )
+
+    # 수정권한 없음
+    else:
+        return redirect("/party/detail/" + str(party_id))
+
+
 def search(request):
     return render(request, "search.html")
-    
-    # start = request.GET.get('start_date')
-    # end = request.GET.get('end_date')
-    # if(request.GET.get('date')):
-    #     date = request.GET.get('date')[0] 
-    # else:
-    #     date = None
-    # day_of_week = request.GET.getlist('day-of-week')
-    # category_list = request.GET.getlist('category')
-    
-    # party_list = Party.objects.all()
-    # current_week = datetime.date.today().isocalendar()[1] 
 
-    # if(date == '이번주'):
-    #     party_list = party_list.filter(date__week=current_week)
-    # if(date == '다음주'):
-    #     party_list = party_list.filter(date__month=current_week+1)
-    # if(start and end):
-    #     party_list = party_list.filter(date__range=[start, end])
-    # if(day_of_week):
-    #     party_list = party_list.filter(date__week_day__in=day_of_week)
-    # if(category_list):
-    #     party_list = party_list.filter(category__in=category_list)
-
-    
-    # return render(request, "search.html", {'party_list':party_list})
 
 def get_comment(request):
-    comment_id = request.GET.get('comment_id')
+    comment_id = request.GET.get("comment_id")
     parent_comment = Comment.objects.get(id=comment_id)
     comment_list = Comment.objects.filter(parent=parent_comment)
-    template = loader.get_template('comment.html')
-    parent_comment.count_like = UserComment.objects.filter(comment=parent_comment, is_like=True).all().count()
+    template = loader.get_template("comment.html")
+    parent_comment.count_like = (
+        UserComment.objects.filter(comment=parent_comment, is_like=True).all().count()
+    )
 
     user = User.objects.get(id=request.session.get("user"))
     try:
@@ -68,32 +94,33 @@ def get_comment(request):
             result_list.append(object.comment.id)
         user.user_comment = result_list
     except:
-        user.user_comment =  None
+        user.user_comment = None
 
     context = {
-        'comment_list': comment_list,
-        'parent_comment': parent_comment,
-        'user': user
-    }  
-    return HttpResponse(template.render(context,request))
+        "comment_list": comment_list,
+        "parent_comment": parent_comment,
+        "user": user,
+    }
+    return HttpResponse(template.render(context, request))
+
 
 def comment(request):
     if request.method == "POST":
-        
+
         user = User.objects.get(id=request.session.get("user"))
         try:
-            party = Party.objects.get(id=request.POST.get('party_id'))
+            party = Party.objects.get(id=request.POST.get("party_id"))
         except:
             party = None
         try:
-            parent = Comment.objects.get(id=request.POST.get('parent_id')) 
+            parent = Comment.objects.get(id=request.POST.get("parent_id"))
             party = parent.party
             print(party)
         except:
             parent = None
 
-        content = request.POST.get('content')
-        
+        content = request.POST.get("content")
+
         comment = Comment()
         comment.content = content
         comment.user = user
@@ -106,18 +133,18 @@ def comment(request):
 
 def like(request):
     user = User.objects.get(id=request.session.get("user"))
-    
-    if request.GET.get('id') and request.GET.get('table')=='party':
-        party = Party.objects.get(id=request.GET.get('id'))
+
+    if request.GET.get("id") and request.GET.get("table") == "party":
+        party = Party.objects.get(id=request.GET.get("id"))
         try:
             relation = UserParty.objects.get(user_id=user, party_id=party)
         except:
             relation = UserParty()
             relation.user_id = user
             relation.party_id = party
-            
-    if request.GET.get('id') and request.GET.get('table')=='comment': 
-        comment = Comment.objects.get(id=request.GET.get('id'))
+
+    if request.GET.get("id") and request.GET.get("table") == "comment":
+        comment = Comment.objects.get(id=request.GET.get("id"))
         try:
             relation = UserComment.objects.get(user=user, comment=comment)
         except:
@@ -125,7 +152,7 @@ def like(request):
             relation.user = user
             relation.comment = comment
 
-    if(request.GET.get('like')=='true'):
+    if request.GET.get("like") == "true":
         relation.is_like = True
     else:
         relation.is_like = False
@@ -137,60 +164,95 @@ def like(request):
     return JsonResponse(dict)
 
 
+def scroll(request):
+    
+
+    party_list = Party.objects.all()
+    
+    
+    print(party_list[0])
+    max = Party.objects.all().count()
+    
+    numbers_list = range(1, max)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(numbers_list, 3)
+    
+    try:
+        numbers = paginator.page(page)
+    except PageNotAnInteger:
+        numbers = paginator.page(1)
+    except EmptyPage:
+        numbers = paginator.page(paginator.num_pages)
+    
+    # print(numbers)
+    return render(request, 'scroll.html', {'party_list':party_list,  'numbers': numbers })
+
+
 def list(request):
     user = User.objects.get(id=request.session.get("user"))
 
-    if(request.GET):
+    if request.GET:
 
-        print(request.GET)
+        start = request.GET.get("start_date")
+        end = request.GET.get("end_date")
+        day_of_week = request.GET.getlist("day-of-week")
+        category_list = request.GET.getlist("category")
+        party_list = Party.objects.all()
+        current_week = datetime.date.today().isocalendar()[1]
+        filter = request.GET.get("filter")
 
-        start = request.GET.get('start_date')
-        end = request.GET.get('end_date')
-        if(request.GET.get('date')):
-            date = request.GET.get('date')
+        if request.GET.get("date"):
+            date = request.GET.get("date")
         else:
             date = None
-        day_of_week = request.GET.getlist('day-of-week')
-        category_list = request.GET.getlist('category')
-        
-        party_list = Party.objects.all()
-        current_week = datetime.date.today().isocalendar()[1] 
 
-        if(date == '이번주'):
+        if filter:
+            if filter == "like":
+                user_party_list = UserParty.objects.values("party_id").filter(
+                    user_id=user, is_like=True
+                )
+                party_list = Party.objects.filter(id__in=user_party_list)
+            if filter == "join":
+                user_party_list = UserParty.objects.values("party_id").filter(
+                    user_id=user, is_join=True
+                )
+                party_list = Party.objects.filter(id__in=user_party_list)
+
+        if date == "이번주":
             party_list = party_list.filter(date__week=current_week)
-        if(date == '다음주'):
-            party_list = party_list.filter(date__week=current_week+1)
-        if(start and end):
+        if date == "다음주":
+            party_list = party_list.filter(date__week=current_week + 1)
+        if start and end:
             party_list = party_list.filter(date__range=[start, end])
-        if(day_of_week):
+        if day_of_week:
             party_list = party_list.filter(date__week_day__in=day_of_week)
-        if(category_list):
+        if category_list:
             party_list = party_list.filter(category__in=category_list)
-    else:    
+    else:
         party_list = Party.objects.all()
-    
+
+    party_list = party_list.order_by("-date")
+
     for party in party_list:
         party.d_day = (party.date - datetime.date.today()).days
-
-        # party.day_of_week = datetime.datetime.strptime(party.date, '%B %d, %Y').strftime('%A')
-        party.day_of_week = ['월','화','수', '목','금', '토', '일'][party.date.weekday()]
-        
+        party.day_of_week = ["월", "화", "수", "목", "금", "토", "일"][party.date.weekday()]
         try:
-            party.like_count = UserParty.objects.filter(party_id=party, is_like=True).annotate(like_count=Count('is_like')).count()
+            party.like_count = (
+                UserParty.objects.filter(party_id=party, is_like=True)
+                .annotate(like_count=Count("is_like"))
+                .count()
+            )
         except:
             party.like_count = 0
-
         try:
             UserParty.objects.get(party_id=party, user_id=user, is_like=True)
             party.user_like = True
         except:
             party.user_like = False
-        
         try:
             party.members = UserParty.objects.filter(party_id=party.id, is_join=True)
         except:
             party.members = None
-
 
     return render(request, "party.html", {"party_list": party_list})
 
@@ -213,8 +275,12 @@ def detail(request, party_id):
     try:
         comments = Comment.objects.filter(party_id=party_id).all()
         for comment in comments:
-            comment.count_like = UserComment.objects.filter(comment=comment, is_like=True).all().count()
-            comment.count_children = Comment.objects.filter(parent=comment).all().count()
+            comment.count_like = (
+                UserComment.objects.filter(comment=comment, is_like=True).all().count()
+            )
+            comment.count_children = (
+                Comment.objects.filter(parent=comment).all().count()
+            )
         party.comments = comments
     except:
         party.comments = None
@@ -229,10 +295,14 @@ def detail(request, party_id):
             result_list.append(object.comment.id)
         user.user_comment = result_list
     except:
-        user.user_comment =  None
+        user.user_comment = None
 
-    
-    return render(request, "detail.html", {"party": party, "user": user})
+    if party.host == user:
+        my = True
+    else:
+        my = False
+
+    return render(request, "detail.html", {"party": party, "user": user, "my": my})
 
 
 def join(request):
@@ -257,7 +327,7 @@ def join(request):
         else:
             user_party.is_join = True
             user_party.save()
-            return HttpResponse (json.dumps({ 'data': 'good' }))
+            return HttpResponse(json.dumps({"data": "good"}))
     else:
         return redirect("/party/")
 
@@ -275,17 +345,24 @@ class PartyViewSet(viewsets.ViewSet):
         headcount = request.POST.get("headcount")
         price = request.POST.get("price")
         link = "https://open.kakao.com/" + request.POST.get("link")
+
+        if request.FILES.get("image"):
+            image = request.FILES.get("image")
+        else:
+            image = "party/default_background.png"
+
         party = Party(
             host=host,
             name=name,
             detail=detail,
-            category = category,
+            category=category,
             date=date,
             time=time,
             address=address,
             headcount=headcount,
             price=price,
             link=link,
+            image=image,
         )
         party.save()
 
@@ -298,7 +375,6 @@ class PartyViewSet(viewsets.ViewSet):
         serializer = PartySerializer(queryset, many=True)
         return redirect("party:list")
         return Response(serializer.data)
-        
 
     def list():
         return "test"

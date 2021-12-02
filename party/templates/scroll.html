@@ -1,35 +1,122 @@
 {% extends 'party_base.html' %}
 
-
-{%block extrahead%}
-<style>
-.infinite-item{
-    background-color:beige;
-    height: 100px;
-    border: solid 3px black;
-}
-</style>
-{%endblock%}
-
 {% block contents %}
-<div class="infinite-container">
-    {% for number in numbers %}
-    <div class="infinite-item">
-    {% load party_tag %}
-    {{ party_list|index:number }}
-    
-    </div>
-    <div class="infinite-item">{{ number }}</div>
-    {% endfor %}
+
+<div class="content">
+    <section class="party">
+        <header>
+            <h1>BUCKETLISTER</h1>
+            <div class="btn-action">
+                <a href="/party/search"><i class="fas fa-search"></i></a>
+                <!-- <a href="#"><i class="fas fa-bell"></i></a> -->
+            </div>
+        </header>
+        <div class="party-box">
+
+            <div class="party-filter">
+                <h3>전체 소셜링</h3>
+            </div>
+
+            {% for number in numbers %}
+            {% load party_tag %}
+
+            {% with party=party_list|index:number %}
+
+            <div class="party-card infinite-item" onclick="location.href='/party/detail/{{party.id}}'">
+                <div class="dday">
+
+                    {% if party.d_day > 0 %}
+                    <h4>D - {{party.d_day}}</span></h4>
+                    {% elif party.d_day < 0 %}
+                    <h4>마감된 소셜링</h4>
+                    {% else %}
+                    <h4>오늘 마감</span></h4>
+                    {% endif %}
+
+                </div>
+                <h3 onclick="location.href='/party/detail/{{party.id}}'">{{party.name}}</h3>
+
+                <div class="party-participant">
+
+                    {% for member in party.members %}
+
+                    {% if member.user_id.image %}
+                    <div class="image-wrapper"
+                        style="background-image: url('/media/{{member.user_id.image}}'); background-size: cover; background-repeat: no-repeat;">
+                        <!-- <img class="join-image" src="/media/{{member.user_id.image}}" alt="profile image" />  -->
+                    </div>
+                    {% else %}
+                    <div class="image-wrapper"
+                        style="background-image: url('/media/default_profile.jpg'); background-size: cover; background-repeat: no-repeat;">
+                        <!-- <img class="join-image" src="/media/{{member.user_id.image}}" alt="profile image" />  -->
+                    </div>
+
+                    {% endif %}
+
+                    {% endfor %}
+
+                    <a href="/party/detail/{{party.id}}">
+                        <i class="fas fa-plus"></i>
+                    </a>
+
+                    {% for memeber in party.members %}
+                    <p class="participant">{{member.name}}</p>
+                    {% endfor %}
+
+                </div>
+                <div class="party-info">
+                    <div class="party-info-element">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>위치 : {{party.address}}</p>
+                    </div>
+                    <div class="party-info-element">
+
+
+                        <p>{{ party.date|date:'Y-m-d'}} ({{party.day_of_week}})</p>
+                    </div>
+                    <div class="party-info-element">
+                        {% if party.user_like %}
+                        <i class="fas fa-heart" onclick="like(this, {{party.id}})"></i>
+                        {%else%}
+                        <i class="far fa-heart" onclick="like(this, {{party.id}})"></i>
+                        {%endif%}
+                        <p>{{party.like_count}}</p>
+                    </div>
+                    <div class="party-info-element">
+                        <i class="fas fa-comment"></i>
+                        <p>1</p>
+                    </div>
+                </div>
+            </div>
+
+            {% endwith %}
+            {% endfor %}
+        </div>
+
+        {% if numbers.has_next %}
+        <a class="infinite-more-link" href="?page={{ numbers.next_page_number }}"></a>
+        {% endif %}
+
+        <div class="bottom-nav">
+            <a href="/party">
+                <i class="fas fa-users"></i>
+                <p>소셜링</p>
+            </a>
+            <a href="/party/create">
+                <i class="fas fa-plus-circle"></i>
+            </a>
+            <a href="/user/profile">
+                <i class="fas fa-user"></i>
+                <p>프로필</p>
+            </a>
+        </div>
+    </section>
 </div>
 
-{% if numbers.has_next %}
-<a class="infinite-more-link" href="?page={{ numbers.next_page_number }}">More</a>
-{% endif %}
 
 <script>
     var infinite = new Waypoint.Infinite({
-        element: $('.infinite-container')[0]
+        element: $('.party-box')[0]
     });
 </script>
-{% endblock %}
+{%endblock%}

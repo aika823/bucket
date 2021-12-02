@@ -22,5 +22,5 @@ urlpatterns = [
     path('detail/<int:party_id>', views.detail, name='detail'),
     path('get_comment', views.get_comment, name='get_comment'),
 
-    path('scroll', views.scroll),
+    # path('scroll', views.scroll),
 ]

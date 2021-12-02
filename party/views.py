@@ -164,28 +164,19 @@ def like(request):
     return JsonResponse(dict)
 
 
-def scroll(request):
-    
-
-    party_list = Party.objects.all()
-    
-    
-    print(party_list[0])
-    max = Party.objects.all().count()
-    
-    numbers_list = range(1, max)
-    page = request.GET.get('page', 1)
-    paginator = Paginator(numbers_list, 3)
-    
-    try:
-        numbers = paginator.page(page)
-    except PageNotAnInteger:
-        numbers = paginator.page(1)
-    except EmptyPage:
-        numbers = paginator.page(paginator.num_pages)
-    
-    # print(numbers)
-    return render(request, 'scroll.html', {'party_list':party_list,  'numbers': numbers })
+# def scroll(request):
+#     party_list = Party.objects.all()
+#     max = Party.objects.all().count()
+#     numbers_list = range(1, max)
+#     page = request.GET.get('page', 1)
+#     paginator = Paginator(numbers_list, 3)
+#     try:
+#         numbers = paginator.page(page)
+#     except PageNotAnInteger:
+#         numbers = paginator.page(1)
+#     except EmptyPage:
+#         numbers = paginator.page(paginator.num_pages)
+#     return render(request, 'scroll.html', {'party_list':party_list,  'numbers': numbers })
 
 
 def list(request):
@@ -254,7 +245,21 @@ def list(request):
         except:
             party.members = None
 
-    return render(request, "party.html", {"party_list": party_list})
+    # infinite scroll
+    max = party_list.count()
+    numbers_list = range(1, max)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(numbers_list, 10)
+
+    try:
+        numbers = paginator.page(page)
+    except PageNotAnInteger:
+        numbers = paginator.page(1)
+    except EmptyPage:
+        numbers = paginator.page(paginator.num_pages)
+
+    return render(request, 'scroll.html', {'party_list':party_list,  'numbers': numbers })
+
 
 
 def create(request):

@@ -13,7 +13,13 @@
 
     {# 소셜링 배너 #}
     <div class="detail-images">
-      <img class="party-bg" src="/static/images/dog.jpg" alt="" />
+      <img class="party-bg" src="/media/{{party.image}}" alt="" />
+      <!-- <img src="/static/images/logo_long.png" style="width: 220px;
+      height: 110px;
+      position: absolute;
+      top: 30%;
+      right: -60px;
+      transform: translate(-50%, -50%);" alt="">-->
 
       <div class="overlay"></div>
 
@@ -23,17 +29,30 @@
       <p class="left">잔여 <span>{{party.leftover}}</span></p>
       {% endif %}
 
-
-      <p class="right" onclick="location.href='/party/delete?party_id={{party.id}}'">삭제<span></span></p>
+      {%if my%}
+      <form id="deletePartyForm" method="post" action="/party/delete">
+        {%csrf_token%}
+        <input type="hidden" name="party_id" value="{{party.id}}">
+      </form>
+      <p class="right" onclick="deleteParty()">삭제</p>
+      {%endif%}
 
       <h2>{{party.name}}</h2>
+
+      {# 참여자 #}
       <div class="participant">
         {% for member in party.members %}
-        <img src="/media/{{member.user_id.image}}" onclick="location.href='/user/profile?id={{member.user_id.id}}'" />
+        <div class="image-wrapper" onclick="location.href='/user/profile?id={{member.user_id.id}}'"
+          style="background-image: url('/media/{{member.user_id.image}}'); background-size: cover; background-repeat: no-repeat;">
+        </div>
         {% endfor %}
       </div>
+
+      {# 호스트 #}
       <div class="owner">
-        <img src="/media/{{party.host.image}}" onclick="location.href='/user/profile?id={{party.host.id}}'" />
+        <div class="image-wrapper" onclick="location.href='/user/profile?id={{party.host.id}}'"
+          style="background-image: url('/media/{{party.host.image}}'); background-size: cover; background-repeat: no-repeat;">
+        </div>
         <h3>{{party.host.name}}</h3>
       </div>
 
@@ -59,7 +78,7 @@
         <div class="detail-card-element">
           <i class="fas fa-link"></i>
           {% if user.member.is_join == True %}
-          <p onclick=" location.href='{{party.link}}' ">{{party.link}}</p>
+          <p onclick=" location.href='https://open.kakao.com/{{party.link}}' ">https://open.kakao.com/{{party.link}}</p>
           {# <p onclick=" location.href='{{party.link}}' ">{{party.link}}</p> #}
           {%else%}
           <p>소셜링 가입 후 링크를 확인해주세요</p>
@@ -143,7 +162,7 @@
 
 
         {% if user.member.is_host == True %}
-        <a class="btn-join" href=""> 내가 만든 소셜링 </a>
+        <a class="btn-join" href="/party/update/{{party.id}}"> 내가 만든 소셜링 (수정) </a>
         {% elif user.member.is_join == True %}
         <a class="btn-join exit" onclick="send_exit_form()"> 소셜링 탈퇴하기 </a>
         {% elif party.leftover < 1 %}
@@ -152,15 +171,23 @@
         <!-- <div class="btn-join-wrap"> -->
         <a id="btnJoin" class="btn-join join open_modal" onclick="send_join_form()"> 소셜링 참여하기 </a>
         <!-- </div> -->
-
-
         {% endif %}
       </div>
+
       <div class="bottom-nav-detail">
-        <a href="/party "><i class="fas fa-users"></i></a>
-        <a href="/party/create "><i class="fas fa-plus-circle"></i></a>
-        <a href="/user/profile "><i class="fas fa-user"></i></a>
+        <a href="/party">
+          <i class="fas fa-users"></i>
+          <p>소셜링</p>
+        </a>
+        <a href="/party/create">
+          <i class="fas fa-plus-circle"></i>
+        </a>
+        <a href="/user/profile">
+          <i class="fas fa-user"></i>
+          <p>프로필</p>
+        </a>
       </div>
+
     </div>
   </section>
 
@@ -205,6 +232,12 @@
         $('#modalSuccess').show();
       }
     });
+  }
+
+  function deleteParty(){
+    if(confirm("삭제 하시겠습니까?")){
+      document.getElementById("deletePartyForm").submit();
+    }
   }
 </script>
 <script src="/static/js/sidenav.js"></script>

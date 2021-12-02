@@ -19,11 +19,19 @@
                 <button onclick = "location.href = '/manager/comment' ">댓글 관리 <br> 총: {{count.comment}} 개의 댓글</button>
             </div>
         </div>
-        <div class="bottom-nav">
-            <a href="/party"><i class="fas fa-users"></i></a>
-            <a href="/party/create"><i class="fas fa-plus-circle"></i></a>
-            <a href="/user/profile"><i class="fas fa-user"></i></a>
-        </div>
+       <div class="bottom-nav">
+           <a href="/party">
+               <i class="fas fa-users"></i>
+               <p>소셜링</p>
+           </a>
+           <a href="/party/create">
+               <i class="fas fa-plus-circle"></i>
+           </a>
+           <a href="/user/profile">
+               <i class="fas fa-user"></i>
+               <p>프로필</p>
+           </a>
+       </div>
     </section>
 </div>
 {%endblock%}

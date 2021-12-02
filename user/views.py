@@ -47,8 +47,16 @@ from django.template.loader import get_template, render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.core.mail import EmailMessage
+from django.core.mail import send_mail
+from email.utils import formataddr
+
+# from email.message import EmailMessage
+import smtplib
+
 from .tokens import account_activation_token
 from django.utils.encoding import force_bytes, force_text
+
+from email.utils import formataddr
 
 
 class InterestViewSet(viewsets.ViewSet):
@@ -85,15 +93,16 @@ class UserInterestViewSet(viewsets.ModelViewSet):
 
 
 def delete(request):
-    user_interest_id = request.GET.get('user_interest_id')
+    user_interest_id = request.GET.get("user_interest_id")
     user_interest = UserInterest.objects.get(id=user_interest_id)
     interest = user_interest.interest_id
 
     user_interest.delete()
     interest.delete()
 
-    result = {"msg":"good"}
+    result = {"msg": "good"}
     return JsonResponse(result)
+
 
 def update(request):
     if request.POST.get("user_id"):
@@ -108,6 +117,8 @@ def update(request):
             user.name = request.POST.get("name")
         if request.POST.get("detail"):
             user.detail = request.POST.get("detail")
+        if request.POST.get("instagram"):
+            user.instagram = request.POST.get("instagram")
         if request.POST.get("password"):
             if request.POST.get("password") == request.POST.get("re_password"):
                 user.password = make_password(request.POST.get("password"))
@@ -196,11 +207,11 @@ def login(request):
                 return redirect("user:profile")
             else:
                 error = "비밀번호를 확인해주세요."
-                return render(request, "login.html", {'error':error})
+                return render(request, "login.html", {"error": error})
         except Exception as e:
             print(e)
             error = "존재하지 않는 회원입니다."
-            return render(request, "login.html", {"error":error})
+            return render(request, "login.html", {"error": error})
     else:
         try:
             user = User.objects.get(id=request.session.get("user"))
@@ -216,7 +227,7 @@ def find_password(request):
         try:
             user = User.objects.get(email=user_email)
         except:
-            return render(request, "find_password.html", {'error':"존재하지 않는 이메일입니다."})
+            return render(request, "find_password.html", {"error": "존재하지 않는 이메일입니다."})
         print(user)
         message = render_to_string(
             "find_password_email.html",
@@ -228,8 +239,35 @@ def find_password(request):
             },
         )
         mail_subject = "[버킷리스터] 비밀번호 초기화 메일입니다."
-        email = EmailMessage(mail_subject, message, to=[user_email])
-        email.send()
+
+        # email = EmailMessage(mail_subject, message, to=[user_email])
+        # email.send()
+
+        # msg = EmailMessage()
+        # msg['From'] = formataddr(('Example Sender Name', 'john@example.com'))
+        # msg['To'] = formataddr(('Example Recipient Name', 'aika823@naver.com'))
+        # msg.set_content('Lorem Ipsum')
+        # with smtplib.SMTP('localhost') as s:
+        #     s.send_message(msg)
+
+        send_mail(
+            subject="here your subject",
+            message="message",
+            from_email="asjdflkjasdlkfj@gmail.com",
+            recipient_list=["aika823@naver.com"],
+            auth_user="choiinkyu95@gmail.com",
+            auth_password="frjerzmtqcsniqeb",
+            
+        )
+
+        # send_mail('Subject here', 'Here is the message.', 'from@example.com', ['aika823@naver.com'], fail_silently=False)
+        # send_mail(
+        #     "subject",
+        #     "message",
+        #     "Dont Reply <do_not_reply@domain.com>",
+        #     ["aika823@naver.com"],
+        # )
+
         return redirect("user:find_password")
     else:
         return render(request, "find_password.html")
@@ -244,6 +282,8 @@ def register(request):
                 password=make_password(request.POST.get("password")),
                 is_active=False,
             )
+            if request.FILES.get("image"):
+                user.image = request.FILES.get("image")
             user.save()
             message = render_to_string(
                 "activate_email.html",

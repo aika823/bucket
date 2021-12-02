@@ -13,39 +13,35 @@
                 <h3>언제 어디서 만나나요?</h3>
             </div>
 
-            <form action="/api/party/" method="post">
+            <form id="createPartyForm" action="/api/party/" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <input type="hidden" name="host" value="{{user_id}}" />
                 <div class="add-select">
-                    <!-- 제목 -->
+                    
+                    <!-- 제목, 설명 -->
                     <div class="add-option">
-                        <div class="option-title">
+                        <div class="option-title" id="scroll-1">
                             <i class="fas fa-edit"></i>
-                            <h3>모임 이름, 설명</h3>
+                            <h3>모임 이름, 설명 <br><small>*이 항목은 필수입니다.</small></h3>
                         </div>
+                        <br>
                         <div class="input-option active">
-                            <input type="text" name="name" placeholder="모임 이름" required />
+                            <input type="text" name="name" placeholder="모임 이름" required data-id="scroll-1" />
                             <input type="text" name="detail" placeholder="모임 설명" required />
                         </div>
                     </div>
-
 
                     <!-- 카테고리 -->
                     <div class="add-option add-option--date">
                         <div class="option-title">
                             <i class="fas fa-calendar-alt"></i>
-                            <h3>카테고리 선택</h3>
+                            <h3>카테고리 선택<br><small>*이 항목은 필수입니다.</small></h3>
                         </div>
                         <a class="open-option"><i class="fas fa-caret-down"></i></a>
-
-
-
-
-                        <div class="search-category">
-                            <h3>카테고리</h3>
+                        <div class="search-category" id="scroll-2">
                             <div class="category">
                                 <label class="container">함께 나들이
-                                    <input type="radio" name="category" value="함께 나들이">
+                                    <input type="radio" name="category" value="함께 나들이" required data-id="scroll-2">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="container">가볍게 한잔
@@ -90,42 +86,37 @@
                                 </label>
                             </div>
                         </div>
-
-
-
-
-
-
                     </div>
-
 
                     <!-- 날짜 -->
-                    <div class="add-option add-option--date">
+                    <div class="add-option add-option--date" id="scroll-3">
                         <div class="option-title">
                             <i class="fas fa-calendar-alt"></i>
-                            <h3>날짜 선택</h3>
+                            <h3>날짜 선택 <br> <small>*이 항목은 필수입니다.</small> </h3>
                         </div>
                         <a class="open-option"><i class="fas fa-caret-down"></i></a>
                         <div class="input-option">
-                            <input id="dateInput" type="date" name="date" required />
+                            <input id="dateInput" type="date" name="date" required data-id="scroll-3" />
                         </div>
                     </div>
+
                     <!-- 시간 -->
-                    <div class="add-option add-option--time">
+                    <div class="add-option add-option--time" id="scroll-4">
                         <div class="option-title">
                             <i class="fas fa-clock"></i>
-                            <h3>시간 입력</h3>
+                            <h3>시간 입력<br><small>*이 항목은 필수입니다.</small></h3>
                         </div>
                         <a class="open-option"><i class="fas fa-caret-down"></i></a>
                         <div class="input-option">
-                            <input type="time" name="time" required />
+                            <input type="time" name="time" required data-id="scroll-4" />
                         </div>
                     </div>
+
                     <!-- 장소 -->
-                    <div class="add-option add-option--location">
+                    <div class="add-option add-option--location" id="scroll-5">
                         <div class="option-title">
                             <i class="fas fa-map-marker-alt"></i>
-                            <h3>장소 입력</h3>
+                            <h3>장소 입력<br><small>*이 항목은 필수입니다.</small></h3>
                         </div>
                         <a class="open-option" onclick="set_defaul_address()"><i class="fas fa-caret-down"></i></a>
                         <div class="input-option">
@@ -136,40 +127,44 @@
                             <div class="offline">
                                 <div class="address-box">
                                     <input id="addressInput" type="text" name="address" class="input-address" value=""
-                                        onkeypress="if(event.keyCode==13) {search_address()}" required />
+                                        onkeypress="if(event.keyCode==13) {search_address()}" required
+                                        data-id="scroll-5" />
                                     <a class="openMap"><i class="fas fa-search" onclick="search_address()"></i></a>
                                 </div>
                                 <div id="map" style="width:100%;height:350px;"></div>
                             </div>
                         </div>
                     </div>
+
                     <!-- 인원 수 -->
                     <div class="add-option add-option--people">
                         <div class="option-title">
                             <i class="fas fa-users"></i>
-                            <h3>인원 설정 <span>(본인 제외)</span></h3>
+                            <h3>인원 설정 <span>(본인 제외)</span><br><small>*이 항목은 필수입니다.</small></h3>
                         </div>
                         <a class="open-option"><i class="fas fa-caret-down"></i></a>
                         <div class="input-option">
                             <input type="number" name="headcount" value="1" min="1" required />
                         </div>
                     </div>
-                    <!-- 인원 수 -->
+
+                    <!-- 참가 비용 -->
                     <div class="add-option">
                         <div class="option-title">
                             <i class="fas fa-coins"></i>
-                            <h3>참가 비용</h3>
+                            <h3>참가 비용<br><small>*이 항목은 필수입니다.</small></h3>
                         </div>
                         <a class="open-option"><i class="fas fa-caret-down"></i></a>
                         <div class="input-option">
                             <input type="number" name="price" value="0" min="0" max="1000000" required />
                         </div>
                     </div>
+
                     <!-- 오픈채팅방 링크 -->
                     <div class="add-option add-option--link">
                         <div class="option-title">
                             <i class="fas fa-comment"></i>
-                            <h3>오픈채팅방 링크</h3>
+                            <h3>오픈채팅방 링크<br><small>*이 항목은 필수입니다.</small></h3>
                         </div>
                         <a class="open-option"><i class="fas fa-caret-down"></i></a>
                         <div class="input-option">
@@ -177,22 +172,63 @@
                             <input type="text" name="link" placeholder="나머지 부분만 입력 해주세요" value="" required />
                         </div>
                     </div>
+
+                    <!-- 배경 화면 -->
+                    <div class="add-option add-option--link">
+                        <div class="option-title">
+                            <i class="fas fa-comment"></i>
+                            <h3>배경 화면<br></h3>
+                        </div>
+                        <a class="open-option"><i class="fas fa-caret-down"></i></a>
+                        <div class="input-option">
+                            <label for="imageInput">아래 이미지를 클릭해서 업로드 </label>
+                            <input id="imageInput" type="file" name="image" required accept="image/*"
+                                style="display:none" />
+                            <img id="imagePreview" src="/media/party/default_background.png" style="width:100%" />
+                        </div>
+                    </div>
+
                 </div>
                 <div class="empty-box"></div>
+
+                <h5 id="requiredError" style="display:none; color:red;">필수항목이 입력되지 않았습니다.</h5>
 
                 <input type="submit" value="만들기" />
             </form>
         </div>
         <div class="bottom-nav">
-            <a href="/party"><i class="fas fa-users"></i></a>
-            <a href="/party/create"><i class="fas fa-plus-circle"></i></a>
-            <a href="/user/profile"><i class="fas fa-user"></i></a>
+            <a href="/party">
+                <i class="fas fa-users"></i>
+                <p>소셜링</p>
+            </a>
+            <a href="/party/create">
+                <i class="fas fa-plus-circle"></i>
+            </a>
+            <a href="/user/profile">
+                <i class="fas fa-user"></i>
+                <p>프로필</p>
+            </a>
         </div>
     </section>
 </div>
 {%endblock%}
 
+
+
+
+
 {%block extrascript %}
+<script>
+    imageInput.onchange = evt => {
+        const [file] = imageInput.files
+        if (file) {
+            document.getElementById("imagePreview").src = URL.createObjectURL(file)
+        }
+    }
+    $('#imagePreview').click(function () {
+        $('#imageInput').trigger('click');
+    });
+</script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
@@ -224,11 +260,20 @@
 
 
 <script>
+    $("form input").on("invalid", function (event) {
+        $('#requiredError').show();
+        console.log("필수항목이 입력되지 않았습니다.");
+    });
+
+
+
+
+
     function getFormatDate(d) {
         return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
     }
 
-    
+
     var minDate = getFormatDate(new Date()),
         mdTemp = new Date(),
         maxDate = getFormatDate(new Date(mdTemp.setDate(mdTemp.getDate() + 30)));

@@ -29,6 +29,38 @@ input[type="date"] {
     height: 100%;
 }
 
+.date-button {
+    border: 1px solid #D0D0D0;
+    overflow: auto;
+    width: 100px;
+    border-radius: 10px;
+    /* border: none; */
+}
+
+.date-button label {
+    width: 4.0em;
+}
+
+.date-button label span {
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    padding: 10px 0;
+    background: #fff;
+    color: #c2c2c2;
+}
+
+.date-button label span:hover {
+    color: #fff;
+    background: #5ca8ff;
+}
+
+.date-button label input {
+    position: absolute;
+    top: -20px;
+    display: none;
+}
+
 
 /* bottom navigation */
 
@@ -283,6 +315,7 @@ section.party .dday h4 {
     padding: 6px 10px;
     color: #fff;
     margin: 0;
+    font-size: 12px;
 }
 
 section.party header {
@@ -318,6 +351,8 @@ section.party header .btn-action i {
 
 section.party .party-box {
     width: 100%;
+    height: fit-content;
+    padding-bottom: 100px;
 }
 
 section.party .party-box .party-filter {
@@ -348,13 +383,14 @@ section.party .party-box .party-card {
     width: 360px;
     background: #fff;
     border-radius: 20px;
-    padding: 13px 15px;
-    margin: 40px auto;
+    padding: 13px 15px 0;
+    margin: 20px auto;
 }
 
 section.party .party-box .party-card h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
+    margin: 9px;
 }
 
 section.party .party-box .party-card .party-participant {
@@ -363,22 +399,25 @@ section.party .party-box .party-card .party-participant {
     justify-items: center;
 }
 
-section.party .party-box .party-card .party-participant .join-image {
-    width: 70px;
-    height: 70px;
+section.party .party-box .party-card .party-participant .image-wrapper {
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+}
+
+section.party .party-box .party-card .party-participant .join-image {
     vertical-align: middle;
 }
 
 section.party .party-box .party-card .party-participant a {
     border-radius: 50%;
-    border: 5px solid #0033FF;
+    border: 2px solid #0033FF;
     height: fit-content;
-    padding: 9px;
+    padding: 13px;
 }
 
 section.party .party-box .party-card .party-participant i {
-    font-size: 40px;
+    font-size: 20px;
     color: #0033FF;
 }
 
@@ -391,6 +430,10 @@ section.party .party-box .party-card .party-info {
     display: grid;
     grid-template-columns: 50% 30% 10% 10%;
     column-gap: 2px;
+}
+
+section.party .party-box .party-card .party-info p {
+    margin: 7px 0;
 }
 
 section.party .party-box .party-card .party-info .party-info-element {
@@ -503,6 +546,11 @@ section.add .add-option .option-title i {
     padding: 0 10px 0 20px;
 }
 
+section.add .add-option .required-info {
+    margin: 0;
+    padding-left: 20px;
+}
+
 section.add .add-option .open-option {
     padding-right: 20px;
     justify-self: end;
@@ -513,6 +561,16 @@ section.add .add-option .open-option {
 section.add .add-box {
     width: 100%;
     padding: 20px;
+}
+
+section.add .add-box input[type="submit"] {
+    background: #0033FF;
+    width: 100%;
+    font-size: 16px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 30px;
 }
 
 section.add .add-option .onoffline {
@@ -613,6 +671,20 @@ section.detail .detail-images {
     /* margin: 0 25px; */
     position: relative;
     height: 300px;
+    background: #fff;
+}
+
+section.detail .detail-images .image-wrapper {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+section.detail .detail-images .participant .image-wrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
 
 section.detail .detail-images img {
@@ -655,9 +727,9 @@ section.detail .detail-images .right {
 section.detail .detail-images h2 {
     position: absolute;
     top: 130px;
-    color: #fff;
+    color: #000;
     left: 20px;
-    width: 50%;
+    width: 90%;
     word-break: break-all;
 }
 
@@ -880,6 +952,15 @@ section.detail .bottom-nav {
     bottom: 0;
     display: block;
     padding: 0;
+}
+
+.bottom-nav a {
+    text-align: center;
+}
+
+.bottom-nav p {
+    font-size: 13px;
+    margin: 3px;
 }
 
 section.detail .bottom-nav .join-box {

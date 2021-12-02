@@ -1,16 +1,36 @@
 {% extends "base.html" %} {% block contents %}
 <div class="content">
   <section class="register">
-    <img class="banner-img" src="/static/images/loginpage.png" alt="" />
+    {# <img class="banner-img" src="/static/images/loginpage.png" alt="" /> #}
+    <img src="/static/images/logo.png" style="width: 30px; height: 30px;" alt="">
+
     <h1>회원가입</h1>
     <form method="POST" action="/user/register/" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input name="name" placeholder="성명(실명기입)" type="text" value="" />
-        <input name="email" placeholder="이메일" type="email" value="" />
-        <input name="password" placeholder="비밀번호" type="password" value="" />
-        <input name="re_password" placeholder="비밀번호 확인" type="password" value="" />
-        <input type="submit" />
+      {% csrf_token %}
+      <input type="text" name="name" placeholder="성명(실명기입)" value="" required/>
+      <input type="email" name="email" placeholder="이메일" value="" required />
+      <input type="password" name="password" placeholder="비밀번호" value="" required />
+      <input type="password" name="re_password" placeholder="비밀번호 확인" value="" required />
+
+      <label for="imageInput">얼굴이 잘 보이는 본인사진 업로드 </label>
+      <input id="imageInput" type="file" name="image" placeholder="프로필 사진" value="" required accept="image/*" style="display:none" />
+      <img id="imagePreview" src="/media/default_profile.jpg" style="width:100%" />
+      <input type="submit" value="가입하기" />
     </form>
   </section>
 </div>
 {% endblock %}
+
+{%block extrascripts%}
+<script>
+  imageInput.onchange = evt => {
+    const [file] = imageInput.files
+    if (file) {
+      document.getElementById("imagePreview").src = URL.createObjectURL(file)
+    }
+  }
+  $('#imagePreview').click(function () {
+    $('#imageInput').trigger('click');
+  });
+</script>
+{%endblock%}

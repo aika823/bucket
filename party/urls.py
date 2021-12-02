@@ -14,10 +14,13 @@ urlpatterns = [
     path('', views.list, name='list'),
     path('create', views.create),
     path('delete', views.delete),
+    path('update/<int:party_id>', views.update),
     path('join', views.join),
     path('comment', views.comment),
     path('like', views.like),
     path('search', views.search),
     path('detail/<int:party_id>', views.detail, name='detail'),
     path('get_comment', views.get_comment, name='get_comment'),
+
+    path('scroll', views.scroll),
 ]

@@ -9,7 +9,6 @@ class PathAndRename(object):
     def __init__(self, sub_path):
         self.path = sub_path
     def __call__(self, instance, filename):
-        print("####################### call function")
         ext = filename.split('.')[-1]
         now = datetime.datetime.now()
         date_time = now.strftime("%y%m%d_%H%M%S")
@@ -21,12 +20,13 @@ class User(models.Model):
     password = models.CharField(max_length=200, null=True)
     email = models.EmailField(max_length=128, null=False)
     phone = models.CharField(max_length=11, null=True)
-    image = models.ImageField(upload_to=("user/"),blank=True, null=True)
+    image = models.ImageField(upload_to=("user/"),default='default_image.jpg')
     detail = models.CharField(max_length=500, null=True)
     social_login = models.CharField(max_length=10, null=True)
     social_id = models.CharField(max_length=200, null=True)
     is_active = models.BooleanField(null=False, default=False)
     is_admin = models.BooleanField(null=False, default=False)
+    instagram = models.CharField(max_length=100, null=True)
     class Meta:
         db_table = 'user'
 

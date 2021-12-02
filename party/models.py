@@ -42,6 +42,7 @@ class Party(models.Model):
     detail = models.CharField(max_length=200)
     link = models.CharField(max_length=200)
     category = models.CharField(max_length=200, default="기타")
+    image = models.ImageField(upload_to=("party/"),default='default_background.png')
 
     class Meta:
         db_table = "party"

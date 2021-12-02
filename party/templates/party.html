@@ -35,28 +35,36 @@
 
                 </div>
                 <h3 onclick="location.href='/party/detail/{{party.id}}'">{{party.name}}</h3>
-                
+
                 <div class="party-participant">
-                    
+
                     {% for member in party.members %}
-                    
+
                     {% if member.user_id.image %}
-                    <img class="join-image" src="/media/{{member.user_id.image}}" alt="profile image" /> 
+                    <div class="image-wrapper"
+                        style="background-image: url('/media/{{member.user_id.image}}'); background-size: cover; background-repeat: no-repeat;">
+                        <!-- <img class="join-image" src="/media/{{member.user_id.image}}" alt="profile image" />  -->
+                    </div>
                     {% else %}
-                    <img class="join-image" src="/media/default_profile.jpg" alt="profile image" />
+                    <div class="image-wrapper"
+                        style="background-image: url('/media/default_profile.jpg'); background-size: cover; background-repeat: no-repeat;"
+                        
+                        >
+                        <!-- <img class="join-image" src="/media/{{member.user_id.image}}" alt="profile image" />  -->
+                    </div>
+
                     {% endif %}
 
                     {% endfor %}
 
                     <a href="/party/detail/{{party.id}}">
-                      <i class="fas fa-plus"></i>
+                        <i class="fas fa-plus"></i>
                     </a>
 
                     {% for memeber in party.members %}
                     <p class="participant">{{member.name}}</p>
                     {% endfor %}
 
-                    <p></p>
                 </div>
                 <div class="party-info">
                     <div class="party-info-element">
@@ -64,7 +72,7 @@
                         <p>위치 : {{party.address}}</p>
                     </div>
                     <div class="party-info-element">
-                    
+
 
                         <p>{{ party.date|date:'Y-m-d'}} ({{party.day_of_week}})</p>
                     </div>
@@ -87,9 +95,17 @@
         </div>
 
         <div class="bottom-nav">
-            <a href="/party"><i class="fas fa-users"></i></a>
-            <a href="/party/create"><i class="fas fa-plus-circle"></i></a>
-            <a href="/user/profile"><i class="fas fa-user"></i></a>
+            <a href="/party">
+                <i class="fas fa-users"></i>
+                <p>소셜링</p>
+            </a>
+            <a href="/party/create">
+                <i class="fas fa-plus-circle"></i>
+            </a>
+            <a href="/user/profile">
+                <i class="fas fa-user"></i>
+                <p>프로필</p>
+            </a>
         </div>
     </section>
 </div>

@@ -159,19 +159,24 @@
           {% endif %}
         </a>
 
+        {% if party.d_day > 0 %}
 
+          {% if user.member.is_host == True %}
+            <a class="btn-join" href="/party/update/{{party.id}}"> 내가 만든 소셜링 (수정) </a>
+          {% elif user.member.is_join == True %}
+            <a class="btn-join exit" onclick="send_exit_form()"> 소셜링 탈퇴하기 </a>
+          {% elif party.leftover < 1 %}
+            <a class="btn-join"> 정원 초과 </a>
+          {% else %}
+          <a id="btnJoin" class="btn-join join open_modal" onclick="send_join_form()"> 소셜링 참여하기 </a>
+          {% endif %}
 
-        {% if user.member.is_host == True %}
-        <a class="btn-join" href="/party/update/{{party.id}}"> 내가 만든 소셜링 (수정) </a>
-        {% elif user.member.is_join == True %}
-        <a class="btn-join exit" onclick="send_exit_form()"> 소셜링 탈퇴하기 </a>
-        {% elif party.leftover < 1 %}
-        <a class="btn-join"> 정원 초과 </a>
         {% else %}
-        <!-- <div class="btn-join-wrap"> -->
-        <a id="btnJoin" class="btn-join join open_modal" onclick="send_join_form()"> 소셜링 참여하기 </a>
-        <!-- </div> -->
+
+          <a class="btn-join join open_modal">마감된 소셜링</a>
+
         {% endif %}
+
       </div>
 
       <div class="bottom-nav-detail">

@@ -30,7 +30,7 @@
                     {% elif party.d_day < 0 %}
                     <h4>마감된 소셜링</h4>
                     {% else %}
-                    <h4>오늘 마감</span></h4>
+                    <h4>오늘 마감</span></h4>   
                     {% endif %}
 
                 </div>
@@ -40,18 +40,17 @@
 
                     {% for member in party.members %}
 
-                    {% if member.user_id.image %}
-                    <div class="image-wrapper"
-                        style="background-image: url('/media/{{member.user_id.image}}'); background-size: cover; background-repeat: no-repeat;">
-                        <!-- <img class="join-image" src="/media/{{member.user_id.image}}" alt="profile image" />  -->
-                    </div>
-                    {% else %}
-                    <div class="image-wrapper"
-                        style="background-image: url('/media/default_profile.jpg'); background-size: cover; background-repeat: no-repeat;">
-                        <!-- <img class="join-image" src="/media/{{member.user_id.image}}" alt="profile image" />  -->
-                    </div>
-
-                    {% endif %}
+                        {% if member.user_id.image %}
+                        <div class="image-wrapper"
+                            style="background-image: url('/media/{{member.user_id.image}}'); background-size: cover; background-repeat: no-repeat;">
+                            <!-- <img class="join-image" src="/media/{{member.user_id.image}}" alt="profile image" />  -->
+                        </div>
+                        {% else %}
+                        <div class="image-wrapper"
+                            style="background-image: url('/media/default_profile.jpg'); background-size: cover; background-repeat: no-repeat;">
+                            <!-- <img class="join-image" src="/media/{{member.user_id.image}}" alt="profile image" />  -->
+                        </div>
+                        {% endif %}
 
                     {% endfor %}
 
@@ -76,9 +75,9 @@
                     </div>
                     <div class="party-info-element">
                         {% if party.user_like %}
-                        <i class="fas fa-heart" onclick="like(this, {{party.id}})"></i>
+                        <i class="fas fa-heart" ></i>
                         {%else%}
-                        <i class="far fa-heart" onclick="like(this, {{party.id}})"></i>
+                        <i class="far fa-heart" ></i>
                         {%endif%}
                         <p>{{party.like_count}}</p>
                     </div>

@@ -17,7 +17,7 @@
                 {% csrf_token %}
                 <input type="hidden" name="host" value="{{user_id}}" />
                 <div class="add-select">
-                    
+
                     <!-- 제목, 설명 -->
                     <div class="add-option">
                         <div class="option-title" id="scroll-1">
@@ -182,7 +182,7 @@
                         <a class="open-option"><i class="fas fa-caret-down"></i></a>
                         <div class="input-option">
                             <label for="imageInput">아래 이미지를 클릭해서 업로드 </label>
-                            <input id="imageInput" type="file" name="image" required accept="image/*"
+                            <input id="imageInput" type="file" name="image" accept="image/*"
                                 style="display:none" />
                             <img id="imagePreview" src="/media/party/default_background.png" style="width:100%" />
                         </div>

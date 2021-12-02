@@ -18,6 +18,9 @@ from django.template import loader
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 
+from itertools import chain
+from django.db.models import Case, When
+
 
 def delete(request):
     if request.method == "POST":
@@ -222,7 +225,17 @@ def list(request):
     else:
         party_list = Party.objects.all()
 
-    party_list = party_list.order_by("-date")
+    today = datetime.datetime.today() - datetime.timedelta(days=2)
+    
+    party_list = Party.objects.annotate(
+        order_new=Case(When(date__gte=today, then=("date")), default=None),
+        order_old=Case(When(date__lt=today, then=("date")), default=None),
+    ).order_by(
+        "order_old",
+        "order_new"
+    )
+
+    print(party_list.query)
 
     for party in party_list:
         party.d_day = (party.date - datetime.date.today()).days
@@ -248,7 +261,7 @@ def list(request):
     # infinite scroll
     max = party_list.count()
     numbers_list = range(1, max)
-    page = request.GET.get('page', 1)
+    page = request.GET.get("page", 1)
     paginator = Paginator(numbers_list, 10)
 
     try:
@@ -258,8 +271,9 @@ def list(request):
     except EmptyPage:
         numbers = paginator.page(paginator.num_pages)
 
-    return render(request, 'scroll.html', {'party_list':party_list,  'numbers': numbers })
-
+    return render(
+        request, "scroll.html", {"party_list": party_list, "numbers": numbers}
+    )
 
 
 def create(request):

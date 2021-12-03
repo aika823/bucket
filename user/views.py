@@ -240,33 +240,9 @@ def find_password(request):
         )
         mail_subject = "[버킷리스터] 비밀번호 초기화 메일입니다."
 
-        # email = EmailMessage(mail_subject, message, to=[user_email])
-        # email.send()
+        email = EmailMessage(mail_subject, message, to=[user_email])
+        email.send()
 
-        # msg = EmailMessage()
-        # msg['From'] = formataddr(('Example Sender Name', 'john@example.com'))
-        # msg['To'] = formataddr(('Example Recipient Name', 'aika823@naver.com'))
-        # msg.set_content('Lorem Ipsum')
-        # with smtplib.SMTP('localhost') as s:
-        #     s.send_message(msg)
-
-        send_mail(
-            subject="here your subject",
-            message="message",
-            from_email="asjdflkjasdlkfj@gmail.com",
-            recipient_list=["aika823@naver.com"],
-            auth_user="choiinkyu95@gmail.com",
-            auth_password="frjerzmtqcsniqeb",
-            
-        )
-
-        # send_mail('Subject here', 'Here is the message.', 'from@example.com', ['aika823@naver.com'], fail_silently=False)
-        # send_mail(
-        #     "subject",
-        #     "message",
-        #     "Dont Reply <do_not_reply@domain.com>",
-        #     ["aika823@naver.com"],
-        # )
 
         return redirect("user:find_password")
     else:

@@ -290,7 +290,7 @@ def detail(request, party_id):
     except:
         party.members = None
     try:
-        comments = Comment.objects.filter(party_id=party_id).all()
+        comments = Comment.objects.filter(party_id=party_id, parent__isnull=True).all()
         for comment in comments:
             comment.count_like = (
                 UserComment.objects.filter(comment=comment, is_like=True).all().count()

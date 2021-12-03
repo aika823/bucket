@@ -15,6 +15,7 @@ input {
     padding: 10px 20px;
     border: 1px solid #c2c2c2;
     border-radius: 5px;
+    box-sizing: border-box;
 }
 
 input[type="date"] {
@@ -27,6 +28,38 @@ input[type="date"] {
     align-items: center;
     width: 100%;
     height: 100%;
+}
+
+.date-button {
+    border: 1px solid #D0D0D0;
+    overflow: auto;
+    width: 100px;
+    border-radius: 10px;
+    /* border: none; */
+}
+
+.date-button label {
+    width: 4.0em;
+}
+
+.date-button label span {
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    padding: 10px 0;
+    background: #fff;
+    color: #c2c2c2;
+}
+
+.date-button label span:hover {
+    color: #fff;
+    background: #5ca8ff;
+}
+
+.date-button label input {
+    position: absolute;
+    top: -20px;
+    display: none;
 }
 
 
@@ -107,6 +140,7 @@ section.profile {
     justify-content: center;
     position: relative;
     width: 400px;
+    /* padding: 200px 0; */
     height: 100%;
     background: #f0f0f0;
 }
@@ -118,6 +152,17 @@ section.profile .profile-box {
     width: 100%;
     padding: 20px 30px;
     position: relative;
+}
+
+@media all and (max-height: 760px) {
+    section.profile .profile-box {
+        background: #fff;
+        border-radius: 0 0 50px 50px;
+        height: fit-content;
+        width: 100%;
+        padding: 20px 30px 150px;
+        position: relative;
+    }
 }
 
 section.profile .profile-box .profile-header {
@@ -198,6 +243,7 @@ section.profile .profile-box .profile-description {
 section.profile .profile-box .profile-description p {
     word-break: keep-all;
     font-weight: 600;
+    margin: 30px 0;
 }
 
 section.profile .profile-box .profile-tag {
@@ -241,6 +287,12 @@ section.profile .btn-manager {
     cursor: pointer;
     color: #0033FF;
 }
+section.profile .btn-manager.under {
+    background: #0033FF;
+    color: #FFF;
+    border-radius: 5px;
+    padding: 3px 7px;
+}
 
 section.profile .profile-box .profile-tag span {
     border: 1.3px solid #0033FF;
@@ -283,6 +335,7 @@ section.party .dday h4 {
     padding: 6px 10px;
     color: #fff;
     margin: 0;
+    font-size: 12px;
 }
 
 section.party header {
@@ -318,6 +371,8 @@ section.party header .btn-action i {
 
 section.party .party-box {
     width: 100%;
+    height: fit-content;
+    padding-bottom: 100px;
 }
 
 section.party .party-box .party-filter {
@@ -348,13 +403,14 @@ section.party .party-box .party-card {
     width: 360px;
     background: #fff;
     border-radius: 20px;
-    padding: 13px 15px;
-    margin: 40px auto;
+    padding: 13px 15px 0;
+    margin: 20px auto;
 }
 
 section.party .party-box .party-card h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
+    margin: 9px;
 }
 
 section.party .party-box .party-card .party-participant {
@@ -363,22 +419,25 @@ section.party .party-box .party-card .party-participant {
     justify-items: center;
 }
 
-section.party .party-box .party-card .party-participant .join-image {
-    width: 70px;
-    height: 70px;
+section.party .party-box .party-card .party-participant .image-wrapper {
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+}
+
+section.party .party-box .party-card .party-participant .join-image {
     vertical-align: middle;
 }
 
 section.party .party-box .party-card .party-participant a {
     border-radius: 50%;
-    border: 5px solid #0033FF;
+    border: 2px solid #0033FF;
     height: fit-content;
-    padding: 9px;
+    padding: 13px;
 }
 
 section.party .party-box .party-card .party-participant i {
-    font-size: 40px;
+    font-size: 20px;
     color: #0033FF;
 }
 
@@ -391,6 +450,10 @@ section.party .party-box .party-card .party-info {
     display: grid;
     grid-template-columns: 50% 30% 10% 10%;
     column-gap: 2px;
+}
+
+section.party .party-box .party-card .party-info p {
+    margin: 7px 0;
 }
 
 section.party .party-box .party-card .party-info .party-info-element {
@@ -503,6 +566,11 @@ section.add .add-option .option-title i {
     padding: 0 10px 0 20px;
 }
 
+section.add .add-option .required-info {
+    margin: 0;
+    padding-left: 20px;
+}
+
 section.add .add-option .open-option {
     padding-right: 20px;
     justify-self: end;
@@ -513,6 +581,16 @@ section.add .add-option .open-option {
 section.add .add-box {
     width: 100%;
     padding: 20px;
+}
+
+section.add .add-box input[type="submit"] {
+    background: #0033FF;
+    width: 100%;
+    font-size: 16px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 30px;
 }
 
 section.add .add-option .onoffline {
@@ -612,12 +690,44 @@ section.detail header i {
 section.detail .detail-images {
     /* margin: 0 25px; */
     position: relative;
-    height: 300px;
+    height: 250px;
+    width: 400px;
+    background: #fff;
+    /* overflow: hidden; */
+}
+
+section.detail .detail-images img {
+    object-fit: cover;
+}
+
+section.detail .detail-images .detail-images-bg {
+    position: relative;
+    height: 250px;
+    width: 400px;
+    background: #fff;
+    overflow: hidden;
+}
+
+section.detail .detail-images .image-wrapper {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+section.detail .detail-images .participant .image-wrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
 
 section.detail .detail-images img {
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 section.detail .detail-images .overlay {
@@ -654,10 +764,11 @@ section.detail .detail-images .right {
 
 section.detail .detail-images h2 {
     position: absolute;
-    top: 130px;
-    color: #fff;
-    left: 20px;
-    width: 50%;
+    /* top: 130px; */
+    bottom: -62px;
+    left: 140px;
+    color: #000;
+    width: 61%;
     word-break: break-all;
 }
 
@@ -681,7 +792,11 @@ section.detail .detail-images .owner {
     bottom: -75px;
     left: 20px;
 }
-
+section.detail .detail-images .owner h3 {
+    position: absolute;
+    bottom: -50px;
+    left: 25px;
+}
 section.detail .detail-images .owner img {
     width: 100px;
     height: 100px;
@@ -690,14 +805,15 @@ section.detail .detail-images .owner img {
 }
 
 section.detail .detail-box {
-    padding-top: 50px;
+    padding-top: 100px;
     margin: 25px;
 }
 
 section.detail .detail-box .detail-card {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
+    overflow-x: hidden;
     background: #fff;
     border-radius: 15px;
     padding: 50px 15px;
@@ -880,6 +996,15 @@ section.detail .bottom-nav {
     bottom: 0;
     display: block;
     padding: 0;
+}
+
+.bottom-nav a {
+    text-align: center;
+}
+
+.bottom-nav p {
+    font-size: 13px;
+    margin: 3px;
 }
 
 section.detail .bottom-nav .join-box {

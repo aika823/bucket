@@ -15,6 +15,7 @@ input {
     padding: 10px 20px;
     border: 1px solid #c2c2c2;
     border-radius: 5px;
+    box-sizing: border-box;
 }
 
 input[type="date"] {
@@ -242,6 +243,7 @@ section.profile .profile-box .profile-description {
 section.profile .profile-box .profile-description p {
     word-break: keep-all;
     font-weight: 600;
+    margin: 30px 0;
 }
 
 section.profile .profile-box .profile-tag {
@@ -284,6 +286,13 @@ section.profile .btn-manager {
     background: #fff;
     cursor: pointer;
     color: #0033FF;
+}
+
+section.profile .btn-manager.under {
+    background: #0033FF;
+    color: #FFF;
+    border-radius: 5px;
+    padding: 3px 7px;
 }
 
 section.profile .profile-box .profile-tag span {
@@ -756,10 +765,11 @@ section.detail .detail-images .right {
 
 section.detail .detail-images h2 {
     position: absolute;
-    top: 130px;
+    /* top: 130px; */
+    bottom: -62px;
+    left: 140px;
     color: #000;
-    left: 20px;
-    width: 90%;
+    width: 61%;
     word-break: break-all;
 }
 
@@ -784,6 +794,12 @@ section.detail .detail-images .owner {
     left: 20px;
 }
 
+section.detail .detail-images .owner h3 {
+    position: absolute;
+    bottom: -50px;
+    left: 25px;
+}
+
 section.detail .detail-images .owner img {
     width: 100px;
     height: 100px;
@@ -792,7 +808,7 @@ section.detail .detail-images .owner img {
 }
 
 section.detail .detail-box {
-    padding-top: 50px;
+    padding-top: 100px;
     margin: 25px;
 }
 

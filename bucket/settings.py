@@ -164,5 +164,3 @@ EMAIL_HOST_USER = "choiinkyu95@gmail.com"
 EMAIL_HOST_PASSWORD = "frjerzmtqcsniqeb"
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-DEFAULT_FROM_EMAIL = "Site Support <support@site.com>"
-DEFAULT_FROM_EMAIL = "support@site.com"

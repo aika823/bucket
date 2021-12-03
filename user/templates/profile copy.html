@@ -55,14 +55,6 @@
 
             {# 개인 정보 #}
 
-            <div class="profile-description">
-                {%if user.detail%}
-                <p>{{user.detail}}</p>
-                {%else%}
-                <p>자기소개가 없습니다.</p>
-                {%endif%}
-            </div>
-
             {%if my%}
             <form class="username-form" action="/user/update/" method="post">
                 {%csrf_token%}
@@ -83,6 +75,15 @@
                 <input type="submit" value="수정">
             </form>
             {%endif%}
+
+            <div class="profile-description">
+                {%if user.detail%}
+                <p>{{user.detail}}</p>
+                {%else%}
+                <p>자기소개가 없습니다.</p>
+                {%endif%}
+            </div>
+
 
             {# 관심사 #}
             <div class="profile-tag">
@@ -106,8 +107,8 @@
                 <button class="btn-manager" onclick="location.href='/manager'">관리자 페이지로 이동</button>
                 {%endif%}
                 <br>
-                <button class="btn-manager under" onclick="location.href='/party?filter=like' ">내가 찜한 소셜링</button>
-                <button class="btn-manager under" onclick="location.href='/party?filter=join' ">내가 참여한 소셜링</button>
+                <button class="btn-manager" onclick="location.href='/party?filter=like' ">내가 찜한 소셜링</button>
+                <button class="btn-manager" onclick="location.href='/party?filter=join' ">내가 참여한 소셜링</button>
             </div>
 
         </div>{#profile-box#}

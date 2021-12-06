@@ -287,6 +287,7 @@ section.profile .btn-manager {
     cursor: pointer;
     color: #0033FF;
 }
+
 section.profile .btn-manager.under {
     background: #0033FF;
     color: #FFF;
@@ -792,11 +793,13 @@ section.detail .detail-images .owner {
     bottom: -75px;
     left: 20px;
 }
+
 section.detail .detail-images .owner h3 {
     position: absolute;
     bottom: -50px;
     left: 25px;
 }
+
 section.detail .detail-images .owner img {
     width: 100px;
     height: 100px;

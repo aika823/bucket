@@ -141,7 +141,7 @@ AWS_SECRET_ACCESS_KEY = SECRETS["AWS_SECRET_ACCESS_KEY"]
 AWS_REGION = "ap-northeast-2"
 
 # AWS S3 SETTINGS
-# AWS_STORAGE_BUCKET_NAME = "static.billim.co.kr"
+# AWS_STORAGE_BUCKET_NAME = "static.buckitlister.co.kr"
 # AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
 # AWS_S3_OBJECT_PARAMETERS = {
 #     "CacheControl": "max-age=86400",

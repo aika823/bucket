@@ -1,6 +1,7 @@
 import json
 import os
 import re
+from django.db import models
 from django.db.models import query
 from django.http.response import JsonResponse
 import requests
@@ -243,7 +244,6 @@ def find_password(request):
         email = EmailMessage(mail_subject, message, to=[user_email])
         email.send()
 
-
         return redirect("user:find_password")
     else:
         return render(request, "find_password.html")
@@ -305,3 +305,38 @@ def reset_password(request, uidb64, token):
     if account_activation_token.check_token(user, token):
         request.session["user"] = uid
         return render(request, "reset_password.html", {"user": user})
+
+
+import os
+from email.mime.image import MIMEImage
+
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+
+
+def send_mail_test():
+
+    rendered_report = RenderedReport.objects.get(pk=1)
+    views = rendered_report.rendered_views.all()
+
+    context = {"views": views}
+
+    html_content = render_to_string("email.html", context=context).strip()
+
+    subject = "HTML Email"
+    to = ["aika823@naver.com"]
+    reply_to = ["noreply@test.com"]
+
+    msg = EmailMultiAlternatives(
+        subject, html_content, "choiinkyu95@gmail.com", to, reply_to=reply_to
+    )
+    msg.content_subtype = "html"  # Main content is text/html
+    msg.mixed_subtype = "related"  # This is critical, otherwise images will be displayed as attachments!
+
+    for view in views:
+        # Create an inline attachment
+        image = MIMEImage(view.png.read())
+        image.add_header("Content-ID", "<{}>".format(view.image_filename))
+        msg.attach(image)
+        
+    msg.send()

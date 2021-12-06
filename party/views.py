@@ -225,7 +225,7 @@ def list(request):
     else:
         party_list = Party.objects.all()
 
-    today = datetime.datetime.today() - datetime.timedelta(days=2)
+    today = datetime.datetime.today() - datetime.timedelta(days=1)
     
     party_list = Party.objects.annotate(
         order_new=Case(When(date__gte=today, then=("date")), default=None),
@@ -392,6 +392,3 @@ class PartyViewSet(viewsets.ViewSet):
         serializer = PartySerializer(queryset, many=True)
         return redirect("party:list")
         return Response(serializer.data)
-
-    def list():
-        return "test"

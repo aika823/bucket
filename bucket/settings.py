@@ -10,7 +10,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 ROOT_DIR = os.path.dirname(BASE_DIR)
 # PROJECT_ROOT    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__name__))
+
+
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
 
 
 # URL
@@ -20,7 +23,6 @@ PROJECT_URL = "http://localhost:8000"
 IMAGE_URL = "http://static.billim.co.kr"
 # SERVICE_URL = json.load(open('url.json'))['SERVICE_URL']
 # IMAGE_URL = json.load(open('url.json'))['IMAGE_URL']
-MEDIA_URL = "/media/"
 
 # SECRET
 SECRET_DIR = os.path.join(PROJECT_ROOT, "secret")

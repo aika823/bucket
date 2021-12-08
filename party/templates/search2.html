@@ -54,43 +54,43 @@
                         </div>
                     </div>
                     <div class="day-of-week">
-                        <div class="date-button">
+                        <div class="ck-button">
                             <label>
                                 <input class="weekend" type="checkbox" name="day-of-week" id="dayOfWeek" value="1"
                                     checked=""><span>일</span>
                             </label>
                         </div>
-                        <div class="date-button">
+                        <div class="ck-button">
                             <label>
                                 <input class="days" type="checkbox" name="day-of-week" id="dayOfWeek" value="2"
                                     checked=""><span>월</span>
                             </label>
                         </div>
-                        <div class="date-button">
+                        <div class="ck-button">
                             <label>
                                 <input class="days" type="checkbox" name="day-of-week" id="dayOfWeek" value="3"
                                     checked=""><span>화</span>
                             </label>
                         </div>
-                        <div class="date-button">
+                        <div class="ck-button">
                             <label>
                                 <input class="days" type="checkbox" name="day-of-week" id="dayOfWeek" value="4"
                                     checked=""><span>수</span>
                             </label>
                         </div>
-                        <div class="date-button">
+                        <div class="ck-button">
                             <label>
                                 <input class="days" type="checkbox" name="day-of-week" id="dayOfWeek" value="5"
                                     checked=""><span>목</span>
                             </label>
                         </div>
-                        <div class="date-button">
+                        <div class="ck-button">
                             <label>
                                 <input class="days" type="checkbox" name="day-of-week" id="dayOfWeek" value="6"
                                     checked=""><span>금</span>
                             </label>
                         </div>
-                        <div class="date-button">
+                        <div class="ck-button">
                             <label>
                                 <input class="weekend" type="checkbox" name="day-of-week" id="dayOfWeek" value="7"
                                     checked=""><span>토</span>
@@ -189,31 +189,16 @@
     $('.day-filter').click(function () {
         if ($(this).text() == "• 주말") {
             $('.weekend').attr('checked', '');
-            $('.days').removeAttr('checked', '');
-            $('.weekend').next().addClass('active');
-            $('.days').next().removeClass('active');
+            $('.days').removeAttr('checked');
         } else if ($(this).text() == "• 평일") {
             $('.days').attr('checked', '');
-            $('.weekend').removeAttr('checked', '');
-            $('.days').next().addClass('active');
-            $('.weekend').next().removeClass('active');
+            $('.weekend').removeAttr('checked');
         } else {
             $('.days').attr('checked', '');
             $('.weekend').attr('checked', '');
-            $('.days').next().addClass('active');
-            $('.weekend').next().addClass('active');
         }
         $(this).addClass('active');
         $(this).siblings().removeClass('active');
-    });
-    $('.date-button span').click(function() {
-        if($(this).hasClass('active') == true) {
-          $(this).prev().removeAttr('checked', '')
-          $(this).removeClass('active');  
-        } else {
-          $(this).prev().attr('checked', '');
-          $(this).addClass('active');
-        }
     });
 
 

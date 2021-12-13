@@ -167,21 +167,6 @@ def like(request):
     return JsonResponse(dict)
 
 
-# def scroll(request):
-#     party_list = Party.objects.all()
-#     max = Party.objects.all().count()
-#     numbers_list = range(1, max)
-#     page = request.GET.get('page', 1)
-#     paginator = Paginator(numbers_list, 3)
-#     try:
-#         numbers = paginator.page(page)
-#     except PageNotAnInteger:
-#         numbers = paginator.page(1)
-#     except EmptyPage:
-#         numbers = paginator.page(paginator.num_pages)
-#     return render(request, 'scroll.html', {'party_list':party_list,  'numbers': numbers })
-
-
 def list(request):
     user = User.objects.get(id=request.session.get("user"))
 
@@ -389,6 +374,8 @@ class PartyViewSet(viewsets.ViewSet):
         user_party.save()
 
         queryset = Party.objects.all()
-        serializer = PartySerializer(queryset, many=True)
-        return redirect("party:list")
-        return Response(serializer.data)
+        # serializer = PartySerializer(queryset, many=True)
+        return redirect("/party")
+    
+    def list():
+        return "test"

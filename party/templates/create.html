@@ -298,7 +298,7 @@
 
     function set_defaul_address() {
         console.log("test");
-        setTimeout(() => search_address('한양대학교 서울캠퍼스'), 50);
+        setTimeout(() => search_address('세종대학교'), 50);
         //search_address('한양대학교 서울캠퍼스');
     }
 
@@ -351,12 +351,12 @@
                 clickable: true // 마커에 클릭이벤트를 등록합니다
             });
             kakao.maps.event.addListener(marker, 'click', function () { // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-
-                console.log(place.road_address_name)
+                
+                console.log(place)
                 infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.road_address_name +
                     '</div>');
                 infowindow.open(map, marker);
-                $('#addressInput').val(place.road_address_name)
+                $('#addressInput').val(place.place_name + ' (' + place.road_address_name + ')' )
             });
         }
     }

@@ -353,10 +353,10 @@
             kakao.maps.event.addListener(marker, 'click', function () { // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
                 
                 console.log(place)
-                infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.road_address_name +
+                infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.address_name +
                     '</div>');
                 infowindow.open(map, marker);
-                $('#addressInput').val(place.place_name + ' (' + place.road_address_name + ')' )
+                $('#addressInput').val(place.place_name + ' (' + place.address_name + ')' )
             });
         }
     }
